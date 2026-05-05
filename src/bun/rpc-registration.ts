@@ -51,10 +51,6 @@ import * as dashboardRpc from "./rpc/dashboard";
 import { engines, getOrCreateEngine, broadcastToWebview, removeEngine, resolveShellApproval, resolveUserQuestion, setAppFocused, abortAllAgents, abortAgentByName, getRunningAgentCount, getRunningAgentNames, getAllRunningAgents } from "./engine-manager";
 import { logError } from "./db/error-logger";
 
-// Track the frontend's current route so we can restore it after tray-hide.
-let _lastKnownRoute: string | null = null;
-export function getLastKnownRoute(): string | null { return _lastKnownRoute; }
-
 // Callbacks for settings that need in-memory sync when changed via RPC.
 const settingChangeCallbacks = new Map<string, (value: unknown) => void>();
 export function onSettingChange(key: string, cb: (value: unknown) => void): void {
@@ -912,9 +908,6 @@ When enhancing a prompt:
 			logClientError: ({ type, message, stack }) => {
 				console.error(`[renderer:${type}] ${message}`);
 				logError("renderer", type, message, stack);
-			},
-			routeChanged: ({ route }) => {
-				_lastKnownRoute = route;
 			},
 		},
 	},

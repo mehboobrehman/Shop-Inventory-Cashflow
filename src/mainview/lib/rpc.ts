@@ -939,10 +939,6 @@ export const rpc = {
   logClientError: (type: string, message: string, stack?: string) =>
     electroviewRpc.send.logClientError({ type, message, stack }),
 
-  /** Notify bun that the frontend route changed (for tray-restore). */
-  notifyRouteChanged: (route: string) =>
-    electroviewRpc.send.routeChanged({ route }),
-
   // ---- Dashboard PM Chat ---------------------------------------------------
 
   /** Send a message to the dashboard PM chatbot. Returns immediately; tokens arrive via dashboardPMChunk events. */

@@ -1,5 +1,5 @@
 import Electrobun from "electrobun/bun";
-import { BrowserWindow, Updater, Utils, Screen, ApplicationMenu, Tray } from "electrobun/bun";
+import { BrowserWindow, Updater, Utils, Screen, ApplicationMenu } from "electrobun/bun";
 import { existsSync, mkdirSync } from "fs";
 import { join, dirname, resolve } from "path";
 import { dlopen, FFIType, ptr } from "bun:ffi";
@@ -17,11 +17,10 @@ import { DiscordAdapter } from "./channels/discord-adapter";
 import { WhatsAppAdapter } from "./channels/whatsapp-adapter";
 import { EmailAdapter } from "./channels/email-adapter";
 
-import * as settingsRpc from "./rpc/settings";
 import { maybeRunStartupMaintenance } from "./db/maintenance";
 import { registerWindowsUninstaller } from "./windows-registry";
 import { getOrCreateEngine, setMainWindowRef } from "./engine-manager";
-import { rpc, onSettingChange, getLastKnownRoute } from "./rpc-registration";
+import { rpc, onSettingChange } from "./rpc-registration";
 import { syncWorkspaceFolders } from "./rpc/projects";
 import { setSchedulerRunning } from "./rpc/health";
 import { initTruncationDir, cleanupTruncationFiles } from "./agents/tools/truncation";
@@ -163,22 +162,6 @@ await initCronScheduler();
 setSchedulerRunning(true);
 initAutomationEngine();
 
-// Whether minimize-to-taskbar is currently active.
-const minimizeToTraySetting = await settingsRpc.getSetting("minimize_to_tray", "general");
-let minimizeToTray = String(minimizeToTraySetting) === "true";
-
-// Keepalive timer — prevents Bun event loop from exiting when no windows
-// exist (exitOnLastWindowClosed: false doesn't always work for recreated windows).
-let keepaliveTimer: ReturnType<typeof setInterval> | undefined;
-
-// Whether the window has been destroyed and is "hidden to tray".
-let windowIsHidden = false;
-
-// Keep in sync when the user toggles it in settings UI
-onSettingChange("minimize_to_tray", (val) => {
-	minimizeToTray = String(val) === "true";
-});
-
 // Re-sync workspace folders whenever the global workspace path changes
 onSettingChange("global_workspace_path", () => {
 	syncWorkspaceFolders().catch(() => {});
@@ -193,7 +176,7 @@ const url = await getMainViewUrl();
 const isDevMode = url.startsWith("http://localhost");
 
 // Create the main application window using saved frame
-let mainWindow = new BrowserWindow({
+const mainWindow = new BrowserWindow({
 	title: "AutoDesk",
 	url,
 	frame: {
@@ -285,38 +268,24 @@ function attachWindowListeners(win: typeof mainWindow): void {
 		debouncedSave(currentState);
 	});
 
-	// Electrobun does not support cancelling window close events.
-	// When minimize-to-tray is on, mark the window as hidden and start a
-	// keepalive timer so the Bun event loop doesn't exit.  The tray handler
-	// recreates the window on demand.
 	win.on("close", () => {
-		if (minimizeToTray) {
-			console.log("[window-close] Hidden to tray");
-			windowIsHidden = true;
-			if (!keepaliveTimer) {
-				keepaliveTimer = setInterval(() => {}, 30_000);
-			}
-		} else {
-			Utils.quit();
-		}
+		Utils.quit();
 	});
 }
 
 attachWindowListeners(mainWindow);
 
-// Cleanup on quit — fires for Utils.quit(), Cmd+Q, tray Quit, Ctrl+C, etc.
+// Cleanup on quit — fires for Utils.quit(), Cmd+Q, Ctrl+C, etc.
 Electrobun.events.on("before-quit", () => {
 	(async () => {
 		try {
-			if (!windowIsHidden) {
-				const frame = mainWindow.getFrame();
-				await saveWindowState({
-					x: frame.x,
-					y: frame.y,
-					width: frame.width,
-					height: frame.height,
-				});
-			}
+			const frame = mainWindow.getFrame();
+			await saveWindowState({
+				x: frame.x,
+				y: frame.y,
+				width: frame.width,
+				height: frame.height,
+			});
 		} catch (_err) {
 			console.error("Failed to save window state on quit");
 		}
@@ -331,12 +300,9 @@ Electrobun.events.on("before-quit", () => {
 
 ApplicationMenu.setApplicationMenu([]);
 
-// ---------------------------------------------------------------------------
-// App icon path — resolved once, used for both titlebar (Win32 FFI) and tray.
+// App icon path — used for the Win32 titlebar icon FFI call.
 // Production: bundled as Resources/app.ico next to the bun binary.
 // Dev / fallback: source assets/icon.ico.
-// ---------------------------------------------------------------------------
-// Electrobun copies app.ico into Resources/app/ next to bun.exe (../Resources/app/app.ico).
 const bundledIconPath = join(dirname(process.argv0), "..", "Resources", "app", "app.ico");
 const appIconPath = existsSync(bundledIconPath)
 	? bundledIconPath
@@ -376,102 +342,5 @@ function setWindowTitlebarIcon(windowTitle: string, iconFilePath: string): void 
 		// Non-fatal — icon is cosmetic only
 	}
 }
-
-// System tray icon
-const trayIconPath = appIconPath;
-
-const tray = new Tray({
-	title: "AutoDesk",
-	image: trayIconPath,
-	template: false,
-	width: 32,
-	height: 32,
-});
-
-tray.setMenu([
-	{ type: "normal", label: "Show AutoDesk", action: "show" },
-	{ type: "divider" },
-	{ type: "normal", label: "Quit", action: "quit" },
-]);
-
-function showOrRestoreWindow(): void {
-	if (!windowIsHidden) {
-		if (mainWindow.isMinimized()) {
-			mainWindow.unminimize();
-		}
-		mainWindow.focus();
-		return;
-	}
-
-	// Window was destroyed — recreate it with the last known route.
-	const lastRoute = getLastKnownRoute();
-	let restoreUrl = url;
-	if (lastRoute && lastRoute !== "/") {
-		const separator = url.includes("?") ? "&" : "?";
-		restoreUrl = `${url}${separator}restoreRoute=${encodeURIComponent(lastRoute)}`;
-	}
-
-	mainWindow = new BrowserWindow({
-		title: "AutoDesk",
-		url: restoreUrl,
-		frame: {
-			width: currentState.width,
-			height: currentState.height,
-			x: currentState.x,
-			y: currentState.y,
-		},
-		rpc,
-	});
-
-	setMainWindowRef(mainWindow);
-
-	mainWindow.webview.on("dom-ready", () => {
-		mainWindow.maximize();
-		setWindowTitlebarIcon("AutoDesk", appIconPath);
-		if (!isDevMode) {
-			mainWindow.webview.executeJavascript(
-				"document.addEventListener('contextmenu', e => e.preventDefault(), true)",
-			);
-		}
-	});
-
-	mainWindow.webview.setNavigationRules([
-		"^*",
-		"views://*",
-		"http://localhost:5173*",
-	]);
-
-	attachWindowListeners(mainWindow);
-	windowIsHidden = false;
-
-	// Clear keepalive — window event loop keeps the process alive now
-	if (keepaliveTimer) {
-		clearInterval(keepaliveTimer);
-		keepaliveTimer = undefined;
-	}
-
-	console.log("[tray] Window restored", lastRoute ? `(route: ${lastRoute})` : "");
-}
-
-// Handle tray interactions — menu item clicks carry the action string
-tray.on("tray-clicked", (e: unknown) => {
-	const event = e as { data: { action?: string } };
-	switch (event.data?.action) {
-		case "show":
-			showOrRestoreWindow();
-			break;
-		case "quit":
-			if (keepaliveTimer) {
-				clearInterval(keepaliveTimer);
-				keepaliveTimer = undefined;
-			}
-			Utils.quit();
-			break;
-		default:
-			// Icon click without a menu action — restore the window
-			showOrRestoreWindow();
-			break;
-	}
-});
 
 console.log("AutoDesk started!");

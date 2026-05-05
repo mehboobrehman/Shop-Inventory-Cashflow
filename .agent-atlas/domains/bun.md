@@ -2,7 +2,7 @@
 
 **Directory:** `src/bun`
 **Files:** 143
-**Symbols:** 1053
+**Symbols:** 1051
 
 ## Files
 
@@ -902,18 +902,17 @@
 ### `src/bun/index.ts`
 
 **Interfaces:**
-- `WindowState` (line 34)
+- `WindowState` (line 33)
 
 **Functions:**
-- `getWindowStateFilePath` (line 44)
-- `loadWindowState` (line 48)
-- `saveWindowState` (line 82)
-- `debounce` (line 98)
-- `getMainViewUrl` (line 107)
-- `attachWindowListeners` (line 273)
-- `setWindowTitlebarIcon` (line 345)
-- `toWide` (line 354)
-- `showOrRestoreWindow` (line 397)
+- `getWindowStateFilePath` (line 43)
+- `loadWindowState` (line 47)
+- `saveWindowState` (line 81)
+- `debounce` (line 97)
+- `getMainViewUrl` (line 106)
+- `attachWindowListeners` (line 256)
+- `setWindowTitlebarIcon` (line 311)
+- `toWide` (line 320)
 
 
 ### `src/bun/lib/git-runner.ts`
@@ -1359,13 +1358,12 @@
 ### `src/bun/rpc-registration.ts`
 
 **Functions:**
-- `getLastKnownRoute` (line 56)
-- `onSettingChange` (line 60)
-- `withErrorToast` (line 69)
-- `walk` (line 540)
+- `onSettingChange` (line 56)
+- `withErrorToast` (line 65)
+- `walk` (line 536)
 
 **Exports:**
-- `rpc` (line 86)
+- `rpc` (line 82)
 
 
 ### `src/bun/rpc/agents.ts`

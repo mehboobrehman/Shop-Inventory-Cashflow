@@ -980,7 +980,7 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 88,
+      "line": 97,
       "symbol": "handleViewAllNotes",
       "type": "function"
     },
@@ -1004,13 +1004,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 530,
+      "line": 535,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 555,
+      "line": 560,
       "symbol": "toggleSelectAll",
       "type": "function"
     },
@@ -1802,13 +1802,13 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 44,
+      "line": 43,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 107,
+      "line": 106,
       "symbol": "getMainViewUrl",
       "type": "function"
     },
@@ -1954,12 +1954,6 @@
       "file": "src/bun/providers/models.ts",
       "line": 70,
       "symbol": "getDefaultModel",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/rpc-registration.ts",
-      "line": 56,
-      "symbol": "getLastKnownRoute",
       "type": "function"
     },
     {
@@ -2492,7 +2486,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 73,
+      "line": 77,
       "symbol": "getLanguage",
       "type": "function"
     },
@@ -2882,7 +2876,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 345,
+      "line": 311,
       "symbol": "setWindowTitlebarIcon",
       "type": "function"
     },
@@ -3736,7 +3730,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 107,
+      "line": 106,
       "symbol": "getMainViewUrl",
       "type": "function"
     }
@@ -3780,44 +3774,38 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 34,
+      "line": 33,
       "symbol": "WindowState",
       "type": "interface"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 44,
+      "line": 43,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 48,
+      "line": 47,
       "symbol": "loadWindowState",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 82,
+      "line": 81,
       "symbol": "saveWindowState",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 273,
+      "line": 256,
       "symbol": "attachWindowListeners",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 345,
+      "line": 311,
       "symbol": "setWindowTitlebarIcon",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/index.ts",
-      "line": 397,
-      "symbol": "showOrRestoreWindow",
       "type": "function"
     }
   ],
@@ -4080,7 +4068,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 348,
+      "line": 353,
       "symbol": "InboxPage",
       "type": "function"
     },
@@ -4614,7 +4602,7 @@
     },
     {
       "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 120,
+      "line": 107,
       "symbol": "handler",
       "type": "function"
     },
@@ -4650,7 +4638,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 434,
+      "line": 439,
       "symbol": "handler",
       "type": "function"
     },
@@ -4718,7 +4706,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 30,
+      "line": 29,
       "symbol": "UserProfile",
       "type": "interface"
     }
@@ -5128,25 +5116,25 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 34,
+      "line": 33,
       "symbol": "WindowState",
       "type": "interface"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 44,
+      "line": 43,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 48,
+      "line": 47,
       "symbol": "loadWindowState",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 82,
+      "line": 81,
       "symbol": "saveWindowState",
       "type": "function"
     },
@@ -5400,7 +5388,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 44,
+      "line": 43,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
@@ -5466,19 +5454,19 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 62,
+      "line": 66,
       "symbol": "isBinaryFile",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 67,
+      "line": 71,
       "symbol": "isImageFile",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 123,
+      "line": 127,
       "symbol": "FileIcon",
       "type": "function"
     },
@@ -5606,7 +5594,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 44,
+      "line": 43,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
@@ -5716,7 +5704,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 48,
+      "line": 47,
       "symbol": "loadWindowState",
       "type": "function"
     },
@@ -5788,7 +5776,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 223,
+      "line": 220,
       "symbol": "loadSettings",
       "type": "function"
     },
@@ -5820,7 +5808,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 82,
+      "line": 81,
       "symbol": "saveWindowState",
       "type": "function"
     },
@@ -6059,24 +6047,16 @@
       "type": "function"
     }
   ],
-  "debounce": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 98,
-      "symbol": "debounce",
-      "type": "function"
-    }
-  ],
   "view": [
     {
       "file": "src/bun/index.ts",
-      "line": 107,
+      "line": 106,
       "symbol": "getMainViewUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 88,
+      "line": 97,
       "symbol": "handleViewAllNotes",
       "type": "function"
     },
@@ -6096,7 +6076,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 107,
+      "line": 106,
       "symbol": "getMainViewUrl",
       "type": "function"
     },
@@ -6155,18 +6135,10 @@
       "type": "function"
     }
   ],
-  "attach": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 273,
-      "symbol": "attachWindowListeners",
-      "type": "function"
-    }
-  ],
   "listeners": [
     {
       "file": "src/bun/index.ts",
-      "line": 273,
+      "line": 256,
       "symbol": "attachWindowListeners",
       "type": "function"
     },
@@ -6177,24 +6149,16 @@
       "type": "method"
     }
   ],
-  "titlebar": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 345,
-      "symbol": "setWindowTitlebarIcon",
-      "type": "function"
-    }
-  ],
   "icon": [
     {
       "file": "src/bun/index.ts",
-      "line": 345,
+      "line": 311,
       "symbol": "setWindowTitlebarIcon",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 123,
+      "line": 127,
       "symbol": "FileIcon",
       "type": "function"
     },
@@ -6235,21 +6199,7 @@
       "type": "function"
     }
   ],
-  "wide": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 354,
-      "symbol": "toWide",
-      "type": "function"
-    }
-  ],
   "show": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 397,
-      "symbol": "showOrRestoreWindow",
-      "type": "function"
-    },
     {
       "file": "src/mainview/components/analytics/charts.tsx",
       "line": 306,
@@ -6271,12 +6221,6 @@
       "type": "function"
     },
     {
-      "file": "src/bun/index.ts",
-      "line": 397,
-      "symbol": "showOrRestoreWindow",
-      "type": "function"
-    },
-    {
       "file": "src/bun/rpc/backup.ts",
       "line": 71,
       "symbol": "restoreBackup",
@@ -6287,12 +6231,6 @@
       "line": 213,
       "symbol": "restoreConversation",
       "type": "function"
-    },
-    {
-      "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 74,
-      "symbol": "restoreRoute",
-      "type": "route"
     }
   ],
   "last": [
@@ -6300,12 +6238,6 @@
       "file": "src/bun/db/maintenance.ts",
       "line": 78,
       "symbol": "getLastVacuumTimestamp",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/rpc-registration.ts",
-      "line": 56,
-      "symbol": "getLastKnownRoute",
       "type": "function"
     },
     {
@@ -6330,7 +6262,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 60,
+      "line": 56,
       "symbol": "onSettingChange",
       "type": "function"
     },
@@ -6446,7 +6378,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 60,
+      "line": 56,
       "symbol": "onSettingChange",
       "type": "function"
     },
@@ -6526,7 +6458,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 69,
+      "line": 65,
       "symbol": "withErrorToast",
       "type": "function"
     },
@@ -6576,7 +6508,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 69,
+      "line": 65,
       "symbol": "withErrorToast",
       "type": "function"
     },
@@ -6656,7 +6588,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 69,
+      "line": 65,
       "symbol": "withErrorToast",
       "type": "function"
     },
@@ -6730,7 +6662,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 86,
+      "line": 82,
       "symbol": "rpc",
       "type": "export"
     },
@@ -7924,13 +7856,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 495,
+      "line": 500,
       "symbol": "handleDeleteMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 509,
+      "line": 514,
       "symbol": "handleArchiveMessage",
       "type": "function"
     },
@@ -12230,7 +12162,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 30,
+      "line": 29,
       "symbol": "UserProfile",
       "type": "interface"
     }
@@ -12848,7 +12780,7 @@
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 6,
+      "line": 8,
       "symbol": "ContextTabId",
       "type": "type"
     },
@@ -13054,7 +12986,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 318,
+      "line": 325,
       "symbol": "findNode",
       "type": "function"
     }
@@ -13712,13 +13644,13 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 186,
+      "line": 183,
       "symbol": "FieldRowProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 193,
+      "line": 190,
       "symbol": "FieldRow",
       "type": "function"
     },
@@ -13938,7 +13870,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 67,
+      "line": 71,
       "symbol": "isImageFile",
       "type": "function"
     },
@@ -15166,9 +15098,15 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 238,
+      "line": 46,
+      "symbol": "FilesTabHandle",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 242,
       "symbol": "FilesTab",
-      "type": "function"
+      "type": "export"
     },
     {
       "file": "src/mainview/components/chat/chat-input.tsx",
@@ -15620,7 +15558,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 138,
+      "line": 142,
       "symbol": "formatSize",
       "type": "function"
     },
@@ -17822,7 +17760,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 408,
+      "line": 400,
       "symbol": "onResult",
       "type": "function"
     },
@@ -17940,19 +17878,19 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 476,
+      "line": 481,
       "symbol": "handleMarkAsRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 530,
+      "line": 535,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 569,
+      "line": 574,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     }
@@ -19060,19 +18998,19 @@
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 6,
+      "line": 8,
       "symbol": "ContextTabId",
       "type": "type"
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 8,
+      "line": 10,
       "symbol": "ContextPanelProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 13,
+      "line": 15,
       "symbol": "ContextPanel",
       "type": "function"
     },
@@ -19164,7 +19102,7 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 88,
+      "line": 97,
       "symbol": "handleViewAllNotes",
       "type": "function"
     },
@@ -19856,7 +19794,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 100,
+      "line": 97,
       "symbol": "ResetApplicationCard",
       "type": "function"
     },
@@ -19958,13 +19896,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 26,
+      "line": 28,
       "symbol": "Plan",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 107,
+      "line": 116,
       "symbol": "openPlan",
       "type": "function"
     },
@@ -20026,13 +19964,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 74,
+      "line": 83,
       "symbol": "onKanbanMove",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 279,
+      "line": 286,
       "symbol": "onKanbanMove",
       "type": "function"
     },
@@ -20160,13 +20098,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 74,
+      "line": 83,
       "symbol": "onKanbanMove",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 279,
+      "line": 286,
       "symbol": "onKanbanMove",
       "type": "function"
     },
@@ -20320,9 +20258,21 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 88,
+      "line": 45,
+      "symbol": "DocsTabHandle",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/docs-tab.tsx",
+      "line": 97,
       "symbol": "handleViewAllNotes",
       "type": "function"
+    },
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 46,
+      "symbol": "FilesTabHandle",
+      "type": "interface"
     },
     {
       "file": "src/mainview/components/chat/chat-input.tsx",
@@ -20860,49 +20810,49 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 476,
+      "line": 481,
       "symbol": "handleMarkAsRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 489,
+      "line": 494,
       "symbol": "handleRowClick",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 495,
+      "line": 500,
       "symbol": "handleDeleteMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 509,
+      "line": 514,
       "symbol": "handleArchiveMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 530,
+      "line": 535,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 569,
+      "line": 574,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 582,
+      "line": 587,
       "symbol": "handleBulkArchive",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 596,
+      "line": 601,
       "symbol": "handleBulkDelete",
       "type": "function"
     },
@@ -21300,7 +21250,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 489,
+      "line": 494,
       "symbol": "handleRowClick",
       "type": "function"
     },
@@ -21318,13 +21268,13 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 186,
+      "line": 183,
       "symbol": "FieldRowProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 193,
+      "line": 190,
       "symbol": "FieldRow",
       "type": "function"
     },
@@ -21768,13 +21718,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 73,
+      "line": 82,
       "symbol": "refresh",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 278,
+      "line": 285,
       "symbol": "refresh",
       "type": "function"
     },
@@ -22088,13 +22038,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 94,
+      "line": 103,
       "symbol": "openNote",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 107,
+      "line": 116,
       "symbol": "openPlan",
       "type": "function"
     },
@@ -22970,13 +22920,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 308,
+      "line": 313,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 316,
+      "line": 321,
       "symbol": "BulkActionBar",
       "type": "function"
     }
@@ -23550,7 +23500,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 56,
+      "line": 53,
       "symbol": "isValidEmail",
       "type": "function"
     }
@@ -24922,19 +24872,19 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 35,
+      "line": 34,
       "symbol": "ApplicationSettings",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 211,
+      "line": 208,
       "symbol": "GeneralSettings",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 223,
+      "line": 220,
       "symbol": "loadSettings",
       "type": "function"
     },
@@ -26554,13 +26504,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 495,
+      "line": 500,
       "symbol": "handleDeleteMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 596,
+      "line": 601,
       "symbol": "handleBulkDelete",
       "type": "function"
     },
@@ -27180,7 +27130,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 62,
+      "line": 66,
       "symbol": "isBinaryFile",
       "type": "function"
     },
@@ -27812,13 +27762,13 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 149,
+      "line": 153,
       "symbol": "TreeItemProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 157,
+      "line": 161,
       "symbol": "TreeItem",
       "type": "function"
     },
@@ -28296,21 +28246,27 @@
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 6,
+      "line": 8,
       "symbol": "ContextTabId",
       "type": "type"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 39,
+      "line": 41,
       "symbol": "DocsTabProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 43,
+      "line": 45,
+      "symbol": "DocsTabHandle",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/docs-tab.tsx",
+      "line": 49,
       "symbol": "DocsTab",
-      "type": "function"
+      "type": "export"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
@@ -28320,9 +28276,15 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 238,
+      "line": 46,
+      "symbol": "FilesTabHandle",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 242,
       "symbol": "FilesTab",
-      "type": "function"
+      "type": "export"
     },
     {
       "file": "src/mainview/components/deploy/deploy-tab.tsx",
@@ -29958,13 +29920,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 509,
+      "line": 514,
       "symbol": "handleArchiveMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 582,
+      "line": 587,
       "symbol": "handleBulkArchive",
       "type": "function"
     }
@@ -31036,19 +30998,19 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 476,
+      "line": 481,
       "symbol": "handleMarkAsRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 530,
+      "line": 535,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 569,
+      "line": 574,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     },
@@ -31224,31 +31186,31 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 308,
+      "line": 313,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 316,
+      "line": 321,
       "symbol": "BulkActionBar",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 569,
+      "line": 574,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 582,
+      "line": 587,
       "symbol": "handleBulkArchive",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 596,
+      "line": 601,
       "symbol": "handleBulkDelete",
       "type": "function"
     }
@@ -31288,13 +31250,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 16,
+      "line": 18,
       "symbol": "Note",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 94,
+      "line": 103,
       "symbol": "openNote",
       "type": "function"
     },
@@ -31348,7 +31310,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 300,
+      "line": 307,
       "symbol": "toggle",
       "type": "function"
     },
@@ -31414,13 +31376,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 546,
+      "line": 551,
       "symbol": "toggleSelect",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 555,
+      "line": 560,
       "symbol": "toggleSelectAll",
       "type": "function"
     },
@@ -31502,13 +31464,13 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 35,
+      "line": 34,
       "symbol": "ApplicationSettings",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 100,
+      "line": 97,
       "symbol": "ResetApplicationCard",
       "type": "function"
     }
@@ -31746,6 +31708,12 @@
       "file": "src/bun/rpc/updater.ts",
       "line": 35,
       "symbol": "downloadUpdate",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/components/activity/docs-tab.tsx",
+      "line": 126,
+      "symbol": "downloadSelectedDoc",
       "type": "function"
     },
     {
@@ -32036,13 +32004,13 @@
   "props": [
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 8,
+      "line": 10,
       "symbol": "ContextPanelProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 39,
+      "line": 41,
       "symbol": "DocsTabProps",
       "type": "interface"
     },
@@ -32054,7 +32022,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 149,
+      "line": 153,
       "symbol": "TreeItemProps",
       "type": "interface"
     },
@@ -32588,7 +32556,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 308,
+      "line": 313,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
@@ -32642,7 +32610,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 186,
+      "line": 183,
       "symbol": "FieldRowProps",
       "type": "interface"
     },
@@ -32752,7 +32720,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 138,
+      "line": 142,
       "symbol": "formatSize",
       "type": "function"
     },
@@ -33796,7 +33764,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 100,
+      "line": 97,
       "symbol": "ResetApplicationCard",
       "type": "function"
     },
@@ -33992,7 +33960,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 348,
+      "line": 353,
       "symbol": "InboxPage",
       "type": "function"
     },
@@ -34130,13 +34098,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 308,
+      "line": 313,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 316,
+      "line": 321,
       "symbol": "BulkActionBar",
       "type": "function"
     }
@@ -34250,7 +34218,7 @@
   "code": [
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 287,
+      "line": 339,
       "symbol": "code",
       "type": "method"
     },
@@ -34544,7 +34512,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 489,
+      "line": 494,
       "symbol": "handleRowClick",
       "type": "function"
     },
@@ -34678,13 +34646,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 546,
+      "line": 551,
       "symbol": "toggleSelect",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 555,
+      "line": 560,
       "symbol": "toggleSelectAll",
       "type": "function"
     },
@@ -34716,7 +34684,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 56,
+      "line": 53,
       "symbol": "isValidEmail",
       "type": "function"
     },
@@ -34908,7 +34876,7 @@
   "language": [
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 73,
+      "line": 77,
       "symbol": "getLanguage",
       "type": "function"
     },
@@ -35570,13 +35538,13 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 149,
+      "line": 153,
       "symbol": "TreeItemProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 157,
+      "line": 161,
       "symbol": "TreeItem",
       "type": "function"
     }
@@ -36040,15 +36008,21 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 39,
+      "line": 41,
       "symbol": "DocsTabProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 43,
+      "line": 45,
+      "symbol": "DocsTabHandle",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/docs-tab.tsx",
+      "line": 49,
       "symbol": "DocsTab",
-      "type": "function"
+      "type": "export"
     }
   ],
   "pool": [
@@ -36059,26 +36033,18 @@
       "type": "function"
     }
   ],
-  "panel": [
-    {
-      "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 8,
-      "symbol": "ContextPanelProps",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 13,
-      "symbol": "ContextPanel",
-      "type": "function"
-    }
-  ],
   "selected": [
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 33,
+      "line": 35,
       "symbol": "SelectedDoc",
       "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/docs-tab.tsx",
+      "line": 126,
+      "symbol": "downloadSelectedDoc",
+      "type": "function"
     },
     {
       "file": "src/mainview/components/chat/conversation-sidebar.tsx",
@@ -36090,9 +36056,15 @@
   "doc": [
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 33,
+      "line": 35,
       "symbol": "SelectedDoc",
       "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/docs-tab.tsx",
+      "line": 126,
+      "symbol": "downloadSelectedDoc",
+      "type": "function"
     },
     {
       "file": "src/mainview/components/chat/chat-input.tsx",
@@ -36105,28 +36077,6 @@
       "line": 37,
       "symbol": "DocItem",
       "type": "type"
-    }
-  ],
-  "node": [
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 36,
-      "symbol": "TreeNode",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 318,
-      "symbol": "findNode",
-      "type": "function"
-    }
-  ],
-  "inject": [
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 342,
-      "symbol": "inject",
-      "type": "function"
     }
   ],
   "tooltip": [
@@ -36981,20 +36931,6 @@
       "type": "export"
     }
   ],
-  "selector": [
-    {
-      "file": "src/mainview/components/chat/model-selector.tsx",
-      "line": 24,
-      "symbol": "ModelSelectorProps",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/chat/model-selector.tsx",
-      "line": 29,
-      "symbol": "ModelSelector",
-      "type": "function"
-    }
-  ],
   "separator": [
     {
       "file": "src/mainview/components/chat/plan-diff.tsx",
@@ -37514,7 +37450,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 211,
+      "line": 208,
       "symbol": "GeneralSettings",
       "type": "function"
     }
@@ -39607,20 +39543,6 @@
       "type": "method"
     }
   ],
-  "route": [
-    {
-      "file": "src/bun/rpc-registration.ts",
-      "line": 56,
-      "symbol": "getLastKnownRoute",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 74,
-      "symbol": "restoreRoute",
-      "type": "route"
-    }
-  ],
   "timezone": [
     {
       "file": "src/bun/rpc/cron.ts",
@@ -39694,38 +39616,6 @@
       "file": "src/bun/scheduler/task-executor.ts",
       "line": 26,
       "symbol": "setTaskExecutorEngine",
-      "type": "function"
-    }
-  ],
-  "focus": [
-    {
-      "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 130,
-      "symbol": "onFocus",
-      "type": "function"
-    }
-  ],
-  "blur": [
-    {
-      "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 131,
-      "symbol": "onBlur",
-      "type": "function"
-    }
-  ],
-  "known": [
-    {
-      "file": "src/bun/rpc-registration.ts",
-      "line": 56,
-      "symbol": "getLastKnownRoute",
-      "type": "function"
-    }
-  ],
-  "walk": [
-    {
-      "file": "src/bun/rpc-registration.ts",
-      "line": 540,
-      "symbol": "walk",
       "type": "function"
     }
   ],
@@ -39897,14 +39787,6 @@
       "type": "function"
     }
   ],
-  "electroview": [
-    {
-      "file": "src/mainview/lib/rpc.ts",
-      "line": 176,
-      "symbol": "electroview",
-      "type": "export"
-    }
-  ],
   "saved": [
     {
       "file": "src/mainview/pages/agents.tsx",
@@ -39942,14 +39824,6 @@
       "file": "src/mainview/pages/council.tsx",
       "line": 163,
       "symbol": "ThinkingDots",
-      "type": "function"
-    }
-  ],
-  "style": [
-    {
-      "file": "src/mainview/pages/inbox.tsx",
-      "line": 82,
-      "symbol": "getSourceBadgeStyle",
       "type": "function"
     }
   ],
@@ -40360,6 +40234,128 @@
       "file": "src/mainview/components/kanban/task-detail-modal.tsx",
       "line": 193,
       "symbol": "saveDueDate",
+      "type": "function"
+    }
+  ],
+  "debounce": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 97,
+      "symbol": "debounce",
+      "type": "function"
+    }
+  ],
+  "attach": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 256,
+      "symbol": "attachWindowListeners",
+      "type": "function"
+    }
+  ],
+  "titlebar": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 311,
+      "symbol": "setWindowTitlebarIcon",
+      "type": "function"
+    }
+  ],
+  "wide": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 320,
+      "symbol": "toWide",
+      "type": "function"
+    }
+  ],
+  "walk": [
+    {
+      "file": "src/bun/rpc-registration.ts",
+      "line": 536,
+      "symbol": "walk",
+      "type": "function"
+    }
+  ],
+  "electroview": [
+    {
+      "file": "src/mainview/lib/rpc.ts",
+      "line": 176,
+      "symbol": "electroview",
+      "type": "export"
+    }
+  ],
+  "style": [
+    {
+      "file": "src/mainview/pages/inbox.tsx",
+      "line": 82,
+      "symbol": "getSourceBadgeStyle",
+      "type": "function"
+    }
+  ],
+  "panel": [
+    {
+      "file": "src/mainview/components/activity/context-panel.tsx",
+      "line": 10,
+      "symbol": "ContextPanelProps",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/context-panel.tsx",
+      "line": 15,
+      "symbol": "ContextPanel",
+      "type": "function"
+    }
+  ],
+  "node": [
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 36,
+      "symbol": "TreeNode",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 325,
+      "symbol": "findNode",
+      "type": "function"
+    }
+  ],
+  "inject": [
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 349,
+      "symbol": "inject",
+      "type": "function"
+    }
+  ],
+  "selector": [
+    {
+      "file": "src/mainview/components/chat/model-selector.tsx",
+      "line": 24,
+      "symbol": "ModelSelectorProps",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/chat/model-selector.tsx",
+      "line": 29,
+      "symbol": "ModelSelector",
+      "type": "function"
+    }
+  ],
+  "focus": [
+    {
+      "file": "src/mainview/components/layout/app-shell.tsx",
+      "line": 117,
+      "symbol": "onFocus",
+      "type": "function"
+    }
+  ],
+  "blur": [
+    {
+      "file": "src/mainview/components/layout/app-shell.tsx",
+      "line": 118,
+      "symbol": "onBlur",
       "type": "function"
     }
   ]

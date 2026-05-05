@@ -63,21 +63,6 @@ function AppShellContent() {
     return () => window.removeEventListener("autodesk:sidebar-default-changed", handler);
   }, []);
 
-  // Notify Bun of route changes so it can restore the page after tray-hide
-  useEffect(() => {
-    rpc.notifyRouteChanged(location.pathname);
-  }, [location.pathname]);
-
-  // Restore route after window recreation from tray (reads ?restoreRoute= param)
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const restoreRoute = params.get("restoreRoute");
-    if (restoreRoute && restoreRoute !== "/") {
-      navigate({ to: restoreRoute });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Update the top-nav title + workspace path when navigating between pages/projects
   useEffect(() => {
     let ignore = false;
@@ -86,6 +71,7 @@ function AppShellContent() {
       // Check full path first (e.g. "/plugin/db-viewer"), then fall back to
       // the top-level segment (e.g. "/settings/providers" → "Settings")
       const segment = `/${location.pathname.split("/").filter(Boolean)[0] ?? ""}`;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPageTitle(PAGE_TITLES[location.pathname] ?? PAGE_TITLES[segment] ?? "AutoDesk");
       setProjectWorkspacePath(null);
       return;
@@ -103,6 +89,7 @@ function AppShellContent() {
   // Redirect to onboarding if no providers exist (first launch or after reset)
   useEffect(() => {
     if (location.pathname === "/onboarding") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCheckingFirstLaunch(false);
       return;
     }

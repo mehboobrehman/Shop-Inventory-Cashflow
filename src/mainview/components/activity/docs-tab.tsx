@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from "react";
-import { FileText, ExternalLink, FolderOpen } from "lucide-react";
+import { useEffect, useState, useCallback, forwardRef, useImperativeHandle } from "react";
+import { FileText, ExternalLink, FolderOpen, Download } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -12,6 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Tip } from "@/components/ui/tooltip";
+import { toast } from "@/components/ui/toast";
 
 interface Note {
   id: string;
@@ -40,7 +42,11 @@ interface DocsTabProps {
   projectId?: string;
 }
 
-export function DocsTab({ projectId }: DocsTabProps) {
+export interface DocsTabHandle {
+  refresh: () => void;
+}
+
+export const DocsTab = forwardRef<DocsTabHandle, DocsTabProps>(function DocsTab({ projectId }, ref) {
   const [notes, setNotes] = useState<Note[]>([]);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,6 +73,9 @@ export function DocsTab({ projectId }: DocsTabProps) {
   useEffect(() => {
     loadDocs();
   }, [loadDocs]);
+
+  // Expose refresh() to parent via ref so the context-panel toolbar can trigger it
+  useImperativeHandle(ref, () => ({ refresh: loadDocs }), [loadDocs]);
 
   // Refresh docs when agents finish, PM stream completes, or a kanban task moves columns
   useEffect(() => {
@@ -113,6 +122,27 @@ export function DocsTab({ projectId }: DocsTabProps) {
   };
 
   const hasContent = notes.length > 0 || plans.length > 0;
+
+  const downloadSelectedDoc = () => {
+    if (!selectedDoc) return;
+    // Sanitize the title for filesystem use: replace runs of unsafe chars with a single dash.
+    const safeName = selectedDoc.title.replace(/[\\/:*?"<>|]+/g, "-").trim() || "document";
+    const filename = `${safeName}.md`;
+    try {
+      const blob = new Blob([selectedDoc.content], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast("success", `Downloaded "${filename}"`);
+    } catch {
+      toast("error", "Failed to download document.");
+    }
+  };
 
   // Empty state
   if (!projectId || (!isLoading && !hasContent)) {
@@ -269,11 +299,33 @@ export function DocsTab({ projectId }: DocsTabProps) {
           if (!open) setSelectedDoc(null);
         }}
       >
-        <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
+        <DialogContent
+          className="max-w-2xl max-h-[80vh] flex flex-col"
+          // Prevent Radix Dialog from auto-focusing the first interactive element
+          // (the download button), which was triggering its tooltip on every open.
+          onOpenAutoFocus={(e) => e.preventDefault()}
+        >
           <DialogHeader>
-            <DialogTitle>{selectedDoc?.title}</DialogTitle>
+            <div className="flex items-center gap-2 pr-8">
+              <DialogTitle>{selectedDoc?.title}</DialogTitle>
+              {selectedDoc && (
+                <Tip content="Download as .md file" side="bottom">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      downloadSelectedDoc();
+                      e.currentTarget.blur();
+                    }}
+                    className="shrink-0 p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                    aria-label="Download as .md file"
+                  >
+                    <Download className="w-4 h-4" aria-hidden="true" />
+                  </button>
+                </Tip>
+              )}
+            </div>
             {selectedDoc?.subtitle && (
-              <p className="text-xs text-gray-400 mt-1">{selectedDoc.subtitle}</p>
+              <p className="text-xs text-gray-400 mt-1 pr-8">{selectedDoc.subtitle}</p>
             )}
           </DialogHeader>
 
@@ -342,4 +394,4 @@ export function DocsTab({ projectId }: DocsTabProps) {
       </Dialog>
     </div>
   );
-}
+});

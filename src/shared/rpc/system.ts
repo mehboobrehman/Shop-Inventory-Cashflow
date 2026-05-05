@@ -241,5 +241,4 @@ export type SystemRequests = {
 export type BunMessages = {
   log: { level: string; message: string };
   logClientError: { type: string; message: string; stack?: string };
-  routeChanged: { route: string };
 };

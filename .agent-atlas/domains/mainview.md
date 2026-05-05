@@ -2,7 +2,7 @@
 
 **Directory:** `src/mainview`
 **Files:** 129
-**Symbols:** 1086
+**Symbols:** 1088
 
 ## Files
 
@@ -15,33 +15,37 @@
 ### `src/mainview/components/activity/context-panel.tsx`
 
 **Interfaces:**
-- `ContextPanelProps` (line 8)
+- `ContextPanelProps` (line 10)
 
 **Types:**
-- `ContextTabId` (line 6)
+- `ContextTabId` (line 8)
 
 **Functions:**
-- `ContextPanel` (line 13)
+- `ContextPanel` (line 15)
 
 
 ### `src/mainview/components/activity/docs-tab.tsx`
 
 **Interfaces:**
-- `Note` (line 16)
-- `Plan` (line 26)
-- `SelectedDoc` (line 33)
-- `DocsTabProps` (line 39)
+- `Note` (line 18)
+- `Plan` (line 28)
+- `SelectedDoc` (line 35)
+- `DocsTabProps` (line 41)
+- `DocsTabHandle` (line 45)
 
 **Functions:**
-- `DocsTab` (line 43)
-- `refresh` (line 73)
-- `onKanbanMove` (line 74)
-- `handleViewAllNotes` (line 88)
-- `openNote` (line 94)
-- `openPlan` (line 107)
+- `refresh` (line 82)
+- `onKanbanMove` (line 83)
+- `handleViewAllNotes` (line 97)
+- `openNote` (line 103)
+- `openPlan` (line 116)
+- `downloadSelectedDoc` (line 126)
 
 **Methods:**
-- `code` (line 287)
+- `code` (line 339)
+
+**Exports:**
+- `DocsTab` (line 49)
 
 
 ### `src/mainview/components/activity/files-tab.tsx`
@@ -50,21 +54,24 @@
 - `FileEntry` (line 28)
 - `TreeNode` (line 36)
 - `FilesTabProps` (line 42)
-- `TreeItemProps` (line 149)
+- `FilesTabHandle` (line 46)
+- `TreeItemProps` (line 153)
 
 **Functions:**
-- `isBinaryFile` (line 62)
-- `isImageFile` (line 67)
-- `getLanguage` (line 73)
-- `FileIcon` (line 123)
-- `formatSize` (line 138)
-- `TreeItem` (line 157)
-- `FilesTab` (line 238)
-- `refresh` (line 278)
-- `onKanbanMove` (line 279)
-- `toggle` (line 300)
-- `findNode` (line 318)
-- `inject` (line 342)
+- `isBinaryFile` (line 66)
+- `isImageFile` (line 71)
+- `getLanguage` (line 77)
+- `FileIcon` (line 127)
+- `formatSize` (line 142)
+- `TreeItem` (line 161)
+- `refresh` (line 285)
+- `onKanbanMove` (line 286)
+- `toggle` (line 307)
+- `findNode` (line 325)
+- `inject` (line 349)
+
+**Exports:**
+- `FilesTab` (line 242)
 
 
 ### `src/mainview/components/analytics/charts.tsx`
@@ -714,12 +721,9 @@
 - `AppShell` (line 30)
 - `AppShellContent` (line 38)
 - `handler` (line 57)
-- `handler` (line 120)
-- `onFocus` (line 130)
-- `onBlur` (line 131)
-
-**Routes:**
-- `restoreRoute` (line 74)
+- `handler` (line 107)
+- `onFocus` (line 117)
+- `onBlur` (line 118)
 
 
 ### `src/mainview/components/layout/sidebar.tsx`
@@ -1538,7 +1542,7 @@
 - `InboxMessage` (line 48)
 - `Project` (line 64)
 - `MessageDetailDialogProps` (line 127)
-- `BulkActionBarProps` (line 308)
+- `BulkActionBarProps` (line 313)
 
 **Types:**
 - `ChannelFilter` (line 69)
@@ -1552,19 +1556,19 @@
 - `getSourceLabel` (line 92)
 - `MessageRowSkeleton` (line 106)
 - `MessageDetailDialog` (line 137)
-- `BulkActionBar` (line 316)
-- `InboxPage` (line 348)
-- `handler` (line 434)
-- `handleMarkAsRead` (line 476)
-- `handleRowClick` (line 489)
-- `handleDeleteMessage` (line 495)
-- `handleArchiveMessage` (line 509)
-- `handleMarkAllRead` (line 530)
-- `toggleSelect` (line 546)
-- `toggleSelectAll` (line 555)
-- `handleBulkMarkRead` (line 569)
-- `handleBulkArchive` (line 582)
-- `handleBulkDelete` (line 596)
+- `BulkActionBar` (line 321)
+- `InboxPage` (line 353)
+- `handler` (line 439)
+- `handleMarkAsRead` (line 481)
+- `handleRowClick` (line 494)
+- `handleDeleteMessage` (line 500)
+- `handleArchiveMessage` (line 514)
+- `handleMarkAllRead` (line 535)
+- `toggleSelect` (line 551)
+- `toggleSelectAll` (line 560)
+- `handleBulkMarkRead` (line 574)
+- `handleBulkArchive` (line 587)
+- `handleBulkDelete` (line 601)
 
 
 ### `src/mainview/pages/onboarding.tsx`
@@ -1808,17 +1812,17 @@
 ### `src/mainview/pages/settings/general.tsx`
 
 **Interfaces:**
-- `UserProfile` (line 30)
-- `ApplicationSettings` (line 35)
-- `FieldRowProps` (line 186)
+- `UserProfile` (line 29)
+- `ApplicationSettings` (line 34)
+- `FieldRowProps` (line 183)
 
 **Functions:**
-- `isValidEmail` (line 56)
-- `ResetApplicationCard` (line 100)
-- `FieldRow` (line 193)
-- `GeneralSettings` (line 211)
-- `loadSettings` (line 223)
-- `onResult` (line 408)
+- `isValidEmail` (line 53)
+- `ResetApplicationCard` (line 97)
+- `FieldRow` (line 190)
+- `GeneralSettings` (line 208)
+- `loadSettings` (line 220)
+- `onResult` (line 400)
 
 
 ### `src/mainview/pages/settings/github.tsx`
@@ -2074,4 +2078,3 @@ Router/Controller → Model/Schema
 To add a new feature to the **mainview** domain:
 
 1. Update the model/schema in `src/mainview/`
-2. Register the new route/endpoint

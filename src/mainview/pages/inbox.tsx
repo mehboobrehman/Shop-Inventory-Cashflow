@@ -151,7 +151,12 @@ function MessageDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
+      <DialogContent
+        className="max-w-lg max-h-[80vh] overflow-y-auto"
+        // Skip Radix's auto-focus of the first interactive element (Archive button),
+        // which was triggering its tooltip every time the dialog opened.
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <div className="flex items-center gap-2 pr-6">
             <MessageSquare
