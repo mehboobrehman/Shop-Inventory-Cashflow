@@ -158,7 +158,7 @@
 
 **Types:**
 - `SystemRequests` (line 1)
-- `BunMessages` (line 241)
+- `BunMessages` (line 245)
 
 
 ### `src/shared/rpc/updater.ts`

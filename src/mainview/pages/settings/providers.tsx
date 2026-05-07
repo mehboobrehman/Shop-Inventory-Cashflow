@@ -64,6 +64,7 @@ const EMPTY_FORM: FormData = {
 };
 
 const PROVIDER_TYPE_OPTIONS = [
+  { value: "opencode", label: "Free (OpenCode)" },
   { value: "anthropic", label: "Anthropic" },
   { value: "deepseek", label: "DeepSeek" },
   { value: "google", label: "Google Gemini" },
@@ -78,6 +79,9 @@ const PROVIDER_TYPE_OPTIONS = [
 
 // Provider types that need a base URL
 const BASE_URL_PROVIDERS = ["ollama", "custom"];
+
+// Provider types that do not require an API key from the user
+const NO_KEY_PROVIDERS = ["opencode"];
 
 function isValidUrl(v: string): boolean {
   try {
@@ -377,13 +381,13 @@ function ProviderDialog({
     }
 
     // For new providers or when API key is entered
-    if (!form.apiKey.trim()) { setAvailableModels([]); return; }
+    if (!form.apiKey.trim() && !NO_KEY_PROVIDERS.includes(form.providerType)) { setAvailableModels([]); return; }
     setLoadingModels(true);
     const timer = setTimeout(async () => {
       try {
         const result = await rpc.listProviderModels({
           providerType: form.providerType === "ollama" || form.providerType === "custom" ? "openai" : form.providerType,
-          apiKey: form.apiKey.trim(),
+          apiKey: NO_KEY_PROVIDERS.includes(form.providerType) ? "public" : form.apiKey.trim(),
           baseUrl: form.baseUrl.trim() || undefined,
         });
         if (result.success && result.models.length > 0) {
@@ -428,7 +432,7 @@ function ProviderDialog({
       toast("error", "Provider name is required.");
       return;
     }
-    if (!form.apiKey.trim() && !isEditing) {
+    if (!form.apiKey.trim() && !isEditing && !NO_KEY_PROVIDERS.includes(form.providerType)) {
       toast("error", "API key is required.");
       return;
     }
@@ -454,7 +458,7 @@ function ProviderDialog({
         ...(isEditing ? { id: editingProvider.id } : {}),
         name: form.name.trim(),
         providerType: form.providerType,
-        apiKey: form.apiKey,
+        apiKey: NO_KEY_PROVIDERS.includes(form.providerType) && !form.apiKey.trim() ? "public" : form.apiKey,
         baseUrl: normalizedBaseUrl,
         defaultModel: form.defaultModel.trim() || undefined,
         isDefault: form.isDefault,
@@ -539,44 +543,50 @@ function ProviderDialog({
           </div>
 
           {/* API Key */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="provider-api-key">
-              API Key
-              {isEditing && (
-                <span className="ml-1 text-xs text-muted-foreground font-normal">
-                  (leave blank to keep existing)
-                </span>
-              )}
-            </Label>
-            <div className="relative">
-              <Input
-                id="provider-api-key"
-                type={showApiKey ? "text" : "password"}
-                placeholder={isEditing ? "Enter new key to replace" : "sk-..."}
-                value={form.apiKey}
-                onChange={(e) => updateField("apiKey", e.target.value)}
-                disabled={saving}
-                autoComplete="off"
-                className="pr-10"
-              />
-              <button
-                type="button"
-                onClick={() => setShowApiKey((v) => !v)}
-                className={cn(
-                  "absolute inset-y-0 right-0 flex items-center px-3",
-                  "text-muted-foreground hover:text-foreground transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-r-md"
-                )}
-                aria-label={showApiKey ? "Hide API key" : "Show API key"}
-              >
-                {showApiKey ? (
-                  <EyeOff className="h-4 w-4" aria-hidden="true" />
-                ) : (
-                  <Eye className="h-4 w-4" aria-hidden="true" />
-                )}
-              </button>
+          {NO_KEY_PROVIDERS.includes(form.providerType) ? (
+            <div className="rounded-md bg-muted px-3 py-2 text-sm text-muted-foreground">
+              No API key needed — free models are available out of the box. Optionally add your own OpenCode key to unlock paid models.
             </div>
-          </div>
+          ) : (
+            <div className="grid gap-1.5">
+              <Label htmlFor="provider-api-key">
+                API Key
+                {isEditing && (
+                  <span className="ml-1 text-xs text-muted-foreground font-normal">
+                    (leave blank to keep existing)
+                  </span>
+                )}
+              </Label>
+              <div className="relative">
+                <Input
+                  id="provider-api-key"
+                  type={showApiKey ? "text" : "password"}
+                  placeholder={isEditing ? "Enter new key to replace" : "sk-..."}
+                  value={form.apiKey}
+                  onChange={(e) => updateField("apiKey", e.target.value)}
+                  disabled={saving}
+                  autoComplete="off"
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowApiKey((v) => !v)}
+                  className={cn(
+                    "absolute inset-y-0 right-0 flex items-center px-3",
+                    "text-muted-foreground hover:text-foreground transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-r-md"
+                  )}
+                  aria-label={showApiKey ? "Hide API key" : "Show API key"}
+                >
+                  {showApiKey ? (
+                    <EyeOff className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Eye className="h-4 w-4" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Base URL — shown only for custom provider type */}
           {isCustom && (

@@ -866,8 +866,32 @@ When enhancing a prompt:
 				};
 			},
 			isFirstLaunch: async () => {
-				const rows = await db.select().from(aiProviders);
-				return rows.length === 0;
+				const { join } = await import("path");
+				const flagPath = join(Utils.paths.userData, "first_launch");
+				const exists = await Bun.file(flagPath).exists();
+				if (exists) return false;
+
+				// Backwards-compat: existing installs that already have a user_name set
+				// have completed onboarding before this file-based check was introduced.
+				// Create the file so future checks are a fast fs lookup.
+				const userName = await db.select({ value: settings.value }).from(settings)
+					.where(eq(settings.key, "user_name"));
+				if (userName.length > 0) {
+					const { mkdirSync, writeFileSync } = await import("fs");
+					mkdirSync(Utils.paths.userData, { recursive: true });
+					writeFileSync(flagPath, "");
+					return false;
+				}
+
+				return true;
+			},
+			markOnboardingComplete: async () => {
+				const { join } = await import("path");
+				const { mkdirSync, writeFileSync } = await import("fs");
+				const flagPath = join(Utils.paths.userData, "first_launch");
+				mkdirSync(Utils.paths.userData, { recursive: true });
+				writeFileSync(flagPath, "");
+				return { success: true };
 			},
 
 			// Dashboard PM Chat

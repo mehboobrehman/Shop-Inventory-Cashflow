@@ -25,7 +25,7 @@ import { rpc } from "@/lib/rpc";
 // Types
 // ---------------------------------------------------------------------------
 
-type ProviderType = "anthropic" | "openai" | "google" | "deepseek" | "groq" | "xai" | "ollama" | "openrouter" | "zai" | "custom";
+type ProviderType = "anthropic" | "openai" | "google" | "deepseek" | "groq" | "xai" | "ollama" | "openrouter" | "zai" | "opencode" | "custom";
 type WizardStep = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface FormData {
@@ -56,6 +56,7 @@ const PROVIDERS: {
   description: string;
   Icon: React.ElementType;
 }[] = [
+  { id: "opencode", label: "Free", description: "No API key needed — free models via OpenCode", Icon: Zap },
   { id: "anthropic", label: "Anthropic", description: "Claude models — fast, capable, safety-focused", Icon: Sparkles },
   { id: "deepseek", label: "DeepSeek", description: "DeepSeek V3/R1 — strong coding, very affordable", Icon: Bot },
   { id: "google", label: "Google Gemini", description: "Gemini models — large context, multimodal", Icon: Sparkles },
@@ -71,6 +72,9 @@ const PROVIDERS: {
 
 // Provider types that require a base URL and free-text model entry
 const FREE_TEXT_PROVIDERS: ProviderType[] = ["ollama", "custom"];
+
+// Provider types that do not require an API key from the user
+const NO_KEY_PROVIDERS: ProviderType[] = ["opencode"];
 
 function isValidEmail(v: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -489,10 +493,14 @@ function StepConfigure({
   const [loadingModels, setLoadingModels] = useState(false);
   const [availableModels, setAvailableModels] = useState<string[]>([]);
   const [modelsFetched, setModelsFetched] = useState(false);
+  const [modelLoadError, setModelLoadError] = useState<string | null>(null);
 
   const isCustom = FREE_TEXT_PROVIDERS.includes(provider);
+  const isNoKey = NO_KEY_PROVIDERS.includes(provider);
   const urlInvalid = isCustom && baseUrl.trim().length > 0 && !isValidUrl(baseUrl.trim());
-  const hasCredentials = apiKey.trim().length > 0 && (!isCustom || baseUrl.trim().length > 0) && !urlInvalid;
+  const hasCredentials = isNoKey
+    ? (!isCustom || baseUrl.trim().length > 0) && !urlInvalid
+    : apiKey.trim().length > 0 && (!isCustom || baseUrl.trim().length > 0) && !urlInvalid;
 
   const providerLabel =
     PROVIDERS.find((p) => p.id === provider)?.label ?? provider;
@@ -503,10 +511,11 @@ function StepConfigure({
 
     const fetchModels = async () => {
       setLoadingModels(true);
+      setModelLoadError(null);
       try {
         const result = await rpc.listProviderModels({
-          providerType: provider === "ollama" || provider === "custom" ? "openai" : provider,
-          apiKey: apiKey.trim(),
+          providerType: provider === "opencode" ? "opencode" : (provider === "ollama" || provider === "custom" ? "openai" : provider),
+          apiKey: isNoKey ? "public" : apiKey.trim(),
           baseUrl: baseUrl.trim() || undefined,
         });
         if (result.success && result.models.length > 0) {
@@ -516,17 +525,16 @@ function StepConfigure({
             onChangeModel(result.models[0]);
           }
         } else {
-          // Use preset models for known providers
-          const presets: string[] = [];
-          setAvailableModels(presets);
-          if (!model.trim() && presets.length > 0) {
-            onChangeModel(presets[0]);
+          setAvailableModels([]);
+          if (!result.success) {
+            setModelLoadError((result as { error?: string }).error ?? "Could not load models.");
+          } else {
+            setModelLoadError("No models returned. Check your connection and retry.");
           }
         }
-      } catch {
-        // Fall back to presets
-        const presets: string[] = [];
-        setAvailableModels(presets);
+      } catch (err) {
+        setAvailableModels([]);
+        setModelLoadError(err instanceof Error ? err.message : "Failed to load models.");
       }
       setLoadingModels(false);
       setModelsFetched(true);
@@ -542,6 +550,7 @@ function StepConfigure({
   useEffect(() => {
     setAvailableModels([]);
     setModelsFetched(false);
+    setModelLoadError(null);
   }, [provider]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
@@ -558,42 +567,48 @@ function StepConfigure({
       </div>
       <div className="flex flex-col gap-4">
         {/* API Key */}
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="api-key">API Key</Label>
-          <div className="relative">
-            <Input
-              id="api-key"
-              type={showKey ? "text" : "password"}
-              placeholder={
-                provider === "anthropic"
-                  ? "sk-ant-…"
-                  : provider === "openai"
-                    ? "sk-…"
-                    : "Your API key"
-              }
-              value={apiKey}
-              onChange={(e) => {
-                onChangeApiKey(e.target.value);
-                setModelsFetched(false);
-              }}
-              className="pr-10"
-              autoComplete="off"
-              spellCheck={false}
-            />
-            <button
-              type="button"
-              aria-label={showKey ? "Hide API key" : "Show API key"}
-              onClick={() => setShowKey((v) => !v)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              {showKey ? (
-                <EyeOff className="h-4 w-4" aria-hidden="true" />
-              ) : (
-                <Eye className="h-4 w-4" aria-hidden="true" />
-              )}
-            </button>
+        {isNoKey ? (
+          <div className="rounded-md bg-muted px-3 py-2 text-sm text-muted-foreground">
+            No API key needed — free models load automatically below.
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="api-key">API Key</Label>
+            <div className="relative">
+              <Input
+                id="api-key"
+                type={showKey ? "text" : "password"}
+                placeholder={
+                  provider === "anthropic"
+                    ? "sk-ant-…"
+                    : provider === "openai"
+                      ? "sk-…"
+                      : "Your API key"
+                }
+                value={apiKey}
+                onChange={(e) => {
+                  onChangeApiKey(e.target.value);
+                  setModelsFetched(false);
+                }}
+                className="pr-10"
+                autoComplete="off"
+                spellCheck={false}
+              />
+              <button
+                type="button"
+                aria-label={showKey ? "Hide API key" : "Show API key"}
+                onClick={() => setShowKey((v) => !v)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {showKey ? (
+                  <EyeOff className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Eye className="h-4 w-4" aria-hidden="true" />
+                )}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Base URL (for custom/ollama) */}
         {isCustom && (
@@ -647,10 +662,25 @@ function StepConfigure({
                   ))}
                 </datalist>
               )}
+              {modelLoadError && !loadingModels && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="default"
+                  onClick={() => setModelsFetched(false)}
+                  title="Retry loading models"
+                >
+                  Retry
+                </Button>
+              )}
             </div>
-            <p className="text-xs text-muted-foreground">
-              Default model for new conversations.
-            </p>
+            {modelLoadError && !loadingModels ? (
+              <p className="text-xs text-destructive">{modelLoadError}</p>
+            ) : (
+              <p className="text-xs text-muted-foreground">
+                Default model for new conversations.
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -801,8 +831,9 @@ function StepConfirmation({
         <div className="flex justify-between gap-4 px-4 py-3">
           <dt className="font-medium text-muted-foreground">API Key</dt>
           <dd className="font-mono">
-            {"•".repeat(8)}
-            {formData.apiKey.slice(-4)}
+            {formData.provider === "opencode"
+              ? "No key required"
+              : `${"•".repeat(8)}${formData.apiKey.slice(-4)}`}
           </dd>
         </div>
         {displayBaseUrl && (
@@ -892,7 +923,7 @@ export function OnboardingPage() {
         const saveResult = await rpc.saveProvider({
           name: PROVIDERS.find((p) => p.id === formData.provider)?.label ?? "Provider",
           providerType: formData.provider ?? "",
-          apiKey: formData.apiKey,
+          apiKey: formData.provider === "opencode" ? "public" : formData.apiKey,
           baseUrl: normalizedBaseUrl,
           defaultModel: formData.model || undefined,
           isDefault: true,
@@ -901,11 +932,19 @@ export function OnboardingPage() {
         if (cancelled) return;
 
         if (!saveResult.success) {
-          setValidation({
-            status: "error",
-            error: (saveResult as { error?: string }).error ?? "Failed to save provider. Please check your details.",
-          });
-          return;
+          // For opencode, a duplicate means it was pre-seeded — treat as success
+          const isOpencodeAlreadyExists =
+            formData.provider === "opencode" && (saveResult as { id?: string }).id;
+          if (!isOpencodeAlreadyExists) {
+            setValidation({
+              status: "error",
+              error:
+                (saveResult as { error?: string }).error ??
+                "Failed to save provider. Please check your details.",
+            });
+            return;
+          }
+          // Fall through using the existing provider id
         }
 
         const testResult = await new Promise<{ success: boolean; error?: string }>((resolve) => {
@@ -1070,6 +1109,8 @@ export function OnboardingPage() {
         // Non-fatal — navigate anyway
       }
     }
+    // Create the first_launch file so isFirstLaunch returns false from now on
+    rpc.markOnboardingComplete().catch(() => {});
     // Ensure workspace projects are registered before the dashboard loads
     try {
       await rpc.syncWorkspaceFolders();

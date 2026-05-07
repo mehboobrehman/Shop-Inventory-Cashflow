@@ -317,6 +317,7 @@ export const rpc = {
    * (i.e. no providers exist in the database yet).
    */
   isFirstLaunch: () => electroviewRpc.request.isFirstLaunch({}),
+  markOnboardingComplete: () => electroviewRpc.request.markOnboardingComplete({}),
 
   // ---- Conversations -------------------------------------------------------
 

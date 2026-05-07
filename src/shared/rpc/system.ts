@@ -12,6 +12,10 @@ export type SystemRequests = {
     params: Record<string, never>;
     response: boolean;
   };
+  markOnboardingComplete: {
+    params: Record<string, never>;
+    response: { success: boolean };
+  };
 
   // Health
   getHealthStatus: {

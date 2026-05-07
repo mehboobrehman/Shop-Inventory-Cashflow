@@ -1,8 +1,8 @@
 # Domain: bun
 
 **Directory:** `src/bun`
-**Files:** 143
-**Symbols:** 1051
+**Files:** 145
+**Symbols:** 1059
 
 ## Files
 
@@ -698,16 +698,25 @@
 ### `src/bun/db/migrate.ts`
 
 **Interfaces:**
-- `Migration` (line 30)
+- `Migration` (line 31)
 
 **Functions:**
-- `runMigrations` (line 51)
+- `runMigrations` (line 53)
 
 
 ### `src/bun/db/migrations/v10_disable-db-viewer-plugin.ts`
 
 **Functions:**
 - `run` (line 11)
+
+**Exports:**
+- `name` (line 3)
+
+
+### `src/bun/db/migrations/v11_free-provider.ts`
+
+**Functions:**
+- `run` (line 9)
 
 **Exports:**
 - `name` (line 3)
@@ -836,7 +845,7 @@
 **Functions:**
 - `getDefaultAgentTools` (line 1198)
 - `seedDatabase` (line 1213)
-- `seedAgentTools` (line 1355)
+- `seedAgentTools` (line 1374)
 
 
 ### `src/bun/db/summaries.ts`
@@ -883,17 +892,18 @@
 - `removeEngine` (line 199)
 - `evictOldestIdleEngine` (line 214)
 - `setMainWindowRef` (line 236)
-- `broadcastToWebview` (line 246)
-- `linkAgentResponseToInbox` (line 262)
-- `resolveShellApproval` (line 293)
-- `getShellApprovalMode` (line 309)
-- `installShellApprovalHandler` (line 327)
-- `resolveUserQuestion` (line 382)
-- `askUserQuestion` (line 398)
-- `getOrCreateEngine` (line 427)
+- `getMainWindowRef` (line 241)
+- `broadcastToWebview` (line 251)
+- `linkAgentResponseToInbox` (line 267)
+- `resolveShellApproval` (line 298)
+- `getShellApprovalMode` (line 314)
+- `installShellApprovalHandler` (line 332)
+- `resolveUserQuestion` (line 387)
+- `askUserQuestion` (line 403)
+- `getOrCreateEngine` (line 432)
 
 **Methods:**
-- `onAgentActivity` (line 573)
+- `onAgentActivity` (line 578)
 
 **Exports:**
 - `engines` (line 18)
@@ -1266,22 +1276,22 @@
 ### `src/bun/providers/index.ts`
 
 **Functions:**
-- `createProviderAdapter` (line 29)
-- `createProviderAdapterWithFallback` (line 65)
+- `createProviderAdapter` (line 30)
+- `createProviderAdapterWithFallback` (line 68)
 
 **Exports:**
-- `ProviderAdapter` (line 12)
-- `ProviderConfig` (line 12)
-- `getContextLimit` (line 13)
-- `getDefaultModel` (line 13)
+- `ProviderAdapter` (line 13)
+- `ProviderConfig` (line 13)
+- `getContextLimit` (line 14)
+- `getDefaultModel` (line 14)
 
 
 ### `src/bun/providers/models.ts`
 
 **Functions:**
-- `getContextLimit` (line 28)
-- `clearContextLimitCache` (line 62)
-- `getDefaultModel` (line 70)
+- `getContextLimit` (line 29)
+- `clearContextLimitCache` (line 63)
+- `getDefaultModel` (line 71)
 
 
 ### `src/bun/providers/ollama.ts`
@@ -1313,6 +1323,20 @@
 - `createModel` (line 53)
 - `listModels` (line 97)
 - `testConnection` (line 127)
+
+
+### `src/bun/providers/opencode.ts`
+
+**Classes:**
+- `OpenCodeAdapter` (line 81)
+
+**Functions:**
+- `fetchFreeModels` (line 13)
+
+**Methods:**
+- `createModel` (line 95)
+- `listModels` (line 99)
+- `testConnection` (line 109)
 
 
 ### `src/bun/providers/openrouter.ts`
@@ -1826,7 +1850,7 @@
 ### `src/bun/rpc/reset.ts`
 
 **Functions:**
-- `resetApplication` (line 14)
+- `resetApplication` (line 23)
 
 
 ### `src/bun/rpc/search.ts`
