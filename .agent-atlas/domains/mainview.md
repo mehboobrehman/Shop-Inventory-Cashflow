@@ -2,7 +2,7 @@
 
 **Directory:** `src/mainview`
 **Files:** 129
-**Symbols:** 1088
+**Symbols:** 1086
 
 ## Files
 
@@ -15,37 +15,33 @@
 ### `src/mainview/components/activity/context-panel.tsx`
 
 **Interfaces:**
-- `ContextPanelProps` (line 10)
+- `ContextPanelProps` (line 8)
 
 **Types:**
-- `ContextTabId` (line 8)
+- `ContextTabId` (line 6)
 
 **Functions:**
-- `ContextPanel` (line 15)
+- `ContextPanel` (line 13)
 
 
 ### `src/mainview/components/activity/docs-tab.tsx`
 
 **Interfaces:**
-- `Note` (line 18)
-- `Plan` (line 28)
-- `SelectedDoc` (line 35)
-- `DocsTabProps` (line 41)
-- `DocsTabHandle` (line 45)
+- `Note` (line 16)
+- `Plan` (line 26)
+- `SelectedDoc` (line 33)
+- `DocsTabProps` (line 39)
 
 **Functions:**
-- `refresh` (line 82)
-- `onKanbanMove` (line 83)
-- `handleViewAllNotes` (line 97)
-- `openNote` (line 103)
-- `openPlan` (line 116)
-- `downloadSelectedDoc` (line 126)
+- `DocsTab` (line 43)
+- `refresh` (line 73)
+- `onKanbanMove` (line 74)
+- `handleViewAllNotes` (line 88)
+- `openNote` (line 94)
+- `openPlan` (line 107)
 
 **Methods:**
-- `code` (line 339)
-
-**Exports:**
-- `DocsTab` (line 49)
+- `code` (line 287)
 
 
 ### `src/mainview/components/activity/files-tab.tsx`
@@ -54,24 +50,21 @@
 - `FileEntry` (line 28)
 - `TreeNode` (line 36)
 - `FilesTabProps` (line 42)
-- `FilesTabHandle` (line 46)
-- `TreeItemProps` (line 153)
+- `TreeItemProps` (line 149)
 
 **Functions:**
-- `isBinaryFile` (line 66)
-- `isImageFile` (line 71)
-- `getLanguage` (line 77)
-- `FileIcon` (line 127)
-- `formatSize` (line 142)
-- `TreeItem` (line 161)
-- `refresh` (line 285)
-- `onKanbanMove` (line 286)
-- `toggle` (line 307)
-- `findNode` (line 325)
-- `inject` (line 349)
-
-**Exports:**
-- `FilesTab` (line 242)
+- `isBinaryFile` (line 62)
+- `isImageFile` (line 67)
+- `getLanguage` (line 73)
+- `FileIcon` (line 123)
+- `formatSize` (line 138)
+- `TreeItem` (line 157)
+- `FilesTab` (line 238)
+- `refresh` (line 278)
+- `onKanbanMove` (line 279)
+- `toggle` (line 300)
+- `findNode` (line 318)
+- `inject` (line 342)
 
 
 ### `src/mainview/components/analytics/charts.tsx`
@@ -721,9 +714,12 @@
 - `AppShell` (line 30)
 - `AppShellContent` (line 38)
 - `handler` (line 57)
-- `handler` (line 107)
-- `onFocus` (line 117)
-- `onBlur` (line 118)
+- `handler` (line 120)
+- `onFocus` (line 130)
+- `onBlur` (line 131)
+
+**Routes:**
+- `restoreRoute` (line 74)
 
 
 ### `src/mainview/components/layout/sidebar.tsx`
@@ -1542,7 +1538,7 @@
 - `InboxMessage` (line 48)
 - `Project` (line 64)
 - `MessageDetailDialogProps` (line 127)
-- `BulkActionBarProps` (line 313)
+- `BulkActionBarProps` (line 308)
 
 **Types:**
 - `ChannelFilter` (line 69)
@@ -1556,19 +1552,19 @@
 - `getSourceLabel` (line 92)
 - `MessageRowSkeleton` (line 106)
 - `MessageDetailDialog` (line 137)
-- `BulkActionBar` (line 321)
-- `InboxPage` (line 353)
-- `handler` (line 439)
-- `handleMarkAsRead` (line 481)
-- `handleRowClick` (line 494)
-- `handleDeleteMessage` (line 500)
-- `handleArchiveMessage` (line 514)
-- `handleMarkAllRead` (line 535)
-- `toggleSelect` (line 551)
-- `toggleSelectAll` (line 560)
-- `handleBulkMarkRead` (line 574)
-- `handleBulkArchive` (line 587)
-- `handleBulkDelete` (line 601)
+- `BulkActionBar` (line 316)
+- `InboxPage` (line 348)
+- `handler` (line 434)
+- `handleMarkAsRead` (line 476)
+- `handleRowClick` (line 489)
+- `handleDeleteMessage` (line 495)
+- `handleArchiveMessage` (line 509)
+- `handleMarkAllRead` (line 530)
+- `toggleSelect` (line 546)
+- `toggleSelectAll` (line 555)
+- `handleBulkMarkRead` (line 569)
+- `handleBulkArchive` (line 582)
+- `handleBulkDelete` (line 596)
 
 
 ### `src/mainview/pages/onboarding.tsx`
@@ -1582,31 +1578,31 @@
 - `WizardStep` (line 29)
 
 **Functions:**
-- `isValidEmail` (line 79)
-- `isValidUrl` (line 83)
-- `normalizeBaseUrl` (line 96)
-- `StepIndicator` (line 117)
-- `StepWelcome` (line 178)
-- `handleImportClick` (line 187)
-- `StepAboutYou` (line 263)
-- `handleBrowseWorkspace` (line 285)
-- `onResult` (line 286)
-- `StepSelectProvider` (line 381)
-- `StepConfigure` (line 471)
-- `fetchModels` (line 512)
-- `StepValidate` (line 705)
-- `StepConfirmation` (line 788)
-- `OnboardingPage` (line 863)
-- `goNext` (line 884)
-- `goBack` (line 886)
-- `updateForm` (line 889)
-- `validate` (line 916)
-- `onResult` (line 951)
-- `handleImportSettings` (line 999)
-- `parseSetting` (line 1024)
-- `handleProviderSelect` (line 1057)
-- `handleRetry` (line 1063)
-- `handleFinish` (line 1085)
+- `isValidEmail` (line 75)
+- `isValidUrl` (line 79)
+- `normalizeBaseUrl` (line 92)
+- `StepIndicator` (line 113)
+- `StepWelcome` (line 174)
+- `handleImportClick` (line 183)
+- `StepAboutYou` (line 259)
+- `handleBrowseWorkspace` (line 281)
+- `onResult` (line 282)
+- `StepSelectProvider` (line 377)
+- `StepConfigure` (line 467)
+- `fetchModels` (line 504)
+- `StepValidate` (line 675)
+- `StepConfirmation` (line 758)
+- `OnboardingPage` (line 832)
+- `goNext` (line 853)
+- `goBack` (line 855)
+- `updateForm` (line 858)
+- `validate` (line 885)
+- `onResult` (line 912)
+- `handleImportSettings` (line 960)
+- `parseSetting` (line 985)
+- `handleProviderSelect` (line 1018)
+- `handleRetry` (line 1024)
+- `handleFinish` (line 1046)
 
 
 ### `src/mainview/pages/plugin-db-viewer.tsx`
@@ -1812,17 +1808,17 @@
 ### `src/mainview/pages/settings/general.tsx`
 
 **Interfaces:**
-- `UserProfile` (line 29)
-- `ApplicationSettings` (line 34)
-- `FieldRowProps` (line 183)
+- `UserProfile` (line 30)
+- `ApplicationSettings` (line 35)
+- `FieldRowProps` (line 186)
 
 **Functions:**
-- `isValidEmail` (line 53)
-- `ResetApplicationCard` (line 97)
-- `FieldRow` (line 190)
-- `GeneralSettings` (line 208)
-- `loadSettings` (line 220)
-- `onResult` (line 400)
+- `isValidEmail` (line 56)
+- `ResetApplicationCard` (line 100)
+- `FieldRow` (line 193)
+- `GeneralSettings` (line 211)
+- `loadSettings` (line 223)
+- `onResult` (line 408)
 
 
 ### `src/mainview/pages/settings/github.tsx`
@@ -1910,29 +1906,29 @@
 **Interfaces:**
 - `Provider` (line 38)
 - `FormData` (line 48)
-- `ProviderCardProps` (line 178)
-- `ProviderDialogProps` (line 320)
+- `ProviderCardProps` (line 174)
+- `ProviderDialogProps` (line 316)
 
 **Functions:**
-- `isValidUrl` (line 86)
-- `normalizeBaseUrl` (line 99)
-- `providerTypeBadgeClass` (line 111)
-- `providerTypeLabel` (line 115)
-- `ProviderCardSkeleton` (line 126)
-- `EmptyProviders` (line 155)
-- `ProviderCard` (line 186)
-- `ProviderDialog` (line 327)
-- `updateField` (line 426)
-- `handleSave` (line 430)
-- `handleCancel` (line 481)
-- `ProvidersSettings` (line 691)
-- `loadProviders` (line 710)
-- `handleAdd` (line 729)
-- `handleEdit` (line 734)
-- `handleDeleteRequest` (line 739)
-- `handleDeleteConfirm` (line 743)
-- `handleTest` (line 762)
-- `onResult` (line 766)
+- `isValidUrl` (line 82)
+- `normalizeBaseUrl` (line 95)
+- `providerTypeBadgeClass` (line 107)
+- `providerTypeLabel` (line 111)
+- `ProviderCardSkeleton` (line 122)
+- `EmptyProviders` (line 151)
+- `ProviderCard` (line 182)
+- `ProviderDialog` (line 323)
+- `updateField` (line 422)
+- `handleSave` (line 426)
+- `handleCancel` (line 477)
+- `ProvidersSettings` (line 681)
+- `loadProviders` (line 700)
+- `handleAdd` (line 719)
+- `handleEdit` (line 724)
+- `handleDeleteRequest` (line 729)
+- `handleDeleteConfirm` (line 733)
+- `handleTest` (line 752)
+- `onResult` (line 756)
 
 
 ### `src/mainview/pages/settings/tavily-settings.tsx`
@@ -2078,3 +2074,4 @@ Router/Controller → Model/Schema
 To add a new feature to the **mainview** domain:
 
 1. Update the model/schema in `src/mainview/`
+2. Register the new route/endpoint

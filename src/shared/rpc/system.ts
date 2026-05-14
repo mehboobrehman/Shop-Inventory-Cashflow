@@ -12,10 +12,6 @@ export type SystemRequests = {
     params: Record<string, never>;
     response: boolean;
   };
-  markOnboardingComplete: {
-    params: Record<string, never>;
-    response: { success: boolean };
-  };
 
   // Health
   getHealthStatus: {
@@ -245,4 +241,5 @@ export type SystemRequests = {
 export type BunMessages = {
   log: { level: string; message: string };
   logClientError: { type: string; message: string; stack?: string };
+  routeChanged: { route: string };
 };

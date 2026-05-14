@@ -51,6 +51,10 @@ import * as dashboardRpc from "./rpc/dashboard";
 import { engines, getOrCreateEngine, broadcastToWebview, removeEngine, resolveShellApproval, resolveUserQuestion, setAppFocused, abortAllAgents, abortAgentByName, getRunningAgentCount, getRunningAgentNames, getAllRunningAgents } from "./engine-manager";
 import { logError } from "./db/error-logger";
 
+// Track the frontend's current route so we can restore it after tray-hide.
+let _lastKnownRoute: string | null = null;
+export function getLastKnownRoute(): string | null { return _lastKnownRoute; }
+
 // Callbacks for settings that need in-memory sync when changed via RPC.
 const settingChangeCallbacks = new Map<string, (value: unknown) => void>();
 export function onSettingChange(key: string, cb: (value: unknown) => void): void {
@@ -866,32 +870,8 @@ When enhancing a prompt:
 				};
 			},
 			isFirstLaunch: async () => {
-				const { join } = await import("path");
-				const flagPath = join(Utils.paths.userData, "first_launch");
-				const exists = await Bun.file(flagPath).exists();
-				if (exists) return false;
-
-				// Backwards-compat: existing installs that already have a user_name set
-				// have completed onboarding before this file-based check was introduced.
-				// Create the file so future checks are a fast fs lookup.
-				const userName = await db.select({ value: settings.value }).from(settings)
-					.where(eq(settings.key, "user_name"));
-				if (userName.length > 0) {
-					const { mkdirSync, writeFileSync } = await import("fs");
-					mkdirSync(Utils.paths.userData, { recursive: true });
-					writeFileSync(flagPath, "");
-					return false;
-				}
-
-				return true;
-			},
-			markOnboardingComplete: async () => {
-				const { join } = await import("path");
-				const { mkdirSync, writeFileSync } = await import("fs");
-				const flagPath = join(Utils.paths.userData, "first_launch");
-				mkdirSync(Utils.paths.userData, { recursive: true });
-				writeFileSync(flagPath, "");
-				return { success: true };
+				const rows = await db.select().from(aiProviders);
+				return rows.length === 0;
 			},
 
 			// Dashboard PM Chat
@@ -932,6 +912,9 @@ When enhancing a prompt:
 			logClientError: ({ type, message, stack }) => {
 				console.error(`[renderer:${type}] ${message}`);
 				logError("renderer", type, message, stack);
+			},
+			routeChanged: ({ route }) => {
+				_lastKnownRoute = route;
 			},
 		},
 	},

@@ -22,11 +22,7 @@ if (-not $ready) {
     Write-Host "Vite did not start in time. Launching anyway..."
 }
 
-# Start Electrobun (blocks until app closes or Ctrl+C).
-# Note: --watch was tried but fails on Windows with EACCES when rebuilding —
-# the killed app's bun.exe / native DLLs stay locked briefly after exit, and
-# Electrobun's rmSync(buildFolder) races with that. Vite HMR still works for
-# src/mainview/* via the dev server above. Bun-side edits require manual restart.
+# Start Electrobun (blocks until app closes)
 cmd /c "bunx electrobun dev"
 
 # Kill Vite and all its child processes (bun) when app exits

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "./index";
-import { settings, agents, prompts, agentTools, aiProviders } from "./schema";
+import { settings, agents, prompts, agentTools } from "./schema";
 import { sqlite } from "./connection";
 
 // ---------------------------------------------------------------------------
@@ -1271,25 +1271,6 @@ export async function seedDatabase(): Promise<void> {
 				 VALUES (lower(hex(randomblob(16))), 'mcp_config', ?, 'mcp')`,
 			)
 			.run(defaultMcpConfig);
-	}
-
-	// ---- Free (OpenCode) provider for fresh installs ------------------------
-	const existingProviders = await db.select({ id: aiProviders.id }).from(aiProviders);
-	if (existingProviders.length === 0) {
-		const now = new Date().toISOString();
-		await db.insert(aiProviders).values({
-			id: crypto.randomUUID(),
-			name: "Free",
-			providerType: "opencode",
-			apiKey: "public",
-			baseUrl: null,
-			defaultModel: null,
-			isDefault: 1,
-			isValid: 0,
-			createdAt: now,
-			updatedAt: now,
-		});
-		console.log("[seed] Inserted Free (OpenCode) provider.");
 	}
 
 	// ---- agents -------------------------------------------------------------

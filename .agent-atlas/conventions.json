@@ -7,6 +7,7 @@
     "confidence": 1
   },
   "patterns": {
+    "routing": "Express-style route handlers",
     "react_hooks": "React hooks pattern (9 custom hooks)"
   },
   "test_patterns": {

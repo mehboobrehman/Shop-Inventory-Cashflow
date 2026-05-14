@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { ChevronDown, Search, Brain, Cpu, Check, ShieldCheck, Hammer, Eye } from "lucide-react";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { Tip, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { Tip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { rpc } from "@/lib/rpc";
 import { ContextIndicator } from "./context-indicator";
@@ -172,26 +172,21 @@ export function ModelSelector({ projectId, messages }: ModelSelectorProps) {
 
       {/* Model selector */}
       <Popover open={open} onOpenChange={handleOpenChange}>
-        <Tooltip delayDuration={300}>
-          <PopoverTrigger asChild>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                className={cn(
-                  "inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs",
-                  "text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors",
-                  "border border-transparent hover:border-gray-200",
-                  open && "bg-gray-100 border-gray-200 text-gray-800",
-                )}
-              >
-                <Cpu className="w-3.5 h-3.5 text-gray-400" />
-                <span className="max-w-[200px] truncate">{displayLabel}</span>
-                <ChevronDown className="w-3 h-3 text-gray-400" />
-              </button>
-            </TooltipTrigger>
-          </PopoverTrigger>
-          <TooltipContent side="top">Choose Model</TooltipContent>
-        </Tooltip>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className={cn(
+              "inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs",
+              "text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors",
+              "border border-transparent hover:border-gray-200",
+              open && "bg-gray-100 border-gray-200 text-gray-800",
+            )}
+          >
+            <Cpu className="w-3.5 h-3.5 text-gray-400" />
+            <span className="max-w-[200px] truncate">{displayLabel}</span>
+            <ChevronDown className="w-3 h-3 text-gray-400" />
+          </button>
+        </PopoverTrigger>
         <PopoverContent
           align="start"
           side="top"
@@ -261,26 +256,21 @@ export function ModelSelector({ projectId, messages }: ModelSelectorProps) {
 
       {/* Thinking level selector */}
       <Popover open={thinkingOpen} onOpenChange={setThinkingOpen}>
-        <Tooltip delayDuration={300}>
-          <PopoverTrigger asChild>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                className={cn(
-                  "inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs",
-                  "text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors",
-                  "border border-transparent hover:border-gray-200",
-                  thinkingOpen && "bg-gray-100 border-gray-200 text-gray-800",
-                )}
-              >
-                <Brain className="w-3.5 h-3.5 text-gray-400" />
-                <span>{thinkingLabel}</span>
-                <ChevronDown className="w-3 h-3 text-gray-400" />
-              </button>
-            </TooltipTrigger>
-          </PopoverTrigger>
-          <TooltipContent side="top">Choose Thinking Level</TooltipContent>
-        </Tooltip>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className={cn(
+              "inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs",
+              "text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors",
+              "border border-transparent hover:border-gray-200",
+              thinkingOpen && "bg-gray-100 border-gray-200 text-gray-800",
+            )}
+          >
+            <Brain className="w-3.5 h-3.5 text-gray-400" />
+            <span>{thinkingLabel}</span>
+            <ChevronDown className="w-3 h-3 text-gray-400" />
+          </button>
+        </PopoverTrigger>
         <PopoverContent
           align="start"
           side="top"

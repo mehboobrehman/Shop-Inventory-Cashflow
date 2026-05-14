@@ -7,13 +7,12 @@ import { DeepSeekAdapter } from "./deepseek";
 import { GroqAdapter } from "./groq";
 import { XaiAdapter } from "./xai";
 import { ZaiAdapter } from "./zai";
-import { OpenCodeAdapter } from "./opencode";
 import type { ProviderAdapter, ProviderConfig } from "./types";
 
 export type { ProviderAdapter, ProviderConfig };
 export { getContextLimit, getDefaultModel } from "./models";
 
-const SUPPORTED_TYPES = ["anthropic", "openai", "google", "deepseek", "groq", "xai", "openrouter", "ollama", "zai", "opencode", "custom"] as const;
+const SUPPORTED_TYPES = ["anthropic", "openai", "google", "deepseek", "groq", "xai", "openrouter", "ollama", "zai", "custom"] as const;
 
 /**
  * Factory function that instantiates the correct provider adapter based
@@ -48,8 +47,6 @@ export function createProviderAdapter(config: ProviderConfig): ProviderAdapter {
 			return new OllamaAdapter(config);
 		case "zai":
 			return new ZaiAdapter(config);
-		case "opencode":
-			return new OpenCodeAdapter(config);
 		default:
 			throw new Error(
 				`Unknown provider type: "${config.providerType}". ` +

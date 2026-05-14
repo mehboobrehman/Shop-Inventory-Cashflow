@@ -15,7 +15,6 @@ const PROVIDER_DEFAULT_MODELS: Record<string, string> = {
 	openrouter: "anthropic/claude-sonnet-4-5",
 	ollama: "llama3.2",
 	zai: "glm-4.5",
-	opencode: "big-pickle",
 };
 
 /** Cached context limits per project (or "global" key). */

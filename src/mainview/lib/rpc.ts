@@ -317,7 +317,6 @@ export const rpc = {
    * (i.e. no providers exist in the database yet).
    */
   isFirstLaunch: () => electroviewRpc.request.isFirstLaunch({}),
-  markOnboardingComplete: () => electroviewRpc.request.markOnboardingComplete({}),
 
   // ---- Conversations -------------------------------------------------------
 
@@ -939,6 +938,10 @@ export const rpc = {
   /** Forward a client-side error to the bun-side error log file. */
   logClientError: (type: string, message: string, stack?: string) =>
     electroviewRpc.send.logClientError({ type, message, stack }),
+
+  /** Notify bun that the frontend route changed (for tray-restore). */
+  notifyRouteChanged: (route: string) =>
+    electroviewRpc.send.routeChanged({ route }),
 
   // ---- Dashboard PM Chat ---------------------------------------------------
 

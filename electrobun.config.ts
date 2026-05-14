@@ -6,6 +6,12 @@ export default {
 		identifier: "com.sarfrazai.autodesk",
 		version: "0.0.28",
 	},
+	runtime: {
+		// Keep Bun alive when the last window closes so we can recreate it
+		// from the tray.  Electrobun does not support cancelling window close
+		// events, so this is the only way to implement minimize-to-taskbar.
+		exitOnLastWindowClosed: false,
+	},
 	build: {
 		// Vite builds to dist/, we copy from there
 		copy: {
@@ -19,10 +25,8 @@ export default {
 			"skills": "skills",
 			"assets/uninstall.ps1": "uninstall.ps1",
 		},
-		// Ignore Vite output and the React source tree in `electrobun dev --watch`.
-		// Vite's own HMR handles src/mainview/* — letting Electrobun also watch it
-		// would trigger a full app restart on every React edit and clobber HMR.
-		watchIgnore: ["dist/**", "src/mainview/**"],
+		// Ignore Vite output in watch mode — HMR handles view rebuilds separately
+		watchIgnore: ["dist/**"],
 		mac: {
 			bundleCEF: false,
 		},
@@ -31,6 +35,11 @@ export default {
 		},
 		win: {
 			bundleCEF: false,
+			// Icon is embedded into the exe files via explicit rcedit calls in the
+			// GitHub Actions release workflow (release.yml). Do NOT set `icon` here —
+			// Electrobun 1.16.0's CLI binary has rcedit's path baked in from its own
+			// CI environment (D:\a\electrobun\...) which doesn't exist locally, causing
+			// a spurious ENOENT warning on every `bun run dev`.
 		},
 	},
 	// Update distribution — point to your GitHub Releases page.

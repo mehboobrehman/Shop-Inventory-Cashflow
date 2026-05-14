@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, forwardRef, useImperativeHandle } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   File,
   FileCode,
@@ -41,10 +41,6 @@ interface TreeNode extends FileEntry {
 
 interface FilesTabProps {
   projectId?: string;
-}
-
-export interface FilesTabHandle {
-  refresh: () => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -239,7 +235,7 @@ function TreeItem({ node, depth, projectId, onToggle, onFileClick }: TreeItemPro
 // FilesTab — main exported component
 // ---------------------------------------------------------------------------
 
-export const FilesTab = forwardRef<FilesTabHandle, FilesTabProps>(function FilesTab({ projectId }, ref) {
+export function FilesTab({ projectId }: FilesTabProps) {
   const [rootNodes, setRootNodes] = useState<TreeNode[] | null>(null);
   const [isLoadingRoot, setIsLoadingRoot] = useState(false);
   const [rootError, setRootError] = useState<string | null>(null);
@@ -275,9 +271,6 @@ export const FilesTab = forwardRef<FilesTabHandle, FilesTabProps>(function Files
   if (rootNodes === null && !isLoadingRoot && !rootError && projectId) {
     loadRoot();
   }
-
-  // Expose refresh() to parent via ref so the context-panel toolbar can trigger it
-  useImperativeHandle(ref, () => ({ refresh: loadRoot }), [loadRoot]);
 
   // Live-refresh when agents finish, PM stream completes, or a kanban task moves columns
   useEffect(() => {
@@ -584,4 +577,4 @@ export const FilesTab = forwardRef<FilesTabHandle, FilesTabProps>(function Files
       )}
     </div>
   );
-});
+}

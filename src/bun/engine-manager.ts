@@ -237,11 +237,6 @@ export function setMainWindowRef(win: any): void {
 	mainWindowRef = win;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getMainWindowRef(): any {
-	return mainWindowRef;
-}
-
 /**
  * Safely send a message to the webview via RPC. At runtime the rpc
  * object has `send.<method>()` helpers created by BrowserView.defineRPC,

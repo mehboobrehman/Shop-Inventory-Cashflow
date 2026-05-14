@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 // ---------------------------------------------------------------------------
@@ -33,6 +34,7 @@ interface UserProfile {
 
 interface ApplicationSettings {
   timezone: string;
+  minimizeToTray: boolean;
   globalWorkspacePath: string;
 }
 
@@ -47,6 +49,7 @@ const USER_DEFAULTS: UserProfile = {
 
 const APPLICATION_DEFAULTS: ApplicationSettings = {
   timezone: "UTC",
+  minimizeToTray: false,
   globalWorkspacePath: "",
 };
 
@@ -241,6 +244,10 @@ export function GeneralSettings() {
             typeof appData.timezone === "string" && appData.timezone.length > 0
               ? appData.timezone
               : APPLICATION_DEFAULTS.timezone,
+          minimizeToTray:
+            typeof appData.minimize_to_tray === "boolean"
+              ? appData.minimize_to_tray
+              : APPLICATION_DEFAULTS.minimizeToTray,
           globalWorkspacePath:
             typeof appData.global_workspace_path === "string"
               ? appData.global_workspace_path
@@ -294,6 +301,7 @@ export function GeneralSettings() {
         rpc.saveSetting("user_name", userProfile.userName, "user"),
         rpc.saveSetting("user_email", userProfile.userEmail, "user"),
         rpc.saveSetting("timezone", application.timezone, "general"),
+        rpc.saveSetting("minimize_to_tray", application.minimizeToTray, "general"),
         rpc.saveSetting("global_workspace_path", application.globalWorkspacePath, "general"),
       ]);
       setDirty(false);
@@ -441,6 +449,21 @@ export function GeneralSettings() {
             </Select>
           </FieldRow>
 
+          <Separator />
+
+          <FieldRow
+            id="minimize-to-tray"
+            label="Minimize to taskbar when closing"
+            description="Minimize instead of quitting when you close the window. Keeps cron tasks and channel listeners running."
+          >
+            <Switch
+              id="minimize-to-tray"
+              checked={application.minimizeToTray}
+              onCheckedChange={(checked) =>
+                handleApplicationChange("minimizeToTray", checked)
+              }
+            />
+          </FieldRow>
         </CardContent>
       </Card>
 

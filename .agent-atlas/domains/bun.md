@@ -1,8 +1,8 @@
 # Domain: bun
 
 **Directory:** `src/bun`
-**Files:** 145
-**Symbols:** 1059
+**Files:** 143
+**Symbols:** 1053
 
 ## Files
 
@@ -698,25 +698,16 @@
 ### `src/bun/db/migrate.ts`
 
 **Interfaces:**
-- `Migration` (line 31)
+- `Migration` (line 30)
 
 **Functions:**
-- `runMigrations` (line 53)
+- `runMigrations` (line 51)
 
 
 ### `src/bun/db/migrations/v10_disable-db-viewer-plugin.ts`
 
 **Functions:**
 - `run` (line 11)
-
-**Exports:**
-- `name` (line 3)
-
-
-### `src/bun/db/migrations/v11_free-provider.ts`
-
-**Functions:**
-- `run` (line 9)
 
 **Exports:**
 - `name` (line 3)
@@ -845,7 +836,7 @@
 **Functions:**
 - `getDefaultAgentTools` (line 1198)
 - `seedDatabase` (line 1213)
-- `seedAgentTools` (line 1374)
+- `seedAgentTools` (line 1355)
 
 
 ### `src/bun/db/summaries.ts`
@@ -892,18 +883,17 @@
 - `removeEngine` (line 199)
 - `evictOldestIdleEngine` (line 214)
 - `setMainWindowRef` (line 236)
-- `getMainWindowRef` (line 241)
-- `broadcastToWebview` (line 251)
-- `linkAgentResponseToInbox` (line 267)
-- `resolveShellApproval` (line 298)
-- `getShellApprovalMode` (line 314)
-- `installShellApprovalHandler` (line 332)
-- `resolveUserQuestion` (line 387)
-- `askUserQuestion` (line 403)
-- `getOrCreateEngine` (line 432)
+- `broadcastToWebview` (line 246)
+- `linkAgentResponseToInbox` (line 262)
+- `resolveShellApproval` (line 293)
+- `getShellApprovalMode` (line 309)
+- `installShellApprovalHandler` (line 327)
+- `resolveUserQuestion` (line 382)
+- `askUserQuestion` (line 398)
+- `getOrCreateEngine` (line 427)
 
 **Methods:**
-- `onAgentActivity` (line 578)
+- `onAgentActivity` (line 573)
 
 **Exports:**
 - `engines` (line 18)
@@ -912,17 +902,18 @@
 ### `src/bun/index.ts`
 
 **Interfaces:**
-- `WindowState` (line 33)
+- `WindowState` (line 34)
 
 **Functions:**
-- `getWindowStateFilePath` (line 43)
-- `loadWindowState` (line 47)
-- `saveWindowState` (line 81)
-- `debounce` (line 97)
-- `getMainViewUrl` (line 106)
-- `attachWindowListeners` (line 256)
-- `setWindowTitlebarIcon` (line 311)
-- `toWide` (line 320)
+- `getWindowStateFilePath` (line 44)
+- `loadWindowState` (line 48)
+- `saveWindowState` (line 82)
+- `debounce` (line 98)
+- `getMainViewUrl` (line 107)
+- `attachWindowListeners` (line 273)
+- `setWindowTitlebarIcon` (line 345)
+- `toWide` (line 354)
+- `showOrRestoreWindow` (line 397)
 
 
 ### `src/bun/lib/git-runner.ts`
@@ -1276,22 +1267,22 @@
 ### `src/bun/providers/index.ts`
 
 **Functions:**
-- `createProviderAdapter` (line 30)
-- `createProviderAdapterWithFallback` (line 68)
+- `createProviderAdapter` (line 29)
+- `createProviderAdapterWithFallback` (line 65)
 
 **Exports:**
-- `ProviderAdapter` (line 13)
-- `ProviderConfig` (line 13)
-- `getContextLimit` (line 14)
-- `getDefaultModel` (line 14)
+- `ProviderAdapter` (line 12)
+- `ProviderConfig` (line 12)
+- `getContextLimit` (line 13)
+- `getDefaultModel` (line 13)
 
 
 ### `src/bun/providers/models.ts`
 
 **Functions:**
-- `getContextLimit` (line 29)
-- `clearContextLimitCache` (line 63)
-- `getDefaultModel` (line 71)
+- `getContextLimit` (line 28)
+- `clearContextLimitCache` (line 62)
+- `getDefaultModel` (line 70)
 
 
 ### `src/bun/providers/ollama.ts`
@@ -1323,20 +1314,6 @@
 - `createModel` (line 53)
 - `listModels` (line 97)
 - `testConnection` (line 127)
-
-
-### `src/bun/providers/opencode.ts`
-
-**Classes:**
-- `OpenCodeAdapter` (line 81)
-
-**Functions:**
-- `fetchFreeModels` (line 13)
-
-**Methods:**
-- `createModel` (line 95)
-- `listModels` (line 99)
-- `testConnection` (line 109)
 
 
 ### `src/bun/providers/openrouter.ts`
@@ -1382,12 +1359,13 @@
 ### `src/bun/rpc-registration.ts`
 
 **Functions:**
-- `onSettingChange` (line 56)
-- `withErrorToast` (line 65)
-- `walk` (line 536)
+- `getLastKnownRoute` (line 56)
+- `onSettingChange` (line 60)
+- `withErrorToast` (line 69)
+- `walk` (line 540)
 
 **Exports:**
-- `rpc` (line 82)
+- `rpc` (line 86)
 
 
 ### `src/bun/rpc/agents.ts`
@@ -1850,7 +1828,7 @@
 ### `src/bun/rpc/reset.ts`
 
 **Functions:**
-- `resetApplication` (line 23)
+- `resetApplication` (line 14)
 
 
 ### `src/bun/rpc/search.ts`

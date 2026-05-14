@@ -242,7 +242,7 @@
     },
     {
       "file": "src/bun/db/seed.ts",
-      "line": 1374,
+      "line": 1355,
       "symbol": "seedAgentTools",
       "type": "function"
     },
@@ -284,13 +284,13 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 267,
+      "line": 262,
       "symbol": "linkAgentResponseToInbox",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 578,
+      "line": 573,
       "symbol": "onAgentActivity",
       "type": "method"
     },
@@ -571,6 +571,26 @@
       "type": "function"
     }
   ],
+  "controller": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 25,
+      "symbol": "AgentControllerEntry",
+      "type": "interface"
+    },
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 31,
+      "symbol": "registerAgentController",
+      "type": "function"
+    },
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 37,
+      "symbol": "unregisterAgentController",
+      "type": "function"
+    }
+  ],
   "entry": [
     {
       "file": "src/bun/agents/engine-types.ts",
@@ -791,6 +811,14 @@
       "type": "interface"
     }
   ],
+  "unregister": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 37,
+      "symbol": "unregisterAgentController",
+      "type": "function"
+    }
+  ],
   "abort": [
     {
       "file": "src/bun/agents/agent-loop.ts",
@@ -952,7 +980,7 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 97,
+      "line": 88,
       "symbol": "handleViewAllNotes",
       "type": "function"
     },
@@ -976,13 +1004,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 535,
+      "line": 530,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 560,
+      "line": 555,
       "symbol": "toggleSelectAll",
       "type": "function"
     },
@@ -1070,12 +1098,6 @@
     },
     {
       "file": "src/bun/db/migrations/v10_disable-db-viewer-plugin.ts",
-      "line": 3,
-      "symbol": "name",
-      "type": "export"
-    },
-    {
-      "file": "src/bun/db/migrations/v11_free-provider.ts",
       "line": 3,
       "symbol": "name",
       "type": "export"
@@ -1768,31 +1790,25 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 241,
-      "symbol": "getMainWindowRef",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 314,
+      "line": 309,
       "symbol": "getShellApprovalMode",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 432,
+      "line": 427,
       "symbol": "getOrCreateEngine",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 43,
+      "line": 44,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 106,
+      "line": 107,
       "symbol": "getMainViewUrl",
       "type": "function"
     },
@@ -1918,26 +1934,32 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 14,
+      "line": 13,
       "symbol": "getContextLimit",
       "type": "export"
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 14,
+      "line": 13,
       "symbol": "getDefaultModel",
       "type": "export"
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 29,
+      "line": 28,
       "symbol": "getContextLimit",
       "type": "function"
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 71,
+      "line": 70,
       "symbol": "getDefaultModel",
+      "type": "function"
+    },
+    {
+      "file": "src/bun/rpc-registration.ts",
+      "line": 56,
+      "symbol": "getLastKnownRoute",
       "type": "function"
     },
     {
@@ -2470,7 +2492,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 77,
+      "line": 73,
       "symbol": "getLanguage",
       "type": "function"
     },
@@ -2695,6 +2717,14 @@
       "type": "function"
     }
   ],
+  "names": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 75,
+      "symbol": "getRunningAgentNames",
+      "type": "function"
+    }
+  ],
   "system": [
     {
       "file": "src/bun/agents/prompts.ts",
@@ -2772,7 +2802,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 578,
+      "line": 573,
       "symbol": "onAgentActivity",
       "type": "method"
     },
@@ -2852,7 +2882,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 311,
+      "line": 345,
       "symbol": "setWindowTitlebarIcon",
       "type": "function"
     },
@@ -3000,6 +3030,14 @@
       "file": "src/mainview/pages/settings/whatsapp-settings.tsx",
       "line": 188,
       "symbol": "WhatsAppSettings",
+      "type": "function"
+    }
+  ],
+  "focused": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 118,
+      "symbol": "setAppFocused",
       "type": "function"
     }
   ],
@@ -3365,6 +3403,14 @@
       "type": "method"
     }
   ],
+  "report": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 126,
+      "symbol": "getStatusReport",
+      "type": "function"
+    }
+  ],
   "remove": [
     {
       "file": "skills/docx/scripts/office/helpers/merge_runs.py",
@@ -3562,7 +3608,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 432,
+      "line": 427,
       "symbol": "getOrCreateEngine",
       "type": "function"
     },
@@ -3606,6 +3652,22 @@
       "file": "src/bun/scheduler/task-executor.ts",
       "line": 26,
       "symbol": "setTaskExecutorEngine",
+      "type": "function"
+    }
+  ],
+  "evict": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 214,
+      "symbol": "evictOldestIdleEngine",
+      "type": "function"
+    }
+  ],
+  "oldest": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 214,
+      "symbol": "evictOldestIdleEngine",
       "type": "function"
     }
   ],
@@ -3673,14 +3735,8 @@
       "type": "function"
     },
     {
-      "file": "src/bun/engine-manager.ts",
-      "line": 241,
-      "symbol": "getMainWindowRef",
-      "type": "function"
-    },
-    {
       "file": "src/bun/index.ts",
-      "line": 106,
+      "line": 107,
       "symbol": "getMainViewUrl",
       "type": "function"
     }
@@ -3723,45 +3779,53 @@
       "type": "function"
     },
     {
-      "file": "src/bun/engine-manager.ts",
-      "line": 241,
-      "symbol": "getMainWindowRef",
-      "type": "function"
-    },
-    {
       "file": "src/bun/index.ts",
-      "line": 33,
+      "line": 34,
       "symbol": "WindowState",
       "type": "interface"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 43,
+      "line": 44,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 47,
+      "line": 48,
       "symbol": "loadWindowState",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 81,
+      "line": 82,
       "symbol": "saveWindowState",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 256,
+      "line": 273,
       "symbol": "attachWindowListeners",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 311,
+      "line": 345,
       "symbol": "setWindowTitlebarIcon",
+      "type": "function"
+    },
+    {
+      "file": "src/bun/index.ts",
+      "line": 397,
+      "symbol": "showOrRestoreWindow",
+      "type": "function"
+    }
+  ],
+  "ref": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 236,
+      "symbol": "setMainWindowRef",
       "type": "function"
     }
   ],
@@ -3786,7 +3850,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 251,
+      "line": 246,
       "symbol": "broadcastToWebview",
       "type": "function"
     }
@@ -3794,7 +3858,7 @@
   "webview": [
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 251,
+      "line": 246,
       "symbol": "broadcastToWebview",
       "type": "function"
     },
@@ -3814,7 +3878,7 @@
   "link": [
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 267,
+      "line": 262,
       "symbol": "linkAgentResponseToInbox",
       "type": "function"
     },
@@ -3840,7 +3904,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 267,
+      "line": 262,
       "symbol": "linkAgentResponseToInbox",
       "type": "function"
     },
@@ -3890,7 +3954,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 267,
+      "line": 262,
       "symbol": "linkAgentResponseToInbox",
       "type": "function"
     },
@@ -4016,7 +4080,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 353,
+      "line": 348,
       "symbol": "InboxPage",
       "type": "function"
     },
@@ -4084,13 +4148,13 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 298,
+      "line": 293,
       "symbol": "resolveShellApproval",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 387,
+      "line": 382,
       "symbol": "resolveUserQuestion",
       "type": "function"
     },
@@ -4188,19 +4252,19 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 298,
+      "line": 293,
       "symbol": "resolveShellApproval",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 314,
+      "line": 309,
       "symbol": "getShellApprovalMode",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 332,
+      "line": 327,
       "symbol": "installShellApprovalHandler",
       "type": "function"
     },
@@ -4274,19 +4338,19 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 298,
+      "line": 293,
       "symbol": "resolveShellApproval",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 314,
+      "line": 309,
       "symbol": "getShellApprovalMode",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 332,
+      "line": 327,
       "symbol": "installShellApprovalHandler",
       "type": "function"
     },
@@ -4342,7 +4406,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 314,
+      "line": 309,
       "symbol": "getShellApprovalMode",
       "type": "function"
     },
@@ -4368,7 +4432,7 @@
   "install": [
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 332,
+      "line": 327,
       "symbol": "installShellApprovalHandler",
       "type": "function"
     },
@@ -4448,7 +4512,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 332,
+      "line": 327,
       "symbol": "installShellApprovalHandler",
       "type": "function"
     },
@@ -4550,7 +4614,7 @@
     },
     {
       "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 107,
+      "line": 120,
       "symbol": "handler",
       "type": "function"
     },
@@ -4586,7 +4650,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 439,
+      "line": 434,
       "symbol": "handler",
       "type": "function"
     },
@@ -4630,13 +4694,13 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 387,
+      "line": 382,
       "symbol": "resolveUserQuestion",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 403,
+      "line": 398,
       "symbol": "askUserQuestion",
       "type": "function"
     },
@@ -4654,7 +4718,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 29,
+      "line": 30,
       "symbol": "UserProfile",
       "type": "interface"
     }
@@ -4662,13 +4726,13 @@
   "question": [
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 387,
+      "line": 382,
       "symbol": "resolveUserQuestion",
       "type": "function"
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 403,
+      "line": 398,
       "symbol": "askUserQuestion",
       "type": "function"
     },
@@ -4694,6 +4758,14 @@
       "file": "src/mainview/pages/council.tsx",
       "line": 187,
       "symbol": "QuestionCard",
+      "type": "function"
+    }
+  ],
+  "ask": [
+    {
+      "file": "src/bun/engine-manager.ts",
+      "line": 398,
+      "symbol": "askUserQuestion",
       "type": "function"
     }
   ],
@@ -4802,7 +4874,7 @@
     },
     {
       "file": "src/bun/engine-manager.ts",
-      "line": 432,
+      "line": 427,
       "symbol": "getOrCreateEngine",
       "type": "function"
     },
@@ -4838,13 +4910,13 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 30,
+      "line": 29,
       "symbol": "createProviderAdapter",
       "type": "function"
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 68,
+      "line": 65,
       "symbol": "createProviderAdapterWithFallback",
       "type": "function"
     },
@@ -4857,12 +4929,6 @@
     {
       "file": "src/bun/providers/openai.ts",
       "line": 53,
-      "symbol": "createModel",
-      "type": "method"
-    },
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 95,
       "symbol": "createModel",
       "type": "method"
     },
@@ -5062,25 +5128,25 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 33,
+      "line": 34,
       "symbol": "WindowState",
       "type": "interface"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 43,
+      "line": 44,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 47,
+      "line": 48,
       "symbol": "loadWindowState",
       "type": "function"
     },
     {
       "file": "src/bun/index.ts",
-      "line": 81,
+      "line": 82,
       "symbol": "saveWindowState",
       "type": "function"
     },
@@ -5334,7 +5400,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 43,
+      "line": 44,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
@@ -5400,19 +5466,19 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 66,
+      "line": 62,
       "symbol": "isBinaryFile",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 71,
+      "line": 67,
       "symbol": "isImageFile",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 127,
+      "line": 123,
       "symbol": "FileIcon",
       "type": "function"
     },
@@ -5540,7 +5606,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 43,
+      "line": 44,
       "symbol": "getWindowStateFilePath",
       "type": "function"
     },
@@ -5650,7 +5716,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 47,
+      "line": 48,
       "symbol": "loadWindowState",
       "type": "function"
     },
@@ -5722,7 +5788,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 220,
+      "line": 223,
       "symbol": "loadSettings",
       "type": "function"
     },
@@ -5740,7 +5806,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 710,
+      "line": 700,
       "symbol": "loadProviders",
       "type": "function"
     }
@@ -5754,7 +5820,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 81,
+      "line": 82,
       "symbol": "saveWindowState",
       "type": "function"
     },
@@ -5976,7 +6042,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 430,
+      "line": 426,
       "symbol": "handleSave",
       "type": "function"
     },
@@ -5993,16 +6059,24 @@
       "type": "function"
     }
   ],
+  "debounce": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 98,
+      "symbol": "debounce",
+      "type": "function"
+    }
+  ],
   "view": [
     {
       "file": "src/bun/index.ts",
-      "line": 106,
+      "line": 107,
       "symbol": "getMainViewUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 97,
+      "line": 88,
       "symbol": "handleViewAllNotes",
       "type": "function"
     },
@@ -6022,7 +6096,7 @@
     },
     {
       "file": "src/bun/index.ts",
-      "line": 106,
+      "line": 107,
       "symbol": "getMainViewUrl",
       "type": "function"
     },
@@ -6058,33 +6132,41 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 83,
+      "line": 79,
       "symbol": "isValidUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 96,
+      "line": 92,
       "symbol": "normalizeBaseUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 86,
+      "line": 82,
       "symbol": "isValidUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 99,
+      "line": 95,
       "symbol": "normalizeBaseUrl",
+      "type": "function"
+    }
+  ],
+  "attach": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 273,
+      "symbol": "attachWindowListeners",
       "type": "function"
     }
   ],
   "listeners": [
     {
       "file": "src/bun/index.ts",
-      "line": 256,
+      "line": 273,
       "symbol": "attachWindowListeners",
       "type": "function"
     },
@@ -6095,16 +6177,24 @@
       "type": "method"
     }
   ],
+  "titlebar": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 345,
+      "symbol": "setWindowTitlebarIcon",
+      "type": "function"
+    }
+  ],
   "icon": [
     {
       "file": "src/bun/index.ts",
-      "line": 311,
+      "line": 345,
       "symbol": "setWindowTitlebarIcon",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 127,
+      "line": 123,
       "symbol": "FileIcon",
       "type": "function"
     },
@@ -6145,7 +6235,21 @@
       "type": "function"
     }
   ],
+  "wide": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 354,
+      "symbol": "toWide",
+      "type": "function"
+    }
+  ],
   "show": [
+    {
+      "file": "src/bun/index.ts",
+      "line": 397,
+      "symbol": "showOrRestoreWindow",
+      "type": "function"
+    },
     {
       "file": "src/mainview/components/analytics/charts.tsx",
       "line": 306,
@@ -6167,6 +6271,12 @@
       "type": "function"
     },
     {
+      "file": "src/bun/index.ts",
+      "line": 397,
+      "symbol": "showOrRestoreWindow",
+      "type": "function"
+    },
+    {
       "file": "src/bun/rpc/backup.ts",
       "line": 71,
       "symbol": "restoreBackup",
@@ -6177,6 +6287,12 @@
       "line": 213,
       "symbol": "restoreConversation",
       "type": "function"
+    },
+    {
+      "file": "src/mainview/components/layout/app-shell.tsx",
+      "line": 74,
+      "symbol": "restoreRoute",
+      "type": "route"
     }
   ],
   "last": [
@@ -6184,6 +6300,12 @@
       "file": "src/bun/db/maintenance.ts",
       "line": 78,
       "symbol": "getLastVacuumTimestamp",
+      "type": "function"
+    },
+    {
+      "file": "src/bun/rpc-registration.ts",
+      "line": 56,
+      "symbol": "getLastKnownRoute",
       "type": "function"
     },
     {
@@ -6208,7 +6330,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 56,
+      "line": 60,
       "symbol": "onSettingChange",
       "type": "function"
     },
@@ -6238,7 +6360,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1024,
+      "line": 985,
       "symbol": "parseSetting",
       "type": "function"
     },
@@ -6324,7 +6446,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 56,
+      "line": 60,
       "symbol": "onSettingChange",
       "type": "function"
     },
@@ -6398,13 +6520,13 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 68,
+      "line": 65,
       "symbol": "createProviderAdapterWithFallback",
       "type": "function"
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 65,
+      "line": 69,
       "symbol": "withErrorToast",
       "type": "function"
     },
@@ -6454,7 +6576,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 65,
+      "line": 69,
       "symbol": "withErrorToast",
       "type": "function"
     },
@@ -6534,7 +6656,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 65,
+      "line": 69,
       "symbol": "withErrorToast",
       "type": "function"
     },
@@ -6608,7 +6730,7 @@
     },
     {
       "file": "src/bun/rpc-registration.ts",
-      "line": 82,
+      "line": 86,
       "symbol": "rpc",
       "type": "export"
     },
@@ -7166,19 +7288,19 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 13,
+      "line": 12,
       "symbol": "ProviderAdapter",
       "type": "export"
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 30,
+      "line": 29,
       "symbol": "createProviderAdapter",
       "type": "function"
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 68,
+      "line": 65,
       "symbol": "createProviderAdapterWithFallback",
       "type": "function"
     },
@@ -7192,12 +7314,6 @@
       "file": "src/bun/providers/openai.ts",
       "line": 41,
       "symbol": "OpenAIAdapter",
-      "type": "class"
-    },
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 81,
-      "symbol": "OpenCodeAdapter",
       "type": "class"
     },
     {
@@ -7808,13 +7924,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 500,
+      "line": 495,
       "symbol": "handleDeleteMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 514,
+      "line": 509,
       "symbol": "handleArchiveMessage",
       "type": "function"
     },
@@ -9291,12 +9407,6 @@
       "type": "method"
     },
     {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 109,
-      "symbol": "testConnection",
-      "type": "method"
-    },
-    {
       "file": "src/bun/providers/openrouter.ts",
       "line": 47,
       "symbol": "testConnection",
@@ -9334,7 +9444,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 762,
+      "line": 752,
       "symbol": "handleTest",
       "type": "function"
     },
@@ -9966,7 +10076,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 729,
+      "line": 719,
       "symbol": "handleAdd",
       "type": "function"
     },
@@ -10152,7 +10262,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 285,
+      "line": 281,
       "symbol": "handleBrowseWorkspace",
       "type": "function"
     },
@@ -10240,7 +10350,7 @@
     },
     {
       "file": "src/bun/db/seed.ts",
-      "line": 1374,
+      "line": 1355,
       "symbol": "seedAgentTools",
       "type": "function"
     },
@@ -10628,7 +10738,7 @@
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 63,
+      "line": 62,
       "symbol": "clearContextLimitCache",
       "type": "function"
     },
@@ -11168,25 +11278,25 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 13,
+      "line": 12,
       "symbol": "ProviderAdapter",
       "type": "export"
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 13,
+      "line": 12,
       "symbol": "ProviderConfig",
       "type": "export"
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 30,
+      "line": 29,
       "symbol": "createProviderAdapter",
       "type": "function"
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 68,
+      "line": 65,
       "symbol": "createProviderAdapterWithFallback",
       "type": "function"
     },
@@ -11312,13 +11422,13 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 381,
+      "line": 377,
       "symbol": "StepSelectProvider",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1057,
+      "line": 1018,
       "symbol": "handleProviderSelect",
       "type": "function"
     },
@@ -11336,43 +11446,43 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 111,
+      "line": 107,
       "symbol": "providerTypeBadgeClass",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 115,
+      "line": 111,
       "symbol": "providerTypeLabel",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 126,
+      "line": 122,
       "symbol": "ProviderCardSkeleton",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 178,
+      "line": 174,
       "symbol": "ProviderCardProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 186,
+      "line": 182,
       "symbol": "ProviderCard",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 320,
+      "line": 316,
       "symbol": "ProviderDialogProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 327,
+      "line": 323,
       "symbol": "ProviderDialog",
       "type": "function"
     },
@@ -11398,19 +11508,19 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 155,
+      "line": 151,
       "symbol": "EmptyProviders",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 691,
+      "line": 681,
       "symbol": "ProvidersSettings",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 710,
+      "line": 700,
       "symbol": "loadProviders",
       "type": "function"
     },
@@ -12120,7 +12230,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 29,
+      "line": 30,
       "symbol": "UserProfile",
       "type": "interface"
     }
@@ -12738,7 +12848,7 @@
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 8,
+      "line": 6,
       "symbol": "ContextTabId",
       "type": "type"
     },
@@ -12944,7 +13054,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 325,
+      "line": 318,
       "symbol": "findNode",
       "type": "function"
     }
@@ -13026,7 +13136,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 884,
+      "line": 853,
       "symbol": "goNext",
       "type": "function"
     }
@@ -13418,13 +13528,13 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 111,
+      "line": 107,
       "symbol": "providerTypeBadgeClass",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 115,
+      "line": 111,
       "symbol": "providerTypeLabel",
       "type": "function"
     }
@@ -13602,19 +13712,19 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 183,
+      "line": 186,
       "symbol": "FieldRowProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 190,
+      "line": 193,
       "symbol": "FieldRow",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 426,
+      "line": 422,
       "symbol": "updateField",
       "type": "function"
     }
@@ -13716,7 +13826,7 @@
     },
     {
       "file": "src/shared/rpc/system.ts",
-      "line": 245,
+      "line": 241,
       "symbol": "BunMessages",
       "type": "type"
     }
@@ -13828,7 +13938,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 71,
+      "line": 67,
       "symbol": "isImageFile",
       "type": "function"
     },
@@ -14216,7 +14326,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 889,
+      "line": 858,
       "symbol": "updateForm",
       "type": "function"
     },
@@ -14830,7 +14940,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1024,
+      "line": 985,
       "symbol": "parseSetting",
       "type": "function"
     },
@@ -15056,15 +15166,9 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 46,
-      "symbol": "FilesTabHandle",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 242,
+      "line": 238,
       "symbol": "FilesTab",
-      "type": "export"
+      "type": "function"
     },
     {
       "file": "src/mainview/components/chat/chat-input.tsx",
@@ -15220,13 +15324,13 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 889,
+      "line": 858,
       "symbol": "updateForm",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 426,
+      "line": 422,
       "symbol": "updateField",
       "type": "function"
     }
@@ -15388,13 +15492,13 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 14,
+      "line": 13,
       "symbol": "getDefaultModel",
       "type": "export"
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 71,
+      "line": 70,
       "symbol": "getDefaultModel",
       "type": "function"
     },
@@ -15516,7 +15620,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 142,
+      "line": 138,
       "symbol": "formatSize",
       "type": "function"
     },
@@ -15640,7 +15744,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 115,
+      "line": 111,
       "symbol": "providerTypeLabel",
       "type": "function"
     }
@@ -15885,12 +15989,6 @@
     {
       "file": "src/bun/providers/openai.ts",
       "line": 97,
-      "symbol": "listModels",
-      "type": "method"
-    },
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 99,
       "symbol": "listModels",
       "type": "method"
     },
@@ -16508,13 +16606,13 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 96,
+      "line": 92,
       "symbol": "normalizeBaseUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 99,
+      "line": 95,
       "symbol": "normalizeBaseUrl",
       "type": "function"
     }
@@ -16906,7 +17004,7 @@
     },
     {
       "file": "src/bun/db/migrate.ts",
-      "line": 53,
+      "line": 51,
       "symbol": "runMigrations",
       "type": "function"
     },
@@ -16919,12 +17017,6 @@
     {
       "file": "src/bun/db/migrations/v10_disable-db-viewer-plugin.ts",
       "line": 11,
-      "symbol": "run",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/db/migrations/v11_free-provider.ts",
-      "line": 9,
       "symbol": "run",
       "type": "function"
     },
@@ -17718,25 +17810,25 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 286,
+      "line": 282,
       "symbol": "onResult",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 951,
+      "line": 912,
       "symbol": "onResult",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 400,
+      "line": 408,
       "symbol": "onResult",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 766,
+      "line": 756,
       "symbol": "onResult",
       "type": "function"
     }
@@ -17848,19 +17940,19 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 481,
+      "line": 476,
       "symbol": "handleMarkAsRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 535,
+      "line": 530,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 574,
+      "line": 569,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     }
@@ -18104,7 +18196,7 @@
     },
     {
       "file": "src/bun/db/seed.ts",
-      "line": 1374,
+      "line": 1355,
       "symbol": "seedAgentTools",
       "type": "function"
     },
@@ -18950,37 +19042,37 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 14,
+      "line": 13,
       "symbol": "getContextLimit",
       "type": "export"
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 29,
+      "line": 28,
       "symbol": "getContextLimit",
       "type": "function"
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 63,
+      "line": 62,
       "symbol": "clearContextLimitCache",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 8,
+      "line": 6,
       "symbol": "ContextTabId",
       "type": "type"
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 10,
+      "line": 8,
       "symbol": "ContextPanelProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 15,
+      "line": 13,
       "symbol": "ContextPanel",
       "type": "function"
     },
@@ -19072,7 +19164,7 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 97,
+      "line": 88,
       "symbol": "handleViewAllNotes",
       "type": "function"
     },
@@ -19728,7 +19820,7 @@
     },
     {
       "file": "src/bun/rpc/reset.ts",
-      "line": 23,
+      "line": 14,
       "symbol": "resetApplication",
       "type": "function"
     },
@@ -19764,7 +19856,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 97,
+      "line": 100,
       "symbol": "ResetApplicationCard",
       "type": "function"
     },
@@ -19866,13 +19958,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 28,
+      "line": 26,
       "symbol": "Plan",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 116,
+      "line": 107,
       "symbol": "openPlan",
       "type": "function"
     },
@@ -19934,13 +20026,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 83,
+      "line": 74,
       "symbol": "onKanbanMove",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 286,
+      "line": 279,
       "symbol": "onKanbanMove",
       "type": "function"
     },
@@ -20068,13 +20160,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 83,
+      "line": 74,
       "symbol": "onKanbanMove",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 286,
+      "line": 279,
       "symbol": "onKanbanMove",
       "type": "function"
     },
@@ -20228,21 +20320,9 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 45,
-      "symbol": "DocsTabHandle",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 97,
+      "line": 88,
       "symbol": "handleViewAllNotes",
       "type": "function"
-    },
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 46,
-      "symbol": "FilesTabHandle",
-      "type": "interface"
     },
     {
       "file": "src/mainview/components/chat/chat-input.tsx",
@@ -20780,85 +20860,85 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 481,
+      "line": 476,
       "symbol": "handleMarkAsRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 494,
+      "line": 489,
       "symbol": "handleRowClick",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 500,
+      "line": 495,
       "symbol": "handleDeleteMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 514,
+      "line": 509,
       "symbol": "handleArchiveMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 535,
+      "line": 530,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 574,
+      "line": 569,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 587,
+      "line": 582,
       "symbol": "handleBulkArchive",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 601,
+      "line": 596,
       "symbol": "handleBulkDelete",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 187,
+      "line": 183,
       "symbol": "handleImportClick",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 285,
+      "line": 281,
       "symbol": "handleBrowseWorkspace",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 999,
+      "line": 960,
       "symbol": "handleImportSettings",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1057,
+      "line": 1018,
       "symbol": "handleProviderSelect",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1063,
+      "line": 1024,
       "symbol": "handleRetry",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1085,
+      "line": 1046,
       "symbol": "handleFinish",
       "type": "function"
     },
@@ -21062,43 +21142,43 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 430,
+      "line": 426,
       "symbol": "handleSave",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 481,
+      "line": 477,
       "symbol": "handleCancel",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 729,
+      "line": 719,
       "symbol": "handleAdd",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 734,
+      "line": 724,
       "symbol": "handleEdit",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 739,
+      "line": 729,
       "symbol": "handleDeleteRequest",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 743,
+      "line": 733,
       "symbol": "handleDeleteConfirm",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 762,
+      "line": 752,
       "symbol": "handleTest",
       "type": "function"
     }
@@ -21220,7 +21300,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 494,
+      "line": 489,
       "symbol": "handleRowClick",
       "type": "function"
     },
@@ -21238,13 +21318,13 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 183,
+      "line": 186,
       "symbol": "FieldRowProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 190,
+      "line": 193,
       "symbol": "FieldRow",
       "type": "function"
     },
@@ -21650,7 +21730,7 @@
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 63,
+      "line": 62,
       "symbol": "clearContextLimitCache",
       "type": "function"
     },
@@ -21688,13 +21768,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 82,
+      "line": 73,
       "symbol": "refresh",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 285,
+      "line": 278,
       "symbol": "refresh",
       "type": "function"
     },
@@ -21989,12 +22069,6 @@
       "type": "class"
     },
     {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 81,
-      "symbol": "OpenCodeAdapter",
-      "type": "class"
-    },
-    {
       "file": "src/bun/providers/openrouter.ts",
       "line": 25,
       "symbol": "OpenRouterAdapter",
@@ -22014,13 +22088,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 103,
+      "line": 94,
       "symbol": "openNote",
       "type": "function"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 116,
+      "line": 107,
       "symbol": "openPlan",
       "type": "function"
     },
@@ -22896,13 +22970,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 313,
+      "line": 308,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 321,
+      "line": 316,
       "symbol": "BulkActionBar",
       "type": "function"
     }
@@ -22998,7 +23072,7 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 13,
+      "line": 12,
       "symbol": "ProviderConfig",
       "type": "export"
     },
@@ -23446,7 +23520,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 79,
+      "line": 75,
       "symbol": "isValidEmail",
       "type": "function"
     },
@@ -23476,7 +23550,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 53,
+      "line": 56,
       "symbol": "isValidEmail",
       "type": "function"
     }
@@ -23957,12 +24031,6 @@
     {
       "file": "src/bun/providers/openai.ts",
       "line": 127,
-      "symbol": "testConnection",
-      "type": "method"
-    },
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 109,
       "symbol": "testConnection",
       "type": "method"
     },
@@ -24619,6 +24687,22 @@
       "type": "interface"
     }
   ],
+  "migration": [
+    {
+      "file": "src/bun/db/migrate.ts",
+      "line": 30,
+      "symbol": "Migration",
+      "type": "interface"
+    }
+  ],
+  "migrations": [
+    {
+      "file": "src/bun/db/migrate.ts",
+      "line": 51,
+      "symbol": "runMigrations",
+      "type": "function"
+    }
+  ],
   "settings": [
     {
       "file": "src/bun/db/schema.ts",
@@ -24754,7 +24838,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 999,
+      "line": 960,
       "symbol": "handleImportSettings",
       "type": "function"
     },
@@ -24838,19 +24922,19 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 34,
+      "line": 35,
       "symbol": "ApplicationSettings",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 208,
+      "line": 211,
       "symbol": "GeneralSettings",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 220,
+      "line": 223,
       "symbol": "loadSettings",
       "type": "function"
     },
@@ -24880,7 +24964,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 691,
+      "line": 681,
       "symbol": "ProvidersSettings",
       "type": "function"
     },
@@ -26470,13 +26554,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 500,
+      "line": 495,
       "symbol": "handleDeleteMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 601,
+      "line": 596,
       "symbol": "handleBulkDelete",
       "type": "function"
     },
@@ -26518,13 +26602,13 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 739,
+      "line": 729,
       "symbol": "handleDeleteRequest",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 743,
+      "line": 733,
       "symbol": "handleDeleteConfirm",
       "type": "function"
     }
@@ -27096,7 +27180,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 66,
+      "line": 62,
       "symbol": "isBinaryFile",
       "type": "function"
     },
@@ -27350,7 +27434,7 @@
     },
     {
       "file": "src/shared/rpc/system.ts",
-      "line": 245,
+      "line": 241,
       "symbol": "BunMessages",
       "type": "type"
     }
@@ -27438,7 +27522,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 739,
+      "line": 729,
       "symbol": "handleDeleteRequest",
       "type": "function"
     },
@@ -27728,13 +27812,13 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 153,
+      "line": 149,
       "symbol": "TreeItemProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 161,
+      "line": 157,
       "symbol": "TreeItem",
       "type": "function"
     },
@@ -28028,7 +28112,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1063,
+      "line": 1024,
       "symbol": "handleRetry",
       "type": "function"
     }
@@ -28212,27 +28296,21 @@
     },
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 8,
+      "line": 6,
       "symbol": "ContextTabId",
       "type": "type"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 41,
+      "line": 39,
       "symbol": "DocsTabProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 45,
-      "symbol": "DocsTabHandle",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 49,
+      "line": 43,
       "symbol": "DocsTab",
-      "type": "export"
+      "type": "function"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
@@ -28242,15 +28320,9 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 46,
-      "symbol": "FilesTabHandle",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 242,
+      "line": 238,
       "symbol": "FilesTab",
-      "type": "export"
+      "type": "function"
     },
     {
       "file": "src/mainview/components/deploy/deploy-tab.tsx",
@@ -29154,13 +29226,13 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 705,
+      "line": 675,
       "symbol": "StepValidate",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 916,
+      "line": 885,
       "symbol": "validate",
       "type": "function"
     }
@@ -29222,13 +29294,13 @@
     },
     {
       "file": "src/bun/providers/index.ts",
-      "line": 14,
+      "line": 13,
       "symbol": "getDefaultModel",
       "type": "export"
     },
     {
       "file": "src/bun/providers/models.ts",
-      "line": 71,
+      "line": 70,
       "symbol": "getDefaultModel",
       "type": "function"
     },
@@ -29241,12 +29313,6 @@
     {
       "file": "src/bun/providers/openai.ts",
       "line": 53,
-      "symbol": "createModel",
-      "type": "method"
-    },
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 95,
       "symbol": "createModel",
       "type": "method"
     },
@@ -29337,18 +29403,6 @@
       "type": "method"
     },
     {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 13,
-      "symbol": "fetchFreeModels",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 99,
-      "symbol": "listModels",
-      "type": "method"
-    },
-    {
       "file": "src/bun/providers/openrouter.ts",
       "line": 43,
       "symbol": "listModels",
@@ -29392,7 +29446,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 512,
+      "line": 504,
       "symbol": "fetchModels",
       "type": "function"
     }
@@ -29400,7 +29454,7 @@
   "fallback": [
     {
       "file": "src/bun/providers/index.ts",
-      "line": 68,
+      "line": 65,
       "symbol": "createProviderAdapterWithFallback",
       "type": "function"
     },
@@ -29470,13 +29524,13 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 96,
+      "line": 92,
       "symbol": "normalizeBaseUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 99,
+      "line": 95,
       "symbol": "normalizeBaseUrl",
       "type": "function"
     }
@@ -29486,12 +29540,6 @@
       "file": "src/bun/providers/openai.ts",
       "line": 61,
       "symbol": "interceptFetch",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 13,
-      "symbol": "fetchFreeModels",
       "type": "function"
     },
     {
@@ -29520,7 +29568,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 512,
+      "line": 504,
       "symbol": "fetchModels",
       "type": "function"
     }
@@ -29910,13 +29958,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 514,
+      "line": 509,
       "symbol": "handleArchiveMessage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 587,
+      "line": 582,
       "symbol": "handleBulkArchive",
       "type": "function"
     }
@@ -30224,13 +30272,13 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 187,
+      "line": 183,
       "symbol": "handleImportClick",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 999,
+      "line": 960,
       "symbol": "handleImportSettings",
       "type": "function"
     },
@@ -30988,19 +31036,19 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 481,
+      "line": 476,
       "symbol": "handleMarkAsRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 535,
+      "line": 530,
       "symbol": "handleMarkAllRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 574,
+      "line": 569,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     },
@@ -31176,31 +31224,31 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 313,
+      "line": 308,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 321,
+      "line": 316,
       "symbol": "BulkActionBar",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 574,
+      "line": 569,
       "symbol": "handleBulkMarkRead",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 587,
+      "line": 582,
       "symbol": "handleBulkArchive",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 601,
+      "line": 596,
       "symbol": "handleBulkDelete",
       "type": "function"
     }
@@ -31240,13 +31288,13 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 18,
+      "line": 16,
       "symbol": "Note",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 103,
+      "line": 94,
       "symbol": "openNote",
       "type": "function"
     },
@@ -31300,7 +31348,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 307,
+      "line": 300,
       "symbol": "toggle",
       "type": "function"
     },
@@ -31366,13 +31414,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 551,
+      "line": 546,
       "symbol": "toggleSelect",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 560,
+      "line": 555,
       "symbol": "toggleSelectAll",
       "type": "function"
     },
@@ -31448,19 +31496,19 @@
   "application": [
     {
       "file": "src/bun/rpc/reset.ts",
-      "line": 23,
+      "line": 14,
       "symbol": "resetApplication",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 34,
+      "line": 35,
       "symbol": "ApplicationSettings",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 97,
+      "line": 100,
       "symbol": "ResetApplicationCard",
       "type": "function"
     }
@@ -31698,12 +31746,6 @@
       "file": "src/bun/rpc/updater.ts",
       "line": 35,
       "symbol": "downloadUpdate",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 126,
-      "symbol": "downloadSelectedDoc",
       "type": "function"
     },
     {
@@ -31994,13 +32036,13 @@
   "props": [
     {
       "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 10,
+      "line": 8,
       "symbol": "ContextPanelProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 41,
+      "line": 39,
       "symbol": "DocsTabProps",
       "type": "interface"
     },
@@ -32012,7 +32054,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 153,
+      "line": 149,
       "symbol": "TreeItemProps",
       "type": "interface"
     },
@@ -32546,7 +32588,7 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 313,
+      "line": 308,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
@@ -32600,7 +32642,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 183,
+      "line": 186,
       "symbol": "FieldRowProps",
       "type": "interface"
     },
@@ -32630,13 +32672,13 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 178,
+      "line": 174,
       "symbol": "ProviderCardProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 320,
+      "line": 316,
       "symbol": "ProviderDialogProps",
       "type": "interface"
     },
@@ -32710,7 +32752,7 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 142,
+      "line": 138,
       "symbol": "formatSize",
       "type": "function"
     },
@@ -33500,13 +33542,13 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 320,
+      "line": 316,
       "symbol": "ProviderDialogProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 327,
+      "line": 323,
       "symbol": "ProviderDialog",
       "type": "function"
     },
@@ -33754,7 +33796,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 97,
+      "line": 100,
       "symbol": "ResetApplicationCard",
       "type": "function"
     },
@@ -33826,19 +33868,19 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 126,
+      "line": 122,
       "symbol": "ProviderCardSkeleton",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 178,
+      "line": 174,
       "symbol": "ProviderCardProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 186,
+      "line": 182,
       "symbol": "ProviderCard",
       "type": "function"
     },
@@ -33918,7 +33960,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 126,
+      "line": 122,
       "symbol": "ProviderCardSkeleton",
       "type": "function"
     }
@@ -33950,13 +33992,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 353,
+      "line": 348,
       "symbol": "InboxPage",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 863,
+      "line": 832,
       "symbol": "OnboardingPage",
       "type": "function"
     },
@@ -34088,13 +34130,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 313,
+      "line": 308,
       "symbol": "BulkActionBarProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 321,
+      "line": 316,
       "symbol": "BulkActionBar",
       "type": "function"
     }
@@ -34207,14 +34249,8 @@
   ],
   "code": [
     {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 81,
-      "symbol": "OpenCodeAdapter",
-      "type": "class"
-    },
-    {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 339,
+      "line": 287,
       "symbol": "code",
       "type": "method"
     },
@@ -34470,7 +34506,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 111,
+      "line": 107,
       "symbol": "providerTypeBadgeClass",
       "type": "function"
     }
@@ -34508,13 +34544,13 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 494,
+      "line": 489,
       "symbol": "handleRowClick",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 187,
+      "line": 183,
       "symbol": "handleImportClick",
       "type": "function"
     }
@@ -34642,25 +34678,25 @@
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 551,
+      "line": 546,
       "symbol": "toggleSelect",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/inbox.tsx",
-      "line": 560,
+      "line": 555,
       "symbol": "toggleSelectAll",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 381,
+      "line": 377,
       "symbol": "StepSelectProvider",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1057,
+      "line": 1018,
       "symbol": "handleProviderSelect",
       "type": "function"
     }
@@ -34668,25 +34704,25 @@
   "valid": [
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 79,
+      "line": 75,
       "symbol": "isValidEmail",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 83,
+      "line": 79,
       "symbol": "isValidUrl",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 53,
+      "line": 56,
       "symbol": "isValidEmail",
       "type": "function"
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 86,
+      "line": 82,
       "symbol": "isValidUrl",
       "type": "function"
     }
@@ -34718,7 +34754,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 117,
+      "line": 113,
       "symbol": "StepIndicator",
       "type": "function"
     },
@@ -34762,7 +34798,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 285,
+      "line": 281,
       "symbol": "handleBrowseWorkspace",
       "type": "function"
     }
@@ -34782,7 +34818,7 @@
     },
     {
       "file": "src/mainview/pages/onboarding.tsx",
-      "line": 788,
+      "line": 758,
       "symbol": "StepConfirmation",
       "type": "function"
     }
@@ -34872,7 +34908,7 @@
   "language": [
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 77,
+      "line": 73,
       "symbol": "getLanguage",
       "type": "function"
     },
@@ -34954,7 +34990,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 734,
+      "line": 724,
       "symbol": "handleEdit",
       "type": "function"
     }
@@ -35028,7 +35064,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 743,
+      "line": 733,
       "symbol": "handleDeleteConfirm",
       "type": "function"
     }
@@ -35534,13 +35570,13 @@
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 153,
+      "line": 149,
       "symbol": "TreeItemProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 161,
+      "line": 157,
       "symbol": "TreeItem",
       "type": "function"
     }
@@ -36004,21 +36040,15 @@
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 41,
+      "line": 39,
       "symbol": "DocsTabProps",
       "type": "interface"
     },
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 45,
-      "symbol": "DocsTabHandle",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 49,
+      "line": 43,
       "symbol": "DocsTab",
-      "type": "export"
+      "type": "function"
     }
   ],
   "pool": [
@@ -36029,18 +36059,26 @@
       "type": "function"
     }
   ],
-  "selected": [
+  "panel": [
     {
-      "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 35,
-      "symbol": "SelectedDoc",
+      "file": "src/mainview/components/activity/context-panel.tsx",
+      "line": 8,
+      "symbol": "ContextPanelProps",
       "type": "interface"
     },
     {
-      "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 126,
-      "symbol": "downloadSelectedDoc",
+      "file": "src/mainview/components/activity/context-panel.tsx",
+      "line": 13,
+      "symbol": "ContextPanel",
       "type": "function"
+    }
+  ],
+  "selected": [
+    {
+      "file": "src/mainview/components/activity/docs-tab.tsx",
+      "line": 33,
+      "symbol": "SelectedDoc",
+      "type": "interface"
     },
     {
       "file": "src/mainview/components/chat/conversation-sidebar.tsx",
@@ -36052,15 +36090,9 @@
   "doc": [
     {
       "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 35,
+      "line": 33,
       "symbol": "SelectedDoc",
       "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/docs-tab.tsx",
-      "line": 126,
-      "symbol": "downloadSelectedDoc",
-      "type": "function"
     },
     {
       "file": "src/mainview/components/chat/chat-input.tsx",
@@ -36073,6 +36105,28 @@
       "line": 37,
       "symbol": "DocItem",
       "type": "type"
+    }
+  ],
+  "node": [
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 36,
+      "symbol": "TreeNode",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 318,
+      "symbol": "findNode",
+      "type": "function"
+    }
+  ],
+  "inject": [
+    {
+      "file": "src/mainview/components/activity/files-tab.tsx",
+      "line": 342,
+      "symbol": "inject",
+      "type": "function"
     }
   ],
   "tooltip": [
@@ -36292,7 +36346,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 155,
+      "line": 151,
       "symbol": "EmptyProviders",
       "type": "function"
     }
@@ -36927,6 +36981,20 @@
       "type": "export"
     }
   ],
+  "selector": [
+    {
+      "file": "src/mainview/components/chat/model-selector.tsx",
+      "line": 24,
+      "symbol": "ModelSelectorProps",
+      "type": "interface"
+    },
+    {
+      "file": "src/mainview/components/chat/model-selector.tsx",
+      "line": 29,
+      "symbol": "ModelSelector",
+      "type": "function"
+    }
+  ],
   "separator": [
     {
       "file": "src/mainview/components/chat/plan-diff.tsx",
@@ -37292,7 +37360,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 481,
+      "line": 477,
       "symbol": "handleCancel",
       "type": "function"
     }
@@ -37446,7 +37514,7 @@
     },
     {
       "file": "src/mainview/pages/settings/general.tsx",
-      "line": 208,
+      "line": 211,
       "symbol": "GeneralSettings",
       "type": "function"
     }
@@ -37474,7 +37542,7 @@
     },
     {
       "file": "src/mainview/pages/settings/providers.tsx",
-      "line": 111,
+      "line": 107,
       "symbol": "providerTypeBadgeClass",
       "type": "function"
     }
@@ -39539,6 +39607,20 @@
       "type": "method"
     }
   ],
+  "route": [
+    {
+      "file": "src/bun/rpc-registration.ts",
+      "line": 56,
+      "symbol": "getLastKnownRoute",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/components/layout/app-shell.tsx",
+      "line": 74,
+      "symbol": "restoreRoute",
+      "type": "route"
+    }
+  ],
   "timezone": [
     {
       "file": "src/bun/rpc/cron.ts",
@@ -39612,6 +39694,38 @@
       "file": "src/bun/scheduler/task-executor.ts",
       "line": 26,
       "symbol": "setTaskExecutorEngine",
+      "type": "function"
+    }
+  ],
+  "focus": [
+    {
+      "file": "src/mainview/components/layout/app-shell.tsx",
+      "line": 130,
+      "symbol": "onFocus",
+      "type": "function"
+    }
+  ],
+  "blur": [
+    {
+      "file": "src/mainview/components/layout/app-shell.tsx",
+      "line": 131,
+      "symbol": "onBlur",
+      "type": "function"
+    }
+  ],
+  "known": [
+    {
+      "file": "src/bun/rpc-registration.ts",
+      "line": 56,
+      "symbol": "getLastKnownRoute",
+      "type": "function"
+    }
+  ],
+  "walk": [
+    {
+      "file": "src/bun/rpc-registration.ts",
+      "line": 540,
+      "symbol": "walk",
       "type": "function"
     }
   ],
@@ -39783,6 +39897,14 @@
       "type": "function"
     }
   ],
+  "electroview": [
+    {
+      "file": "src/mainview/lib/rpc.ts",
+      "line": 176,
+      "symbol": "electroview",
+      "type": "export"
+    }
+  ],
   "saved": [
     {
       "file": "src/mainview/pages/agents.tsx",
@@ -39820,6 +39942,14 @@
       "file": "src/mainview/pages/council.tsx",
       "line": 163,
       "symbol": "ThinkingDots",
+      "type": "function"
+    }
+  ],
+  "style": [
+    {
+      "file": "src/mainview/pages/inbox.tsx",
+      "line": 82,
+      "symbol": "getSourceBadgeStyle",
       "type": "function"
     }
   ],
@@ -39995,6 +40125,26 @@
       "type": "export"
     }
   ],
+  "limit": [
+    {
+      "file": "src/bun/providers/index.ts",
+      "line": 13,
+      "symbol": "getContextLimit",
+      "type": "export"
+    },
+    {
+      "file": "src/bun/providers/models.ts",
+      "line": 28,
+      "symbol": "getContextLimit",
+      "type": "function"
+    },
+    {
+      "file": "src/bun/providers/models.ts",
+      "line": 62,
+      "symbol": "clearContextLimitCache",
+      "type": "function"
+    }
+  ],
   "ollama": [
     {
       "file": "src/bun/providers/ollama.ts",
@@ -40049,6 +40199,120 @@
       "type": "class"
     }
   ],
+  "wizard": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 29,
+      "symbol": "WizardStep",
+      "type": "type"
+    }
+  ],
+  "step": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 29,
+      "symbol": "WizardStep",
+      "type": "type"
+    },
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 113,
+      "symbol": "StepIndicator",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 174,
+      "symbol": "StepWelcome",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 259,
+      "symbol": "StepAboutYou",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 377,
+      "symbol": "StepSelectProvider",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 467,
+      "symbol": "StepConfigure",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 675,
+      "symbol": "StepValidate",
+      "type": "function"
+    },
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 758,
+      "symbol": "StepConfirmation",
+      "type": "function"
+    }
+  ],
+  "welcome": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 174,
+      "symbol": "StepWelcome",
+      "type": "function"
+    }
+  ],
+  "about": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 259,
+      "symbol": "StepAboutYou",
+      "type": "function"
+    }
+  ],
+  "you": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 259,
+      "symbol": "StepAboutYou",
+      "type": "function"
+    }
+  ],
+  "configure": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 467,
+      "symbol": "StepConfigure",
+      "type": "function"
+    }
+  ],
+  "onboarding": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 832,
+      "symbol": "OnboardingPage",
+      "type": "function"
+    }
+  ],
+  "back": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 855,
+      "symbol": "goBack",
+      "type": "function"
+    }
+  ],
+  "finish": [
+    {
+      "file": "src/mainview/pages/onboarding.tsx",
+      "line": 1046,
+      "symbol": "handleFinish",
+      "type": "function"
+    }
+  ],
   "acceptance": [
     {
       "file": "src/mainview/components/kanban/task-detail-modal.tsx",
@@ -40096,376 +40360,6 @@
       "file": "src/mainview/components/kanban/task-detail-modal.tsx",
       "line": 193,
       "symbol": "saveDueDate",
-      "type": "function"
-    }
-  ],
-  "debounce": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 97,
-      "symbol": "debounce",
-      "type": "function"
-    }
-  ],
-  "attach": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 256,
-      "symbol": "attachWindowListeners",
-      "type": "function"
-    }
-  ],
-  "titlebar": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 311,
-      "symbol": "setWindowTitlebarIcon",
-      "type": "function"
-    }
-  ],
-  "wide": [
-    {
-      "file": "src/bun/index.ts",
-      "line": 320,
-      "symbol": "toWide",
-      "type": "function"
-    }
-  ],
-  "style": [
-    {
-      "file": "src/mainview/pages/inbox.tsx",
-      "line": 82,
-      "symbol": "getSourceBadgeStyle",
-      "type": "function"
-    }
-  ],
-  "panel": [
-    {
-      "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 10,
-      "symbol": "ContextPanelProps",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/context-panel.tsx",
-      "line": 15,
-      "symbol": "ContextPanel",
-      "type": "function"
-    }
-  ],
-  "node": [
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 36,
-      "symbol": "TreeNode",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 325,
-      "symbol": "findNode",
-      "type": "function"
-    }
-  ],
-  "inject": [
-    {
-      "file": "src/mainview/components/activity/files-tab.tsx",
-      "line": 349,
-      "symbol": "inject",
-      "type": "function"
-    }
-  ],
-  "selector": [
-    {
-      "file": "src/mainview/components/chat/model-selector.tsx",
-      "line": 24,
-      "symbol": "ModelSelectorProps",
-      "type": "interface"
-    },
-    {
-      "file": "src/mainview/components/chat/model-selector.tsx",
-      "line": 29,
-      "symbol": "ModelSelector",
-      "type": "function"
-    }
-  ],
-  "focus": [
-    {
-      "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 117,
-      "symbol": "onFocus",
-      "type": "function"
-    }
-  ],
-  "blur": [
-    {
-      "file": "src/mainview/components/layout/app-shell.tsx",
-      "line": 118,
-      "symbol": "onBlur",
-      "type": "function"
-    }
-  ],
-  "controller": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 25,
-      "symbol": "AgentControllerEntry",
-      "type": "interface"
-    },
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 31,
-      "symbol": "registerAgentController",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 37,
-      "symbol": "unregisterAgentController",
-      "type": "function"
-    }
-  ],
-  "unregister": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 37,
-      "symbol": "unregisterAgentController",
-      "type": "function"
-    }
-  ],
-  "names": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 75,
-      "symbol": "getRunningAgentNames",
-      "type": "function"
-    }
-  ],
-  "focused": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 118,
-      "symbol": "setAppFocused",
-      "type": "function"
-    }
-  ],
-  "report": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 126,
-      "symbol": "getStatusReport",
-      "type": "function"
-    }
-  ],
-  "evict": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 214,
-      "symbol": "evictOldestIdleEngine",
-      "type": "function"
-    }
-  ],
-  "oldest": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 214,
-      "symbol": "evictOldestIdleEngine",
-      "type": "function"
-    }
-  ],
-  "ref": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 236,
-      "symbol": "setMainWindowRef",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 241,
-      "symbol": "getMainWindowRef",
-      "type": "function"
-    }
-  ],
-  "ask": [
-    {
-      "file": "src/bun/engine-manager.ts",
-      "line": 403,
-      "symbol": "askUserQuestion",
-      "type": "function"
-    }
-  ],
-  "walk": [
-    {
-      "file": "src/bun/rpc-registration.ts",
-      "line": 536,
-      "symbol": "walk",
-      "type": "function"
-    }
-  ],
-  "migration": [
-    {
-      "file": "src/bun/db/migrate.ts",
-      "line": 31,
-      "symbol": "Migration",
-      "type": "interface"
-    }
-  ],
-  "migrations": [
-    {
-      "file": "src/bun/db/migrate.ts",
-      "line": 53,
-      "symbol": "runMigrations",
-      "type": "function"
-    }
-  ],
-  "limit": [
-    {
-      "file": "src/bun/providers/index.ts",
-      "line": 14,
-      "symbol": "getContextLimit",
-      "type": "export"
-    },
-    {
-      "file": "src/bun/providers/models.ts",
-      "line": 29,
-      "symbol": "getContextLimit",
-      "type": "function"
-    },
-    {
-      "file": "src/bun/providers/models.ts",
-      "line": 63,
-      "symbol": "clearContextLimitCache",
-      "type": "function"
-    }
-  ],
-  "free": [
-    {
-      "file": "src/bun/providers/opencode.ts",
-      "line": 13,
-      "symbol": "fetchFreeModels",
-      "type": "function"
-    }
-  ],
-  "electroview": [
-    {
-      "file": "src/mainview/lib/rpc.ts",
-      "line": 176,
-      "symbol": "electroview",
-      "type": "export"
-    }
-  ],
-  "wizard": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 29,
-      "symbol": "WizardStep",
-      "type": "type"
-    }
-  ],
-  "step": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 29,
-      "symbol": "WizardStep",
-      "type": "type"
-    },
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 117,
-      "symbol": "StepIndicator",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 178,
-      "symbol": "StepWelcome",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 263,
-      "symbol": "StepAboutYou",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 381,
-      "symbol": "StepSelectProvider",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 471,
-      "symbol": "StepConfigure",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 705,
-      "symbol": "StepValidate",
-      "type": "function"
-    },
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 788,
-      "symbol": "StepConfirmation",
-      "type": "function"
-    }
-  ],
-  "welcome": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 178,
-      "symbol": "StepWelcome",
-      "type": "function"
-    }
-  ],
-  "about": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 263,
-      "symbol": "StepAboutYou",
-      "type": "function"
-    }
-  ],
-  "you": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 263,
-      "symbol": "StepAboutYou",
-      "type": "function"
-    }
-  ],
-  "configure": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 471,
-      "symbol": "StepConfigure",
-      "type": "function"
-    }
-  ],
-  "onboarding": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 863,
-      "symbol": "OnboardingPage",
-      "type": "function"
-    }
-  ],
-  "back": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 886,
-      "symbol": "goBack",
-      "type": "function"
-    }
-  ],
-  "finish": [
-    {
-      "file": "src/mainview/pages/onboarding.tsx",
-      "line": 1085,
-      "symbol": "handleFinish",
       "type": "function"
     }
   ]

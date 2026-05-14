@@ -1,9 +1,7 @@
-import { useState, useRef, useCallback } from "react";
-import { RefreshCw } from "lucide-react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Tip } from "@/components/ui/tooltip";
-import { DocsTab, type DocsTabHandle } from "./docs-tab";
-import { FilesTab, type FilesTabHandle } from "./files-tab";
+import { DocsTab } from "./docs-tab";
+import { FilesTab } from "./files-tab";
 
 type ContextTabId = "docs" | "files";
 
@@ -14,23 +12,11 @@ interface ContextPanelProps {
 
 export function ContextPanel({ projectId }: ContextPanelProps) {
   const [activeTab, setActiveTab] = useState<ContextTabId>("files");
-  const [isSpinning, setIsSpinning] = useState(false);
-  const filesRef = useRef<FilesTabHandle>(null);
-  const docsRef = useRef<DocsTabHandle>(null);
 
   const tabs: Array<{ id: ContextTabId; label: string }> = [
     { id: "files", label: "Files" },
     { id: "docs", label: "Docs" },
   ];
-
-  // Refresh both tabs so the user always gets fresh data regardless of which is active.
-  // Brief spin animation gives the user visual confirmation that the click registered.
-  const handleRefresh = useCallback(() => {
-    filesRef.current?.refresh();
-    docsRef.current?.refresh();
-    setIsSpinning(true);
-    setTimeout(() => setIsSpinning(false), 600);
-  }, []);
 
   return (
     <div className="flex flex-col h-full bg-gray-50">
@@ -54,28 +40,14 @@ export function ContextPanel({ projectId }: ContextPanelProps) {
             </button>
           ))}
         </div>
-        <Tip content="Refresh Files and Docs" side="bottom">
-          <button
-            type="button"
-            onClick={(e) => {
-              handleRefresh();
-              // Drop focus so the focus-ring/outline doesn't linger after a mouse click.
-              e.currentTarget.blur();
-            }}
-            className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-            aria-label="Refresh Files and Docs"
-          >
-            <RefreshCw className={cn("w-3.5 h-3.5", isSpinning && "animate-spin")} aria-hidden="true" />
-          </button>
-        </Tip>
       </div>
 
       {/* Tab content */}
       <div className={activeTab === "docs" ? "flex flex-col flex-1 min-h-0" : "hidden"}>
-        <DocsTab ref={docsRef} projectId={projectId} />
+        <DocsTab projectId={projectId} />
       </div>
       <div className={activeTab === "files" ? "flex flex-col flex-1 min-h-0" : "hidden"}>
-        <FilesTab ref={filesRef} projectId={projectId} />
+        <FilesTab projectId={projectId} />
       </div>
     </div>
   );
