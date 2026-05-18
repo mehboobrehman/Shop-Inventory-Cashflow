@@ -65,11 +65,21 @@ esac
 echo "[*] Extracting command-line tools..."
 unzip -o "$TMP_ZIP" -d "$TOOLS_DIR-tmp" >/dev/null 2>&1
 
-# The zip contains cmdline-tools/latest/... 
+# Ensure cmdline-tools/latest/ structure regardless of zip packaging
+rm -rf "$TOOLS_DIR" 2>/dev/null
+mkdir -p "$TOOLS_DIR/latest"
+
 if [ -d "$TOOLS_DIR-tmp/cmdline-tools/latest" ]; then
-    mv "$TOOLS_DIR-tmp/cmdline-tools/latest" "$TOOLS_DIR"
+    # Zip has cmdline-tools/latest/{bin,lib,...} 
+    mv "$TOOLS_DIR-tmp/cmdline-tools/latest/"* "$TOOLS_DIR/latest/"
+elif [ -d "$TOOLS_DIR-tmp/cmdline-tools/bin" ]; then
+    # Zip has cmdline-tools/{bin,lib,...} directly
+    mv "$TOOLS_DIR-tmp/cmdline-tools/bin" "$TOOLS_DIR/latest/"
+    mv "$TOOLS_DIR-tmp/cmdline-tools/lib" "$TOOLS_DIR/latest/" 2>/dev/null || true
+    cp "$TOOLS_DIR-tmp/cmdline-tools/"*.txt "$TOOLS_DIR/latest/" 2>/dev/null || true
 else
-    mv "$TOOLS_DIR-tmp/cmdline-tools" "$TOOLS_DIR" 2>/dev/null || true
+    echo "[!] Unexpected zip structure — attempting fallback"
+    find "$TOOLS_DIR-tmp" -name "*.bat" -o -name "sdkmanager" | head -1 || true
 fi
 rm -rf "$TOOLS_DIR-tmp"
 rm -f "$TMP_ZIP"
