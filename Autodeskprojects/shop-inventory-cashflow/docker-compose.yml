@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: shop_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: shopadmin
+      POSTGRES_PASSWORD: shoplocaldev123
+      POSTGRES_DB: shop_inventory
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shopadmin -d shop_inventory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile.dev
+    container_name: shop_server
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./server:/app/server
+      - ./shared:/app/shared
+      - /app/server/node_modules
+    environment:
+      - DATABASE_URL=postgresql://shopadmin:shoplocaldev123@db:5432/shop_inventory
+      - JWT_SECRET=dev-jwt-secret-change-in-production
+      - PORT=4000
+      - NODE_ENV=development
+    # Run migrations + seed before starting the dev server.
+    command: ["npm", "run", "docker:start", "--workspace=@shop/server"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile.dev
+    container_name: shop_client
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app/client
+      - ./shared:/app/shared
+      - /app/client/node_modules
+    environment:
+      - VITE_PROXY_TARGET=http://server:4000
+      - VITE_API_URL=http://localhost:4000
+    depends_on:
+      - server
+
+volumes:
+  pgdata:

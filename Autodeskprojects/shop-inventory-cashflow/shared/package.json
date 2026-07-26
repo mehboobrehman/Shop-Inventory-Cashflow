@@ -1,0 +1,11 @@
+{
+  "name": "@shop/shared",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types and contracts for Shop Inventory & Account Management System",
+  "main": "types/index.ts",
+  "types": "types/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT"
+}

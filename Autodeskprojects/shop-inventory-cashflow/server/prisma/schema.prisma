@@ -1,0 +1,210 @@
+// Prisma schema for Shop Inventory & Account Management System.
+// All enum values mirror @shop/shared (shared/types/enums.ts, stock.ts).
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+/// User authorization roles (mirrors @shop/shared UserRole enum).
+enum Role {
+  ADMIN
+  MANAGER
+  CASHIER
+}
+
+/// Stock movement direction (mirrors @shop/shared StockMovementType enum).
+enum StockMovementType {
+  IN // Stock added (restock)
+  OUT // Stock removed (sale or manual removal)
+  ADJUSTMENT // Correction entry
+}
+
+/// Financial account provider (mirrors @shop/shared AccountType enum).
+enum AccountType {
+  JAZZCASH
+  EASYPISA
+  BANK
+}
+
+/// Direction of money flow for a transaction (mirrors @shop/shared TransactionType enum).
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+}
+
+/// How an account transaction was created.
+enum TransactionSource {
+  MANUAL // User-entered deposit/withdrawal
+  SALE // Automatically created from a sale
+  AUTO_SYNC // Created via Merchant API sync
+}
+
+// ---------------------------------------------------------------------------
+// Models
+// ---------------------------------------------------------------------------
+
+/// User — authentication and authorization.
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(CASHIER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sales Sale[]
+
+  @@index([role])
+}
+
+/// Product — inventory items for sale.
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  /// Unique barcode (EAN/UPC). Nullable for products without barcodes.
+  barcode       String?  @unique
+  salePrice     Decimal  @db.Decimal(12, 2)
+  currentStock  Int      @default(0)
+  /// Threshold below which a low-stock alert is triggered.
+  minStockLimit Int      @default(0)
+  /// Soft-delete flag. Inactive products are hidden from default views.
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  stockMovements StockMovement[]
+  saleItems      SaleItem[]
+  lowStockAlerts LowStockAlert[]
+
+  @@index([name])
+  @@index([currentStock])
+}
+
+/// StockMovement — audit trail of every stock change.
+model StockMovement {
+  id        String            @id @default(uuid())
+  productId String
+  product   Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type      StockMovementType
+  quantity  Int
+  /// Human-readable reason for the movement.
+  reason    String?
+  /// Machine reference, e.g. "SALE:<saleId>" or "MANUAL_IN".
+  reference String?
+  createdAt DateTime          @default(now())
+
+  @@index([productId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+/// Account — JazzCash, Easypaisa, or Bank financial account.
+model Account {
+  id                   String      @id @default(uuid())
+  type                 AccountType
+  name                 String
+  currentBalance       Decimal     @default(0) @db.Decimal(14, 2)
+  /// AES-encrypted JSON of Merchant API credentials (if configured).
+  encryptedCredentials String?
+  autoSyncEnabled      Boolean     @default(false)
+  lastSyncAt           DateTime?
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  transactions AccountTransaction[]
+  sales        Sale[]
+
+  @@index([type])
+}
+
+/// AccountTransaction — deposit or withdrawal record with balance tracking.
+model AccountTransaction {
+  id            String            @id @default(uuid())
+  accountId     String
+  account       Account           @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  type          TransactionType
+  amount        Decimal           @db.Decimal(14, 2)
+  /// Balance immediately before this transaction was applied.
+  balanceBefore Decimal           @db.Decimal(14, 2)
+  /// Balance immediately after this transaction was applied.
+  balanceAfter  Decimal           @db.Decimal(14, 2)
+  source        TransactionSource @default(MANUAL)
+  /// Linked sale if this transaction originated from a sale.
+  saleId        String?
+  sale          Sale?             @relation(fields: [saleId], references: [id], onDelete: SetNull)
+  description   String?
+  createdAt     DateTime          @default(now())
+
+  @@index([accountId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+/// Sale — header record for each sale transaction.
+model Sale {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Account the sale proceeds were deposited into (null for cash/unassigned).
+  accountId   String?
+  account     Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  totalAmount Decimal  @db.Decimal(14, 2)
+  itemCount   Int
+  createdAt   DateTime @default(now())
+
+  saleItems    SaleItem[]
+  transactions AccountTransaction[]
+
+  @@index([createdAt])
+  @@index([userId])
+  @@index([accountId])
+}
+
+/// SaleItem — individual product line within a sale.
+model SaleItem {
+  id          String  @id @default(uuid())
+  saleId      String
+  sale        Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity    Int
+  /// Unit price at the time of sale (captured for historical accuracy).
+  salePrice   Decimal @db.Decimal(12, 2)
+  totalAmount Decimal @db.Decimal(14, 2)
+
+  @@index([saleId])
+  @@index([productId])
+}
+
+/// LowStockAlert — tracks products that have fallen below their minimum stock threshold.
+model LowStockAlert {
+  id             String    @id @default(uuid())
+  productId      String
+  product        Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productName    String
+  currentStock   Int
+  minStockLimit  Int
+  /// How many units below the threshold (always >= 1).
+  deficit        Int
+  /// When this alert was first triggered.
+  triggeredAt    DateTime  @default(now())
+  /// Whether this alert has been acknowledged/cleared by a user.
+  isAcknowledged Boolean   @default(false)
+  /// When the alert was acknowledged (null if still active).
+  acknowledgedAt DateTime?
+
+  @@index([productId])
+  @@index([isAcknowledged])
+  @@index([triggeredAt])
+}

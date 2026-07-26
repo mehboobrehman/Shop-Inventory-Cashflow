@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "@shop/shared": "file:../shared",
+    "axios": "^1.18.1",
+    "html5-qrcode": "^2.3.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0",
+    "react-toastify": "^11.1.0",
+    "recharts": "^2.12.0",
+    "serve": "^14.2.6"
+  },
+  "description": "React + Vite + TypeScript frontend for Shop Inventory & Account Management System",
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4",
+    "vite": "^5.3.5"
+  },
+  "name": "@shop/client",
+  "private": true,
+  "scripts": {
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "version": "1.0.0"
+}

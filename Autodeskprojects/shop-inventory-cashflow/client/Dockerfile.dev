@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy workspace manifests first for dependency caching
+COPY package.json package.json
+COPY shared/package.json shared/package.json
+COPY client/package.json client/package.json
+
+RUN npm install
+
+# Copy source (overridden by volume mounts in dev for hot-reload)
+COPY shared/ shared/
+COPY client/ client/
+
+EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--workspace=@shop/client", "--", "--host"]
