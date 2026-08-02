@@ -14,12 +14,8 @@ import {
 import { getDashboardStats, getRecentSales, getSalesTrend } from '../services/dashboard';
 import { getAccounts } from '../services/account';
 import { useLowStock } from '../hooks/useLowStock';
-import {
-  DashboardStats,
-  SalesTrendData,
-  Sale,
-  Account,
-} from '@shop/shared';
+import { DashboardStats, SalesTrendData, Sale, Account } from '@shop/shared';
+import { SystemStatus } from '../components/SystemStatus';
 
 // Format currency as PKR
 const formatPKR = (amount: number): string => {
@@ -129,9 +125,12 @@ const DashboardPage: React.FC = () => {
     <div className="min-h-screen bg-gray-100 ml-64 p-4 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Page title */}
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Overview of your shop inventory and sales</p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-600">Overview of your shop inventory and sales</p>
+          </div>
+          <SystemStatus />
         </div>
 
         {/* Stat Cards */}

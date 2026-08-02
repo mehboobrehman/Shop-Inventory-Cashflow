@@ -95,4 +95,31 @@ export class SalesController {
       return res.status(500).json(error('Failed to retrieve sale'));
     }
   }
+
+  /**
+   * POST /api/v1/sales/:id/refund
+   * Refund a sale.
+   */
+  async refundSale(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+        return res.status(400).json({ success: false, error: { code: 'VALIDATION_ERROR', message: 'Invalid sale ID format' } });
+      }
+
+      const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json(error('UNAUTHORIZED', 'User ID required'));
+      }
+
+      const result = await salesService.refundSale(id, userId);
+      return res.json(success(result));
+    } catch (err: any) {
+      console.error('Refund sale error:', err);
+      if (err.message === 'Sale not found') {
+        return res.status(404).json(error('NOT_FOUND', err.message));
+      }
+      return res.status(500).json(error(err.message || 'Failed to refund sale'));
+    }
+  }
 }

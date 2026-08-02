@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
 export const LoginPage: React.FC = () => {
@@ -17,8 +18,15 @@ export const LoginPage: React.FC = () => {
       await login(email, password);
       // Redirect to dashboard after successful login
       navigate('/dashboard');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const serverMessage = err.response?.data?.error?.message;
+        setError(serverMessage || err.message || 'Invalid email or password');
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Invalid email or password');
+      }
     }
   };
 
@@ -83,6 +91,12 @@ export const LoginPage: React.FC = () => {
               </button>
             </div>
           </form>
+
+          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-md p-3 text-xs text-blue-800">
+            <span className="font-semibold block mb-1">Default Demo Credentials:</span>
+            <div>Email: <code className="bg-blue-100 px-1 py-0.5 rounded font-mono">admin@shop.com</code></div>
+            <div>Password: <code className="bg-blue-100 px-1 py-0.5 rounded font-mono">admin123</code></div>
+          </div>
 
           <div className="mt-6">
             <div className="relative">

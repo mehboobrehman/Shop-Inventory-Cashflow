@@ -42,16 +42,16 @@ class StockService {
   ): Promise<{ movement: any; product: any }> {
     // Start a transaction to ensure atomicity
     return prisma.$transaction(async (tx) => {
-      // Fetch current product stock with FOR UPDATE lock
-      const products: any = await tx.$queryRaw`
-        SELECT "currentStock" FROM "Product" WHERE id = ${productId} FOR UPDATE;
-      `;
+      // Fetch current product stock
+      const productRecord = await tx.product.findUnique({
+        where: { id: productId },
+      });
       
-      if (!products || products.length === 0) {
+      if (!productRecord) {
         throw new Error(`Product not found: ${productId}`);
       }
       
-      const currentStock = products[0].currentStock;
+      const currentStock = productRecord.currentStock;
       const difference = newQuantity - currentStock;
       
       // Update product stock to the new absolute value

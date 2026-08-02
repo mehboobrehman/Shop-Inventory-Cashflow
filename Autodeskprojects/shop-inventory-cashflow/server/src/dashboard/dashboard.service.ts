@@ -36,7 +36,7 @@ export async function getLowStockCount(): Promise<number> {
       AND "minStockLimit" > 0
       AND "isActive" = true
   `;
-  return result[0]?.count ?? 0;
+  return Number(result[0]?.count ?? 0);
 }
 
 /**

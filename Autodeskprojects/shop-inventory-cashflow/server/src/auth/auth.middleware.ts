@@ -5,20 +5,18 @@ import { JWTPayload } from '@shop/shared';
 
 export class AuthMiddleware {
   authenticate(req: Request, res: Response, next: NextFunction) {
-    // Extract token from Authorization header
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    // Extract token from cookie
+    const token = req.cookies.token;
+    if (!token) {
       return res.status(401).json({
         success: false,
         data: null,
         error: {
           code: 'UNAUTHORIZED',
-          message: 'Authorization token required',
+          message: 'Authentication required',
         },
       });
     }
-
-    const token = authHeader.split(' ')[1];
 
     try {
       // Verify JWT token

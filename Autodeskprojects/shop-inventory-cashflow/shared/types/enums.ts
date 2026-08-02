@@ -31,3 +31,10 @@ export enum TransactionSource {
   SALE = 'SALE',           // Automatically created from a sale
   AUTO_SYNC = 'AUTO_SYNC', // Created via Merchant API sync
 }
+
+/** Type of stock movement. */
+export enum StockMovementType {
+  IN = 'IN',
+  OUT = 'OUT',
+  ADJUSTMENT = 'ADJUSTMENT',
+}

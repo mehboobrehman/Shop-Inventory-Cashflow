@@ -8,7 +8,7 @@ const accountService = new AccountService();
 
 // Zod schemas for validation
 const CreateAccountSchema = z.object({
-  type: z.nativeEnum(AccountType, { required_error: 'Type is required' }),
+  type: z.nativeEnum(AccountType),
   name: z.string().min(1, 'Name is required'),
   initialBalance: z.number().min(0, 'Initial balance cannot be negative').optional(),
   credentials: z.object({

@@ -1,5 +1,4 @@
 // Prisma schema for Shop Inventory & Account Management System.
-// All enum values mirror @shop/shared (shared/types/enums.ts, stock.ts).
 
 generator client {
   provider = "prisma-client-js"
@@ -7,46 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-// ---------------------------------------------------------------------------
-// Enums
-// ---------------------------------------------------------------------------
-
-/// User authorization roles (mirrors @shop/shared UserRole enum).
-enum Role {
-  ADMIN
-  MANAGER
-  CASHIER
-}
-
-/// Stock movement direction (mirrors @shop/shared StockMovementType enum).
-enum StockMovementType {
-  IN // Stock added (restock)
-  OUT // Stock removed (sale or manual removal)
-  ADJUSTMENT // Correction entry
-}
-
-/// Financial account provider (mirrors @shop/shared AccountType enum).
-enum AccountType {
-  JAZZCASH
-  EASYPISA
-  BANK
-}
-
-/// Direction of money flow for a transaction (mirrors @shop/shared TransactionType enum).
-enum TransactionType {
-  DEPOSIT
-  WITHDRAWAL
-}
-
-/// How an account transaction was created.
-enum TransactionSource {
-  MANUAL // User-entered deposit/withdrawal
-  SALE // Automatically created from a sale
-  AUTO_SYNC // Created via Merchant API sync
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 // ---------------------------------------------------------------------------
@@ -59,11 +20,12 @@ model User {
   email        String   @unique
   passwordHash String
   name         String
-  role         Role     @default(CASHIER)
+  role         String   @default("CASHIER")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  sales Sale[]
+  sales     Sale[]
+  auditLogs AuditLog[]
 
   @@index([role])
 }
@@ -74,7 +36,7 @@ model Product {
   name          String
   /// Unique barcode (EAN/UPC). Nullable for products without barcodes.
   barcode       String?  @unique
-  salePrice     Decimal  @db.Decimal(12, 2)
+  salePrice     Decimal
   currentStock  Int      @default(0)
   /// Threshold below which a low-stock alert is triggered.
   minStockLimit Int      @default(0)
@@ -86,23 +48,37 @@ model Product {
   stockMovements StockMovement[]
   saleItems      SaleItem[]
   lowStockAlerts LowStockAlert[]
+  stocks         Stock[]
 
   @@index([name])
   @@index([currentStock])
 }
 
+/// Stock — inventory levels per product and location.
+model Stock {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  location  String
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([location])
+}
+
 /// StockMovement — audit trail of every stock change.
 model StockMovement {
-  id        String            @id @default(uuid())
+  id        String   @id @default(uuid())
   productId String
-  product   Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
-  type      StockMovementType
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type      String
   quantity  Int
   /// Human-readable reason for the movement.
   reason    String?
   /// Machine reference, e.g. "SALE:<saleId>" or "MANUAL_IN".
   reference String?
-  createdAt DateTime          @default(now())
+  createdAt DateTime @default(now())
 
   @@index([productId])
   @@index([type])
@@ -112,9 +88,9 @@ model StockMovement {
 /// Account — JazzCash, Easypaisa, or Bank financial account.
 model Account {
   id                   String      @id @default(uuid())
-  type                 AccountType
+  type                 String
   name                 String
-  currentBalance       Decimal     @default(0) @db.Decimal(14, 2)
+  currentBalance       Decimal     @default(0)
   /// AES-encrypted JSON of Merchant API credentials (if configured).
   encryptedCredentials String?
   autoSyncEnabled      Boolean     @default(false)
@@ -133,13 +109,13 @@ model AccountTransaction {
   id            String            @id @default(uuid())
   accountId     String
   account       Account           @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  type          TransactionType
-  amount        Decimal           @db.Decimal(14, 2)
+  type          String
+  amount        Decimal
   /// Balance immediately before this transaction was applied.
-  balanceBefore Decimal           @db.Decimal(14, 2)
+  balanceBefore Decimal
   /// Balance immediately after this transaction was applied.
-  balanceAfter  Decimal           @db.Decimal(14, 2)
-  source        TransactionSource @default(MANUAL)
+  balanceAfter  Decimal
+  source        String            @default("MANUAL")
   /// Linked sale if this transaction originated from a sale.
   saleId        String?
   sale          Sale?             @relation(fields: [saleId], references: [id], onDelete: SetNull)
@@ -159,7 +135,7 @@ model Sale {
   /// Account the sale proceeds were deposited into (null for cash/unassigned).
   accountId   String?
   account     Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
-  totalAmount Decimal  @db.Decimal(14, 2)
+  totalAmount Decimal
   itemCount   Int
   createdAt   DateTime @default(now())
 
@@ -180,8 +156,8 @@ model SaleItem {
   product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity    Int
   /// Unit price at the time of sale (captured for historical accuracy).
-  salePrice   Decimal @db.Decimal(12, 2)
-  totalAmount Decimal @db.Decimal(14, 2)
+  salePrice   Decimal
+  totalAmount Decimal
 
   @@index([saleId])
   @@index([productId])
@@ -207,4 +183,21 @@ model LowStockAlert {
   @@index([productId])
   @@index([isAcknowledged])
   @@index([triggeredAt])
+}
+
+/// AuditLog — tracks system events and user actions.
+model AuditLog {
+  id         String   @id @default(uuid())
+  action     String
+  entityType String
+  entityId   String?
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  details    String?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType])
+  @@index([entityId])
+  @@index([userId])
+  @@index([createdAt])
 }

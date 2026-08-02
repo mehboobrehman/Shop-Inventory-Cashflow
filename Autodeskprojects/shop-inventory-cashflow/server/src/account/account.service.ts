@@ -137,12 +137,12 @@ export class AccountService {
 
   async deposit(id: string, amount: number, description?: string): Promise<any> {
     return prisma.$transaction(async (tx) => {
-      // Row lock using $queryRaw to prevent concurrency issues
-      const accounts = await tx.$queryRaw<any[]>`SELECT * FROM "Account" WHERE id = ${id} FOR UPDATE`;
-      if (!accounts || accounts.length === 0) {
+      const account = await tx.account.findUnique({
+        where: { id },
+      });
+      if (!account) {
         throw new Error('Account not found');
       }
-      const account = accounts[0];
 
       // Convert currentBalance to Decimal robustly
       const rawBalance = account.currentBalance;
@@ -188,12 +188,12 @@ export class AccountService {
 
   async withdraw(id: string, amount: number, description?: string): Promise<any> {
     return prisma.$transaction(async (tx) => {
-      // Row lock using $queryRaw to prevent concurrency issues
-      const accounts = await tx.$queryRaw<any[]>`SELECT * FROM "Account" WHERE id = ${id} FOR UPDATE`;
-      if (!accounts || accounts.length === 0) {
+      const account = await tx.account.findUnique({
+        where: { id },
+      });
+      if (!account) {
         throw new Error('Account not found');
       }
-      const account = accounts[0];
 
       const rawBalance = account.currentBalance;
       const balanceBefore: Prisma.Decimal = rawBalance instanceof Prisma.Decimal

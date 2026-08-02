@@ -4,6 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shop Inventory System</title>
+    <script>
+      window.addEventListener("error", (event) => {
+        const errorDiv = document.createElement("div");
+        errorDiv.style.color = "red";
+        errorDiv.style.padding = "20px";
+        errorDiv.style.border = "2px solid red";
+        errorDiv.style.margin = "20px";
+        errorDiv.style.fontFamily = "monospace";
+        errorDiv.innerHTML = "<h3>Frontend Error</h3><p>" + event.message + "</p><pre>" + (event.error && event.error.stack ? event.error.stack : "") + "</pre>";
+        document.body.prepend(errorDiv);
+      });
+      window.addEventListener("unhandledrejection", (event) => {
+        const errorDiv = document.createElement("div");
+        errorDiv.style.color = "red";
+        errorDiv.style.padding = "20px";
+        errorDiv.style.border = "2px solid red";
+        errorDiv.style.margin = "20px";
+        errorDiv.style.fontFamily = "monospace";
+        errorDiv.innerHTML = "<h3>Unhandled Promise Rejection</h3><p>" + event.reason + "</p>";
+        document.body.prepend(errorDiv);
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

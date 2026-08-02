@@ -5,21 +5,8 @@ import { StockMovement, StockMovementType } from '@shop/shared';
 // Create axios instance
 const api = axios.create({
   baseURL: '/api/v1',
+  withCredentials: true,
 });
-
-// Add request interceptor to include auth token
-api.interceptors.request.use(
-  (config: any) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error: any) => {
-    return Promise.reject(error);
-  }
-);
 
 interface StockInPayload {
   productId: string;
@@ -47,17 +34,14 @@ interface StockMovementFilters {
 export const addStockIn = async (
   productId: string,
   quantity: number,
-  reason?: string
+  reason?: string,
+  userId?: string
 ): Promise<{ movement: StockMovement; product: any }> => {
-  const userId = localStorage.getItem('authUser') 
-    ? JSON.parse(localStorage.getItem('authUser') || '{}').id 
-    : '';
-  
   const payload: StockInPayload = {
     productId,
     quantity,
     reason,
-    userId,
+    userId: userId || '',
   };
   
   const response = await api.post('/stock/in', payload);
@@ -67,17 +51,14 @@ export const addStockIn = async (
 export const adjustStock = async (
   productId: string,
   newQuantity: number,
-  reason?: string
+  reason?: string,
+  userId?: string
 ): Promise<{ movement: StockMovement; product: any }> => {
-  const userId = localStorage.getItem('authUser') 
-    ? JSON.parse(localStorage.getItem('authUser') || '{}').id 
-    : '';
-  
   const payload: StockAdjustmentPayload = {
     productId,
     newQuantity,
     reason,
-    userId,
+    userId: userId || '',
   };
   
   const response = await api.post('/stock/adjust', payload);

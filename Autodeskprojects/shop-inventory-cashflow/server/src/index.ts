@@ -2,7 +2,8 @@ import { createApp } from './app';
 import { env } from './config/env';
 
 const app = createApp();
+const port = env.PORT;
 
-app.listen(env.PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${env.PORT} [${env.NODE_ENV}]`);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

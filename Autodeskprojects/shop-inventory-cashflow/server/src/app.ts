@@ -1,5 +1,6 @@
 import express, { type Request, type Response } from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import authRoutes from './auth/auth.routes';
 import productRoutes from './product/product.routes';
 import stockRoutes from './stock/stock.routes';
@@ -11,8 +12,12 @@ import salesRoutes from './sales/sales.routes';
 export function createApp(): express.Application {
   const app = express();
 
-  app.use(cors());
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
   app.use(express.json());
+  app.use(cookieParser());
 
   // Health check endpoint
   app.get('/api/v1/health', (_req: Request, res: Response) => {

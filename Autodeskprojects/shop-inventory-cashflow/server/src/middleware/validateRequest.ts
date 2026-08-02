@@ -12,7 +12,7 @@ export function validateRequest(schema: ZodSchema<any>) {
         res.status(400).json({
           success: false,
           error: "Validation failed",
-          details: error.errors,
+          details: error.issues,
         });
       } else {
         res.status(500).json({

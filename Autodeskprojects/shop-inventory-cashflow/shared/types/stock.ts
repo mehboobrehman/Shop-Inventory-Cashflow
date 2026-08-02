@@ -1,8 +1,4 @@
-export enum StockMovementType {
-  IN = "IN",
-  OUT = "OUT",
-  ADJUSTMENT = "ADJUSTMENT",
-}
+import { StockMovementType } from './enums';
 
 export interface StockMovement {
   id: string;

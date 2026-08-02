@@ -4,49 +4,13 @@ import { LoginResponse, User } from '@shop/shared';
 // Create axios instance
 const api = axios.create({
   baseURL: '/api/v1',
+  withCredentials: true,
 });
 
-// Add request interceptor to include auth token
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-// Add response interceptor for token refresh (placeholder for future implementation)
+// Add response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
-    
-    // If 401 and not a retry, attempt token refresh
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      
-      try {
-        const refreshResponse = await refreshToken();
-        if (refreshResponse) {
-          // Update token in localStorage
-          localStorage.setItem('authToken', refreshResponse.token);
-          
-          // Retry original request with new token
-          originalRequest.headers.Authorization = `Bearer ${refreshResponse.token}`;
-          return api(originalRequest);
-        }
-      } catch (refreshError) {
-        // Refresh failed, redirect to login
-        window.location.href = '/login';
-        return Promise.reject(refreshError);
-      }
-    }
-    
     return Promise.reject(error);
   }
 );
@@ -63,8 +27,6 @@ export const register = async (email: string, password: string, name: string): P
 
 export const logout = async (): Promise<void> => {
   await api.post('/auth/logout');
-  localStorage.removeItem('authToken');
-  localStorage.removeItem('authUser');
 };
 
 export const getCurrentUser = async (): Promise<User> => {

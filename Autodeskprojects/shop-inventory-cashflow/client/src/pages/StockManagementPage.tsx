@@ -100,7 +100,7 @@ export const StockManagementPage: React.FC = () => {
 
     try {
       setLoading(true);
-      await stockService.addStockIn(selectedProductId, stockInQuantity, reason || undefined);
+      await stockService.addStockIn(selectedProductId, stockInQuantity, reason || undefined, user?.id);
       setSuccess('Stock added successfully!');
       setReason('');
       setStockInQuantity(1);
@@ -135,7 +135,7 @@ export const StockManagementPage: React.FC = () => {
 
     try {
       setLoading(true);
-      await stockService.adjustStock(selectedProductId, adjustQuantity, reason || undefined);
+      await stockService.adjustStock(selectedProductId, adjustQuantity, reason || undefined, user?.id);
       setSuccess('Stock adjusted successfully!');
       setReason('');
       setAdjustQuantity(0);

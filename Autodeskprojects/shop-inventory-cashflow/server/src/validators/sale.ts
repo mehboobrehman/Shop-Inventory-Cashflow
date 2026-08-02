@@ -14,12 +14,16 @@ export const createSaleSchema = z.object({
 });
 
 // Schema for sales query parameters (GET /sales)
+// Accept both full ISO datetimes (2026-08-02T10:00:00.000Z) and
+// date-only strings (2026-08-02) sent by <input type="date">.
+const dateOrDatetime = z.union([z.string().datetime(), z.string().date()]);
+
 export const saleQuerySchema = z.object({
-  from: z.string().datetime().optional(),
-  to: z.string().datetime().optional(),
+  from: dateOrDatetime.optional(),
+  to: dateOrDatetime.optional(),
   search: z.string().optional(),
-  page: z.number().int().positive().optional(),
-  limit: z.number().int().positive().max(100).optional(),
+  page: z.coerce.number().int().positive().optional(),
+  limit: z.coerce.number().int().positive().max(100).optional(),
 });
 
 // Helper to type-guard CreateSaleItemDTO from validated Zod data

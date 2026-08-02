@@ -24,9 +24,12 @@ const UpdateProductSchema = z.object({
 
 const ProductQuerySchema = z.object({
   search: z.string().optional(),
-  lowStock: z.boolean().optional(),
-  page: z.number().min(1).optional(),
-  limit: z.number().min(1).max(100).optional(),
+  lowStock: z.preprocess((val) => {
+    if (val === undefined) return undefined;
+    return val === 'true' || val === true;
+  }, z.boolean().optional()),
+  page: z.coerce.number().min(1).optional(),
+  limit: z.coerce.number().min(1).max(100).optional(),
 });
 
 export class ProductController {

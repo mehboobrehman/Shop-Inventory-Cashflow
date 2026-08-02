@@ -223,8 +223,10 @@ async function main(): Promise<void> {
     // OUT stock movements for each sale line item (audit trail).
     for (let j = 0; j < lineItems.length; j++) {
       const item = lineItems[j];
-      await prisma.stockMovement.create({
-        data: {
+      await prisma.stockMovement.upsert({
+        where: { id: outStockMovementId(i, j) },
+        update: {},
+        create: {
           id: outStockMovementId(i, j),
           productId: item.product.id,
           type: 'OUT',

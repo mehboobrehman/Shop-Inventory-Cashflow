@@ -49,7 +49,7 @@ export class AuthController {
           error: {
             code: 'VALIDATION_ERROR',
             message: 'Invalid request body',
-            details: error.errors.map(e => e.message),
+            details: error.issues.map((e: any) => e.message),
           },
         });
       }
@@ -93,11 +93,18 @@ export class AuthController {
       }
 
       const { email, password } = result.data;
-      const loginResponse: LoginResponse = await authService.login(email, password);
+      const { token, user } = await authService.login(email, password);
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 15 * 60 * 1000, // 15 minutes
+      });
 
       return res.json({
         success: true,
-        data: loginResponse,
+        data: { user },
         message: 'Login successful',
       });
     } catch (error) {
@@ -114,8 +121,7 @@ export class AuthController {
   }
 
   async logout(_req: Request, res: Response) {
-    // Logout is client-side; server just needs to invalidate token on client
-    // We can send success response since token is in client storage
+    res.clearCookie('token');
     return res.json({
       success: true,
       data: null,

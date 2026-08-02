@@ -6,7 +6,7 @@
  * TypeScript all use identical values (no numeric mismatch).
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransactionSource = exports.UserRole = exports.TransactionType = exports.AccountType = void 0;
+exports.StockMovementType = exports.TransactionSource = exports.UserRole = exports.TransactionType = exports.AccountType = void 0;
 /** Financial account providers supported by the system. */
 var AccountType;
 (function (AccountType) {
@@ -34,4 +34,11 @@ var TransactionSource;
     TransactionSource["SALE"] = "SALE";
     TransactionSource["AUTO_SYNC"] = "AUTO_SYNC";
 })(TransactionSource || (exports.TransactionSource = TransactionSource = {}));
+/** Type of stock movement. */
+var StockMovementType;
+(function (StockMovementType) {
+    StockMovementType["IN"] = "IN";
+    StockMovementType["OUT"] = "OUT";
+    StockMovementType["ADJUSTMENT"] = "ADJUSTMENT";
+})(StockMovementType || (exports.StockMovementType = StockMovementType = {}));
 //# sourceMappingURL=enums.js.map

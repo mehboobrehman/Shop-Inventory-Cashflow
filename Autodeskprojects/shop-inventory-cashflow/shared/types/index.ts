@@ -4,8 +4,7 @@
  */
 
 // Enums
-export { AccountType, TransactionType, TransactionSource, UserRole } from './enums';
-export { StockMovementType } from './stock';
+export { AccountType, TransactionType, TransactionSource, UserRole, StockMovementType } from './enums';
 
 // Common primitives
 export type {

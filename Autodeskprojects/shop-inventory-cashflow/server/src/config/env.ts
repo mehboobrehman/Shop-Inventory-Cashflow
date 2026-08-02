@@ -12,10 +12,7 @@ function required(key: string, fallback?: string): string {
 
 export const env = {
   PORT: parseInt(process.env.PORT ?? '4000', 10),
-  DATABASE_URL: required(
-    'DATABASE_URL',
-    'postgresql://shopadmin:shoplocaldev123@localhost:5432/shop_inventory',
-  ),
+  DATABASE_URL: process.env.DATABASE_URL ?? 'file:./dev.db',
   JWT_SECRET: required('JWT_SECRET', 'dev-jwt-secret-change-in-production'),
   NODE_ENV: process.env.NODE_ENV ?? 'development',
 } as const;

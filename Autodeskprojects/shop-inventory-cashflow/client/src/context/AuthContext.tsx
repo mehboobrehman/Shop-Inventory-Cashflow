@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User } from '@shop/shared';
+import authService from '../services/auth';
 
 interface AuthContextType {
   user: User | null;
-  token: string | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   register: (email: string, password: string, name: string) => Promise<void>;
   loading: boolean;
   error: string | null;
@@ -16,26 +16,24 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Check for existing token on initial load
+  // Check for existing session on initial load
   useEffect(() => {
-    const storedToken = localStorage.getItem('authToken');
-    const storedUser = localStorage.getItem('authUser');
-    
-    if (storedToken && storedUser) {
+    const checkAuth = async () => {
       try {
-        setToken(storedToken);
-        setUser(JSON.parse(storedUser));
+        const currentUser = await authService.getCurrentUser();
+        setUser(currentUser);
       } catch (err) {
-        console.error('Failed to parse stored user:', err);
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('authUser');
+        console.error('Session check failed:', err);
+        setUser(null);
+      } finally {
+        setLoading(false);
       }
-    }
-    setLoading(false);
+    };
+
+    checkAuth();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -43,33 +41,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     
     try {
-      const response = await fetch('/api/v1/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Login failed');
-      }
-
-      if (data.success && data.data) {
-        const { token, user } = data.data;
-        
-        // Store in localStorage
-        localStorage.setItem('authToken', token);
-        localStorage.setItem('authUser', JSON.stringify(user));
-        
-        // Update state
-        setToken(token);
-        setUser(user);
-      } else {
-        throw new Error('Invalid response format');
-      }
+      const { user } = await authService.login(email, password);
+      setUser(user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
       throw err;
@@ -83,26 +56,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     
     try {
-      const response = await fetch('/api/v1/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, name }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Registration failed');
-      }
-
-      if (data.success && data.data) {
-        // Auto-login after registration
-        await login(email, password);
-      } else {
-        throw new Error('Invalid response format');
-      }
+      await authService.register(email, password, name);
+      // Auto-login after registration is not automatic based on backend API design? 
+      // The old code called `login(email, password)`. Let's stick to that.
+      await login(email, password);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
       throw err;
@@ -111,21 +68,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const logout = () => {
-    // Clear localStorage
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('authUser');
-    
-    // Clear state
-    setToken(null);
-    setUser(null);
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } catch (err) {
+      console.error('Logout failed:', err);
+    } finally {
+      setUser(null);
+    }
   };
-
-  const isAuthenticated = !!token && !!user;
+  
+  const isAuthenticated = !!user;
 
   return (
     <AuthContext.Provider
-      value={{ user, token, isAuthenticated, login, logout, register, loading, error }}
+      value={{ user, isAuthenticated, login, logout, register, loading, error }}
     >
       {children}
     </AuthContext.Provider>

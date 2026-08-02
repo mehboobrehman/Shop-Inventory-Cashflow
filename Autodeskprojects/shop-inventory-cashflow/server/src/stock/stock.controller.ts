@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import stockService from "./stock.service";
 import { StockMovementType } from "@shop/shared";
+import { stockMovementQuerySchema } from "../validators/stock";
 
 // Controller for stock management
 class StockController {
@@ -44,17 +45,28 @@ class StockController {
 
   async getStockMovements(req: Request, res: Response) {
     try {
-      const { productId, type, startDate, endDate, limit, skip } = req.query;
-      
+      const parseResult = stockMovementQuerySchema.safeParse(req.query);
+      if (!parseResult.success) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid query parameters",
+          details: parseResult.error.issues,
+        });
+      }
+
+      const { productId, type, startDate, endDate, limit, skip, page } = parseResult.data;
+
+      const effectiveSkip = skip ?? (page && limit ? (page - 1) * limit : undefined);
+
       const movements = await stockService.getStockMovements(
-        productId as string | undefined,
-        type as StockMovementType | undefined,
-        startDate ? new Date(startDate as string) : undefined,
-        endDate ? new Date(endDate as string) : undefined,
-        limit ? parseInt(limit as string) : undefined,
-        skip ? parseInt(skip as string) : undefined,
+        productId,
+        type,
+        startDate ? new Date(startDate) : undefined,
+        endDate ? new Date(endDate) : undefined,
+        limit,
+        effectiveSkip,
       );
-      
+
       res.status(200).json({
         success: true,
         data: movements,

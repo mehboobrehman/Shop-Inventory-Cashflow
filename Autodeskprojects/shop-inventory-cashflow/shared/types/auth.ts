@@ -27,7 +27,7 @@ export interface RegisterRequest {
 
 /** Login response returned after successful authentication. */
 export interface LoginResponse {
-  token: string;
+  token?: string;
   user: User;
 }
 

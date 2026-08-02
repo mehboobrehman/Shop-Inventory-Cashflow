@@ -4,20 +4,8 @@ import { Account, CreateAccountDTO, UpdateAccountDTO, DepositDTO, WithdrawalDTO,
 // Create axios instance with auth interceptor
 const api = axios.create({
   baseURL: '/api/v1',
+  withCredentials: true,
 });
-
-api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  }
-);
 
 interface AccountTransactionListResponse {
   items: AccountTransaction[];

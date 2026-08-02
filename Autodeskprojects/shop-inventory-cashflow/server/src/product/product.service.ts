@@ -34,8 +34,8 @@ export class ProductService {
     
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { barcode: { contains: search, mode: 'insensitive' } },
+        { name: { contains: search } },
+        { barcode: { contains: search } },
       ];
     }
     
@@ -112,8 +112,8 @@ export class ProductService {
       where: {
         isActive: true,
         OR: [
-          { name: { contains: searchTerm, mode: 'insensitive' } },
-          { barcode: { contains: searchTerm, mode: 'insensitive' } },
+          { name: { contains: searchTerm } },
+          { barcode: { contains: searchTerm } },
         ],
       },
       orderBy: { name: 'asc' },

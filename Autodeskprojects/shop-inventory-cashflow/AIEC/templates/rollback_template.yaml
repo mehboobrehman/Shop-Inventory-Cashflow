@@ -1,0 +1,25 @@
+# rollback_plan.yaml
+feature_id: "F-XXX"
+tier: "Tier_X"
+estimated_downtime: "X minutes"
+
+## 1. Pre-Rollback Verification
+- [ ] Verify last known good backup exists.
+- [ ] Verify database migration down-script is tested and valid.
+- [ ] Verify DNS TTL was reduced to 60 seconds 24 hours prior.
+
+## 2. Execution Steps
+1. Gracefully drain traffic from the deployment (e.g., remove pod from load balancer).
+2. Run the automated rollback script: `scripts/rollback.sh`
+3. Run the database reverse migration: `npm run migrate:down`
+4. Redeploy the previous stable container/image tag.
+5. Reinstate traffic to the old deployment.
+
+## 3. Post-Rollback Verification
+- [ ] Run health checks (`curl /health` returns 200).
+- [ ] Run data integrity checks (counts between primary and replica).
+- [ ] Alert SRE/Founder that rollback is complete.
+
+## 4. Root Cause Analysis (Post-Mortem)
+- [ ] Generate a diff of the failed PR vs. stable code.
+- [ ] Document the failure in `post-mortem/YYYY-MM-DD.md`.

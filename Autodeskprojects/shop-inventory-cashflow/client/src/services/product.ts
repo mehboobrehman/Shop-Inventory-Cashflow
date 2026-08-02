@@ -4,20 +4,8 @@ import { Product, CreateProductDTO, UpdateProductDTO, PaginatedData } from '@sho
 // Create axios instance with auth interceptor
 const api = axios.create({
   baseURL: '/api/v1',
+  withCredentials: true,
 });
-
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
 export const getProducts = async (search?: string, lowStock?: boolean, page?: number, limit?: number): Promise<PaginatedData<Product>> => {
   const params = new URLSearchParams();

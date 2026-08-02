@@ -17,6 +17,20 @@ export class SalesService {
   }
 
   /**
+   * Parse a date filter value into a Date.
+   * Date-only strings (YYYY-MM-DD) are interpreted as local day boundaries:
+   * start = 00:00:00.000, end = 23:59:59.999 so the whole day is included.
+   * Full ISO datetimes pass through as-is.
+   */
+  private parseDateFilter(value: string, isEndOfDay: boolean): Date {
+    const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(value);
+    if (dateOnly) {
+      return isEndOfDay ? new Date(`${value}T23:59:59.999`) : new Date(`${value}T00:00:00`);
+    }
+    return new Date(value);
+  }
+
+  /**
    * Map a SaleItem Prisma model to the API response SaleItem interface.
    */
   private mapSaleItemToResponse(item: any): SaleItem {
@@ -38,7 +52,7 @@ export class SalesService {
     return {
       id: sale.id,
       userId: sale.userId,
-      items: sale.saleItems.map(this.mapSaleItemToResponse),
+      items: sale.saleItems.map((item: any) => this.mapSaleItemToResponse(item)),
       totalAmount: this.decimalToNumber(sale.totalAmount),
       itemCount: sale.itemCount,
       accountId: sale.accountId,
@@ -59,10 +73,7 @@ export class SalesService {
       const { items, accountId } = input;
       const productIds = items.map(item => item.productId);
 
-      // 1. Lock all product rows to prevent concurrent stock modifications
-      await tx.$queryRaw<any[]>`SELECT * FROM "Product" WHERE id IN (${productIds}) FOR UPDATE`;
-
-      // 2. Validate all products exist and are active, also check stock (now locked)
+      // 1. Validate all products exist and are active, also check stock
       const products = await tx.product.findMany({
         where: { id: { in: productIds }, isActive: true },
       });
@@ -156,13 +167,7 @@ export class SalesService {
           throw new Error(`Account with ID ${accountId} not found.`);
         }
 
-        // We'll use raw SELECT FOR UPDATE for account balance to ensure atomicity
-        const accounts = await tx.$queryRaw<any[]>`SELECT * FROM "Account" WHERE id = ${accountId} FOR UPDATE`;
-        if (accounts.length === 0) {
-          throw new Error(`Account with ID ${accountId} not found.`);
-        }
-        const dbAccount = accounts[0];
-        const balanceBefore = new Prisma.Decimal(dbAccount.currentBalance);
+        const balanceBefore = new Prisma.Decimal(account.currentBalance);
         const balanceAfter = balanceBefore.add(totalAmount);
 
         // Update account balance
@@ -226,10 +231,12 @@ export class SalesService {
     const where: any = {};
 
     // Date range filter
+    // Accept date-only strings (YYYY-MM-DD) and extend `to` to end of day
+    // so the whole selected day is included; full ISO datetimes pass through.
     if (startDate || endDate) {
       where.createdAt = {};
-      if (startDate) where.createdAt.gte = new Date(startDate);
-      if (endDate) where.createdAt.lte = new Date(endDate);
+      if (startDate) where.createdAt.gte = this.parseDateFilter(startDate, false);
+      if (endDate) where.createdAt.lte = this.parseDateFilter(endDate, true);
     }
 
     // Search by product name using relation filter
@@ -239,7 +246,6 @@ export class SalesService {
           product: {
             name: {
               contains: search,
-              mode: 'insensitive',
             },
           },
         },
@@ -267,7 +273,7 @@ export class SalesService {
       take: limit,
     });
 
-    const items = sales.map(this.mapSaleToResponse);
+    const items = sales.map((sale: any) => this.mapSaleToResponse(sale));
     const totalPages = Math.ceil(total / limit);
 
     return {
@@ -304,5 +310,91 @@ export class SalesService {
     }
 
     return this.mapSaleToResponse(sale);
+  }
+
+  /**
+   * Refund a sale:
+   * - Restores stock for all items (StockMovement IN)
+   * - If linked to an account, creates an AccountTransaction (DEPOSIT/refund) and credits account balance
+   */
+  async refundSale(saleId: string, userId: string): Promise<{ success: boolean; message: string; saleId: string }> {
+    return prisma.$transaction(async (tx) => {
+      const sale = await tx.sale.findUnique({
+        where: { id: saleId },
+        include: {
+          saleItems: true,
+          account: true,
+        },
+      });
+
+      if (!sale) {
+        throw new Error('Sale not found');
+      }
+
+      // 1. Restore stock levels and create StockMovement IN
+      await Promise.all(
+        sale.saleItems.map(item =>
+          tx.stockMovement.create({
+            data: {
+              productId: item.productId,
+              type: 'IN',
+              quantity: item.quantity,
+              reason: `Refund: ${sale.id}`,
+              reference: `REFUND:${sale.id}`,
+            },
+          })
+        )
+      );
+
+      await Promise.all(
+        sale.saleItems.map(item =>
+          tx.product.update({
+            where: { id: item.productId },
+            data: {
+              currentStock: { increment: item.quantity },
+            },
+          })
+        )
+      );
+
+      // 2. If accountId present, refund the amount from the account
+      // (the sale deposited into the account at checkout, so a refund debits it)
+      if (sale.accountId) {
+        const account = await tx.account.findUnique({
+          where: { id: sale.accountId },
+        });
+        if (account) {
+          const balanceBefore = new Prisma.Decimal(account.currentBalance);
+          if (balanceBefore.lt(sale.totalAmount)) {
+            throw new Error(`Insufficient balance to refund sale ${sale.id}`);
+          }
+          const balanceAfter = balanceBefore.sub(sale.totalAmount);
+
+          await tx.account.update({
+            where: { id: sale.accountId },
+            data: { currentBalance: balanceAfter },
+          });
+
+          await tx.accountTransaction.create({
+            data: {
+              accountId: sale.accountId,
+              type: TransactionType.WITHDRAWAL,
+              amount: sale.totalAmount,
+              balanceBefore,
+              balanceAfter,
+              source: TransactionSource.MANUAL,
+              saleId: sale.id,
+              description: `Refund for sale ${sale.id}`,
+            },
+          });
+        }
+      }
+
+      return {
+        success: true,
+        message: `Sale ${sale.id} successfully refunded`,
+        saleId: sale.id,
+      };
+    });
   }
 }
