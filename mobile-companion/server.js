@@ -1,12 +1,16 @@
 const express = require('express');
-const http = require('http');
+const https = require('https');
+const selfsigned = require('selfsigned');
 const WebSocket = require('ws');
 const os = require('os');
 const path = require('path');
 const qrcode = require('qrcode-terminal');
 
+const attrs = [{ name: 'commonName', value: 'localhost' }];
+const pems = selfsigned.generate(attrs, { days: 365 });
+
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer({ key: pems.private, cert: pems.cert }, app);
 const wss = new WebSocket.Server({ server });
 
 const PORT = process.env.PORT || 3000;
@@ -45,7 +49,7 @@ function getLocalIpAddress() {
 
 server.listen(PORT, '0.0.0.0', () => {
   const ip = getLocalIpAddress();
-  const url = `http://${ip}:${PORT}`;
+  const url = `https://${ip}:${PORT}`;
   
   console.log(`Server running at ${url}`);
   console.log('Scan the QR code below to open the mobile companion app:\n');

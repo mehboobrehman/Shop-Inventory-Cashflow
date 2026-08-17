@@ -1,9 +1,0 @@
-{
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "..",
-    "outDir": "../dist/prisma",
-    "module": "CommonJS"
-  },
-  "include": ["./**/*.ts", "../src/**/*.ts"]
-}
