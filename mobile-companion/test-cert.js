@@ -1,0 +1,1 @@
+const selfsigned = require('selfsigned'); selfsigned.generate([{ name: 'commonName', value: 'localhost' }], { days: 365 }).then(pems => console.log('CERT_SUCCESS')).catch(e => console.error('CERT_ERROR', e));
