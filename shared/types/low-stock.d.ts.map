@@ -1,0 +1,1 @@
+{"version":3,"file":"low-stock.d.ts","sourceRoot":"","sources":["low-stock.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAC;AAEhC,mEAAmE;AACnE,MAAM,WAAW,aAAa;IAC5B,SAAS,EAAE,IAAI,CAAC;IAChB,WAAW,EAAE,MAAM,CAAC;IACpB,YAAY,EAAE,MAAM,CAAC;IACrB,aAAa,EAAE,MAAM,CAAC;IACtB,wDAAwD;IACxD,OAAO,EAAE,MAAM,CAAC;CACjB"}

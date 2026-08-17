@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile Companion Scanner</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Scanner Companion</h1>
+      <div id="status" class="status-disconnected">Disconnected</div>
+    </header>
+    
+    <main>
+      <div id="reader-container">
+        <div id="reader"></div>
+      </div>
+      <div id="result-container">
+        <h3>Last Scanned:</h3>
+        <p id="result-text">None</p>
+      </div>
+    </main>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

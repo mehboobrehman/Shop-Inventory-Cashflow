@@ -1,0 +1,19 @@
+# dms_schema.yaml
+dms_v3_0:
+  decision_id: "ADR-XXX"
+  title: "Selecting Primary Database"
+  date_recorded: "YYYY-MM-DD"
+  project_tier: "Tier_X"
+  
+  context: "Storing user data."
+  alternatives_considered: ["Option A", "Option B"]
+  trade_offs:
+    - "Tradeoff description here."
+  chosen_option: "Chosen Technology"
+  rationale: "Why you chose it."
+  risks:
+    - "Risk. Mitigation."
+  security_impact: "Low/Med/High"
+  rollback_plan: "Path to rollback script."
+  review_date: "YYYY-MM-DD"
+  status: "Active"

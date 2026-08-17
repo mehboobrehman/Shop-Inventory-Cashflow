@@ -1,0 +1,51 @@
+{
+  "name": "shop-inventory-cashflow",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shop Inventory & Account Management System — monorepo root",
+  "workspaces": ["shared", "server", "client"],
+  "scripts": {
+    "dev": "concurrently \"bun run dev:server\" \"bun run dev:client\"",
+    "start:all": "concurrently \"bun run dev:server\" \"bun run dev:client\"",
+    "dev:server": "cd server && bun run dev",
+    "dev:client": "cd client && bun run dev",
+    "install:all": "bun install --ignore-scripts",
+    "server": "cd server && bun run dev",
+    "client": "cd client && bun run dev",
+    "build": "cd server && bun run compile && cd ../client && bun run build",
+    "build:server": "cd server && bun run compile",
+    "build:client": "cd client && bun run build",
+    "build:portable": "node scripts/create-portable-package.js",
+    "package:portable": "node scripts/create-portable-package.js",
+    "typecheck": "cd server && bun run typecheck && cd ../client && bun run typecheck && cd ../shared && bun run typecheck",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node test/e2e_verify.cjs",
+    "start:prod": "node_modules/.bin/pm2 start pm2.config.js",
+    "stop:prod": "node_modules/.bin/pm2 stop pm2.config.js",
+    "restart:prod": "node_modules/.bin/pm2 restart pm2.config.js",
+    "monitor:prod": "node_modules/.bin/pm2 monit",
+    "preview": "node_modules/.bin/pm2 start pm2.config.js"
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "bcryptjs": "^3.0.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.22.0",
+    "pm2": "^7.0.3",
+    "serve": "^14.2.6"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.4",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "typescript": "5.5.4",
+    "@typescript-eslint/parser": "^8.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.2.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2"
+  }
+}

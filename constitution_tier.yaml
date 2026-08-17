@@ -1,0 +1,14 @@
+# AIEC Layer 2 Classification
+project_id: 86e1ebab-bd3d-4994-9ca8-c962d5142e3f
+tier: T1
+classification: Internal Utility
+rigor_level: Standard
+governance:
+  adr_required: true
+  dms_required: true
+  rollback_provision: true
+constraints:
+  data_sensitivity: Financial
+  max_concurrency: 5
+  budget_limit: 0
+  compliance: None

@@ -1,0 +1,8 @@
+# constitution_tier.yaml
+project:
+  name: "My_Project"
+  version: "1.0.0"
+  classification:
+    tier: "Tier_1"
+    assigned_by: "AI_Constitution_v3.0"
+    date_assigned: "YYYY-MM-DD"  # <--- Change to this placeholder

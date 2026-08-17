@@ -1,0 +1,203 @@
+// Prisma schema for Shop Inventory & Account Management System.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ---------------------------------------------------------------------------
+// Models
+// ---------------------------------------------------------------------------
+
+/// User — authentication and authorization.
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("CASHIER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sales     Sale[]
+  auditLogs AuditLog[]
+
+  @@index([role])
+}
+
+/// Product — inventory items for sale.
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  /// Unique barcode (EAN/UPC). Nullable for products without barcodes.
+  barcode       String?  @unique
+  salePrice     Decimal
+  currentStock  Int      @default(0)
+  /// Threshold below which a low-stock alert is triggered.
+  minStockLimit Int      @default(0)
+  /// Soft-delete flag. Inactive products are hidden from default views.
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  stockMovements StockMovement[]
+  saleItems      SaleItem[]
+  lowStockAlerts LowStockAlert[]
+  stocks         Stock[]
+
+  @@index([name])
+  @@index([currentStock])
+}
+
+/// Stock — inventory levels per product and location.
+model Stock {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  location  String
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([location])
+}
+
+/// StockMovement — audit trail of every stock change.
+model StockMovement {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type      String
+  quantity  Int
+  /// Human-readable reason for the movement.
+  reason    String?
+  /// Machine reference, e.g. "SALE:<saleId>" or "MANUAL_IN".
+  reference String?
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+/// Account — JazzCash, Easypaisa, or Bank financial account.
+model Account {
+  id                   String      @id @default(uuid())
+  type                 String
+  name                 String
+  currentBalance       Decimal     @default(0)
+  /// AES-encrypted JSON of Merchant API credentials (if configured).
+  encryptedCredentials String?
+  autoSyncEnabled      Boolean     @default(false)
+  lastSyncAt           DateTime?
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  transactions AccountTransaction[]
+  sales        Sale[]
+
+  @@index([type])
+}
+
+/// AccountTransaction — deposit or withdrawal record with balance tracking.
+model AccountTransaction {
+  id            String            @id @default(uuid())
+  accountId     String
+  account       Account           @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  type          String
+  amount        Decimal
+  /// Balance immediately before this transaction was applied.
+  balanceBefore Decimal
+  /// Balance immediately after this transaction was applied.
+  balanceAfter  Decimal
+  source        String            @default("MANUAL")
+  /// Linked sale if this transaction originated from a sale.
+  saleId        String?
+  sale          Sale?             @relation(fields: [saleId], references: [id], onDelete: SetNull)
+  description   String?
+  createdAt     DateTime          @default(now())
+
+  @@index([accountId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+/// Sale — header record for each sale transaction.
+model Sale {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Account the sale proceeds were deposited into (null for cash/unassigned).
+  accountId   String?
+  account     Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  totalAmount Decimal
+  itemCount   Int
+  createdAt   DateTime @default(now())
+
+  saleItems    SaleItem[]
+  transactions AccountTransaction[]
+
+  @@index([createdAt])
+  @@index([userId])
+  @@index([accountId])
+}
+
+/// SaleItem — individual product line within a sale.
+model SaleItem {
+  id          String  @id @default(uuid())
+  saleId      String
+  sale        Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity    Int
+  /// Unit price at the time of sale (captured for historical accuracy).
+  salePrice   Decimal
+  totalAmount Decimal
+
+  @@index([saleId])
+  @@index([productId])
+}
+
+/// LowStockAlert — tracks products that have fallen below their minimum stock threshold.
+model LowStockAlert {
+  id             String    @id @default(uuid())
+  productId      String
+  product        Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productName    String
+  currentStock   Int
+  minStockLimit  Int
+  /// How many units below the threshold (always >= 1).
+  deficit        Int
+  /// When this alert was first triggered.
+  triggeredAt    DateTime  @default(now())
+  /// Whether this alert has been acknowledged/cleared by a user.
+  isAcknowledged Boolean   @default(false)
+  /// When the alert was acknowledged (null if still active).
+  acknowledgedAt DateTime?
+
+  @@index([productId])
+  @@index([isAcknowledged])
+  @@index([triggeredAt])
+}
+
+/// AuditLog — tracks system events and user actions.
+model AuditLog {
+  id         String   @id @default(uuid())
+  action     String
+  entityType String
+  entityId   String?
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  details    String?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType])
+  @@index([entityId])
+  @@index([userId])
+  @@index([createdAt])
+}

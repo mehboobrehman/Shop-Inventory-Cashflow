@@ -1,0 +1,7 @@
+node_modules
+dist
+dist-portable
+ShopInventory-Portable
+*.cjs
+*.js
+!src/**/*.js

@@ -1,0 +1,8 @@
+node_modules
+dist
+dist-portable
+ShopInventory-Portable
+bun.lock
+package-lock.json
+.github
+*.db
