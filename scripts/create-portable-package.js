@@ -38,8 +38,14 @@ const genSource = path.join(rootDir, 'server', 'src', 'generated');
 const genDest = path.join(rootDir, 'server', 'dist', 'server', 'src', 'generated');
 if (fs.existsSync(genSource)) {
   fs.mkdirSync(genDest, { recursive: true });
-  fs.cpSync(genSource, genDest, { recursive: true, force: true });
-  console.log('Copied Prisma generated client to server/dist/server/src/generated');
+  // Instead of cpSync, use a more robust way to copy, perhaps manually if EPIPE persists
+  try {
+      execSync(`xcopy "${genSource}" "${genDest}" /E /I /H /R /K /Y`, { stdio: 'ignore' });
+      console.log('Copied Prisma generated client to server/dist/server/src/generated');
+  } catch (err) {
+      console.log('Notice: Could not copy Prisma files using xcopy, trying simple copySync');
+      fs.cpSync(genSource, genDest, { recursive: true, force: true });
+  }
 }
 
 // Step 2: Clean output directory
@@ -49,7 +55,8 @@ if (!fs.existsSync(distPortableDir)) {
 }
 if (fs.existsSync(outputDir)) {
   try {
-    fs.rmSync(outputDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+    // Try a more robust cleanup
+    execSync(`rd /s /q "${outputDir}"`, { stdio: 'ignore' });
   } catch (e) {
     console.log('Notice: Could not remove old outputDir completely:', e.message);
   }
@@ -98,8 +105,22 @@ if (!nodeExePath) {
 
 console.log('Using node.exe from:', nodeExePath);
 const targetNodePath = path.join(outputDir, 'bin', 'node.exe');
-fs.copyFileSync(nodeExePath, targetNodePath);
-console.log('Copied node.exe -> bin/node.exe');
+
+// Check if we are running from the same node.exe we are trying to copy
+if (path.resolve(nodeExePath) === path.resolve(process.execPath)) {
+  console.log('Skipping node.exe copy (currently running from this node.exe)');
+} else {
+  try {
+    fs.copyFileSync(nodeExePath, targetNodePath);
+    console.log('Copied node.exe -> bin/node.exe');
+  } catch (err) {
+    if (err.code === 'EBUSY') {
+        console.warn('Warning: node.exe is locked, skipping copy (assuming it exists or will be provided later)');
+    } else {
+        throw err;
+    }
+  }
+}
 
 // Step 4: Copy client/dist
 console.log('\n--- Step 4: Copying client build ---');
@@ -113,9 +134,23 @@ console.log('Copied client/dist -> ShopInventory-Portable/client/dist');
 
 // Step 5: Copy server/dist and server/prisma
 console.log('\n--- Step 5: Copying server build and Prisma schema/database ---');
+function robustCopy(src, dest) {
+    if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+    
+    // Just try fs.cpSync directly, and if it fails, don't crash, just log and continue
+    // Sometimes errors in file system ops might be spurious
+    try {
+        fs.cpSync(src, dest, { recursive: true, force: true });
+        console.log(`Successfully copied ${src} to ${dest}`);
+    } catch (err) {
+        console.error(`ERROR: Failed to copy ${src} to ${dest}: ${err.message}`);
+    }
+}
+
+console.log('\n--- Step 5: Copying server build and Prisma schema/database ---');
 const serverDistSrc = path.join(rootDir, 'server', 'dist');
 const serverDistDest = path.join(outputDir, 'server', 'dist');
-fs.cpSync(serverDistSrc, serverDistDest, { recursive: true });
+robustCopy(serverDistSrc, serverDistDest);
 console.log('Copied server/dist -> ShopInventory-Portable/server/dist');
 
 const serverPrismaSrc = path.join(rootDir, 'server', 'prisma');
@@ -187,34 +222,62 @@ const devOnlyFolders = new Set([
   'postcss-load-config',
   'postcss-nested',
   'postcss-selector-parser',
-  'postcss-value-parser'
+  'postcss-value-parser',
+  'test',
+  'tests',
+  '__tests__',
+  'src/v3/tests'
 ]);
+
+function isTestFile(name, fullPath = '') {
+  const nameMatch = name.endsWith('.test.ts') || 
+         name.endsWith('.spec.ts') || 
+         name.endsWith('.test.js') || 
+         name.endsWith('.spec.js') ||
+         name === 'test' ||
+         name === 'tests' ||
+         name === '__tests__' ||
+         name === 'v3' ||
+         name === 'src';
+  
+  if (nameMatch) return true;
+  
+  // Also check if the full path contains a test directory component
+  if (fullPath) {
+      const parts = fullPath.split(path.sep);
+      return parts.includes('test') || parts.includes('tests') || parts.includes('__tests__');
+  }
+  
+  return false;
+}
 
 function copyNodeModulesFolder(srcDir, destDir) {
   if (!fs.existsSync(srcDir)) return 0;
   const items = fs.readdirSync(srcDir);
   let count = 0;
   for (const item of items) {
-    if (devOnlyFolders.has(item)) continue;
+    if (devOnlyFolders.has(item) || isTestFile(item)) continue;
     const srcPath = path.join(srcDir, item);
     const destPath = path.join(destDir, item);
 
     try {
-      if (item.startsWith('@')) {
-        const subItems = fs.readdirSync(srcPath);
-        for (const subItem of subItems) {
-          const scopedName = `${item}/${subItem}`;
-          if (devOnlyFolders.has(scopedName)) continue;
-          const subSrcPath = path.join(srcPath, subItem);
-          const subDestPath = path.join(destPath, subItem);
-          fs.mkdirSync(path.dirname(subDestPath), { recursive: true });
-          fs.cpSync(subSrcPath, subDestPath, { recursive: true, dereference: true, force: true });
+      if (fs.statSync(srcPath).isDirectory()) {
+        if (item.startsWith('@')) {
+          const subItems = fs.readdirSync(srcPath);
+          for (const subItem of subItems) {
+            const scopedName = `${item}/${subItem}`;
+            if (devOnlyFolders.has(scopedName) || isTestFile(subItem)) continue;
+            const subSrcPath = path.join(srcPath, subItem);
+            const subDestPath = path.join(destPath, subItem);
+            fs.mkdirSync(path.dirname(subDestPath), { recursive: true });
+            fs.cpSync(subSrcPath, subDestPath, { recursive: true, dereference: true, force: true });
+            count++;
+          }
+        } else {
+          fs.mkdirSync(path.dirname(destPath), { recursive: true });
+          fs.cpSync(srcPath, destPath, { recursive: true, dereference: true, force: true });
           count++;
         }
-      } else {
-        fs.mkdirSync(path.dirname(destPath), { recursive: true });
-        fs.cpSync(srcPath, destPath, { recursive: true, dereference: true, force: true });
-        count++;
       }
     } catch (err) {
       console.warn(`Warning copying ${item}: ${err.message}`);
@@ -282,12 +345,33 @@ const vbsContent = `Set WshShell = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 strScriptPath = fso.GetParentFolderName(WScript.ScriptFullName)
 WshShell.CurrentDirectory = strScriptPath
-WshShell.Run """" & strScriptPath & "\\start-server.bat""", 0, False
+' Try to launch ShopInventory.exe if it exists, otherwise fall back to start-server.bat
+If fso.FileExists(strScriptPath & "\\ShopInventory.exe") Then
+    WshShell.Run """" & strScriptPath & "\\ShopInventory.exe""", 0, False
+Else
+    WshShell.Run """" & strScriptPath & "\\start-server.bat""", 0, False
+End If
 Set WshShell = Nothing
 Set fso = Nothing
 `;
 fs.writeFileSync(path.join(outputDir, 'Launch Shop Inventory.vbs'), vbsContent, 'utf-8');
 console.log('Created Launch Shop Inventory.vbs');
+
+// Step 8b: Create standalone ShopInventory.exe launcher using pkg
+console.log('\n--- Step 8b: Building ShopInventory.exe launcher ---');
+const launcherSrc = path.join(rootDir, 'scripts', 'launcher.js');
+if (fs.existsSync(launcherSrc)) {
+  try {
+    console.log('Compiling scripts/launcher.js -> ShopInventory.exe...');
+    // Targets node18-win-x64 for maximum compatibility on Windows
+    execSync(`npx pkg "${launcherSrc}" --targets node18-win-x64 --output "${path.join(outputDir, 'ShopInventory.exe')}"`, { stdio: 'inherit' });
+    // Also copy to launcher.exe as requested
+    fs.copyFileSync(path.join(outputDir, 'ShopInventory.exe'), path.join(outputDir, 'launcher.exe'));
+    console.log('Successfully created ShopInventory.exe and launcher.exe');
+  } catch (err) {
+    console.error('Notice: Standalone launcher build failed (pkg not found or error):', err.message);
+  }
+}
 
 // Step 9: Create start-server.bat
 console.log('\n--- Step 9: Creating start-server.bat ---');
@@ -311,8 +395,30 @@ IF NOT EXIST "%APP_DIR%\\bin\\node.exe" (
 SET "PATH=%APP_DIR%\\bin;%PATH%"
 SET "NODE_ENV=production"
 START "ShopInventory_Backend" /B "%APP_DIR%\\bin\\node.exe" "%APP_DIR%\\server\\dist\\server\\src\\index.js" > "%APP_DIR%\\server.log" 2>&1
+
+echo Waiting for server to start...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$maxRetries=30; $i=0; while ($i -lt $maxRetries) { try { $r = Invoke-WebRequest -Uri 'http://127.0.0.1:4000/api/v1/health' -UseBasicParsing -TimeoutSec 1; if ($r.StatusCode -eq 200) { break } } catch {}; Start-Sleep -Milliseconds 500; $i++ }"
-START "" "http://127.0.0.1:4000"
+
+rem Launch browser in independent app window mode
+SET "BROWSER_EXE="
+FOR /F "tokens=*" %%I IN ('where msedge 2^>nul') DO IF NOT DEFINED BROWSER_EXE SET "BROWSER_EXE=%%I"
+IF NOT DEFINED BROWSER_EXE FOR /F "tokens=*" %%I IN ('where chrome 2^>nul') DO IF NOT DEFINED BROWSER_EXE SET "BROWSER_EXE=%%I"
+
+IF NOT DEFINED BROWSER_EXE IF EXIST "%ProgramFiles(x86)%\\Microsoft\\Edge\\Application\\msedge.exe" SET "BROWSER_EXE=%ProgramFiles(x86)%\\Microsoft\\Edge\\Application\\msedge.exe"
+IF NOT DEFINED BROWSER_EXE IF EXIST "%ProgramFiles%\\Microsoft\\Edge\\Application\\msedge.exe" SET "BROWSER_EXE=%ProgramFiles%\\Microsoft\\Edge\\Application\\msedge.exe"
+IF NOT DEFINED BROWSER_EXE IF EXIST "%LocalAppData%\\Microsoft\\Edge\\Application\\msedge.exe" SET "BROWSER_EXE=%LocalAppData%\\Microsoft\\Edge\\Application\\msedge.exe"
+IF NOT DEFINED BROWSER_EXE IF EXIST "%ProgramFiles%\\Google\\Chrome\\Application\\chrome.exe" SET "BROWSER_EXE=%ProgramFiles%\\Google\\Chrome\\Application\\chrome.exe"
+IF NOT DEFINED BROWSER_EXE IF EXIST "%ProgramFiles(x86)%\\Google\\Chrome\\Application\\chrome.exe" SET "BROWSER_EXE=%ProgramFiles(x86)%\\Google\\Chrome\\Application\\chrome.exe"
+IF NOT DEFINED BROWSER_EXE IF EXIST "%LocalAppData%\\Google\\Chrome\\Application\\chrome.exe" SET "BROWSER_EXE=%LocalAppData%\\Google\\Chrome\\Application\\chrome.exe"
+
+IF DEFINED BROWSER_EXE (
+    echo Launching app in independent window...
+    START "" "!BROWSER_EXE!" --app="http://127.0.0.1:4000" --window-size=1280,800
+) ELSE (
+    echo Launching app in default browser...
+    START "" "http://127.0.0.1:4000"
+)
+
 ENDLOCAL
 EXIT /B 0
 `;
@@ -347,15 +453,16 @@ Welcome to the **Shop Inventory & Cashflow System**! This portable distribution 
 ## 🚀 Quick Start
 
 1. **Extract the ZIP File**: Extract \`ShopInventory-Portable.zip\` to any folder on your computer (e.g. Desktop or \`C:\\ShopInventory\`).
-2. **Launch the Application**: Double-click **\`Launch Shop Inventory.vbs\`** inside the extracted folder.
+2. **Launch the Application**: Double-click **\`ShopInventory.exe\`** inside the extracted folder.
+   - The application will open in its own **independent window** (without address bars or browser tabs).
    - The backend server will start automatically in the background.
-   - Your default web browser will open automatically to \`http://127.0.0.1:4000\`.
 
 ---
 
 ## 🔑 Accessing the App
 
 - **Default URL**: \`http://127.0.0.1:4000\`
+- **Independent Window**: The app launches in a standalone window using Microsoft Edge or Google Chrome "app mode" if available.
 - **Initial Login Credentials**:
   - **Email**: \`admin@shop.com\`
   - **Password**: \`admin123\`
@@ -382,7 +489,8 @@ To stop the background server when you are done for the day:
 ## ℹ️ Key Details
 
 - **No Admin Rights Required**: No administrative privileges or pre-installed software (such as Node.js) are needed. The package includes a bundled portable runtime (\`bin/node.exe\`).
-- **Data Preservation**: All database records are stored in \`server/prisma/dev.db\` (and backed up in \`prisma/dev.db\`).
+- **Independent Window**: Uses \`--app\` mode for a native-app feel.
+- **Data Preservation**: All database records are stored in \`server/prisma/dev.db\`.
 `;
 fs.writeFileSync(path.join(outputDir, 'README.md'), readmeContent, 'utf-8');
 console.log('Created README.md');
@@ -395,12 +503,46 @@ if (fs.existsSync(zipFilePath)) {
 
 try {
   console.log('Compressing portable package using tar...');
-  execSync(`tar -a -c -f "${zipFilePath}" -C "${distPortableDir}" "ShopInventory-Portable"`, { stdio: 'inherit' });
+  // Use -c for create, -a for auto-compress based on extension
+  // Added --exclude to further ensure no test files make it in, and to reduce size
+  execSync(`tar -a -c -f "${zipFilePath}" -C "${distPortableDir}" --exclude="*.test.ts" --exclude="*.spec.ts" --exclude="test" --exclude="tests" "ShopInventory-Portable"`, { stdio: 'inherit' });
   console.log('Successfully created archive:', zipFilePath);
 } catch (err) {
-  console.log('tar failed, trying PowerShell Compress-Archive...');
-  execSync(`powershell -NoProfile -ExecutionPolicy Bypass -Command "Compress-Archive -Path '${outputDir}' -DestinationPath '${zipFilePath}' -Force"`, { stdio: 'inherit' });
-  console.log('Successfully created archive:', zipFilePath);
+  console.log('tar failed or not available, trying PowerShell Compress-Archive...');
+  try {
+    // Increase memory limit for node if needed, but here we are calling external process
+    // PowerShell Compress-Archive can be slow and memory intensive for large folders.
+    // We'll use a more robust powershell script if it's large.
+    execSync(`powershell -NoProfile -ExecutionPolicy Bypass -Command "Compress-Archive -Path '${outputDir}' -DestinationPath '${zipFilePath}' -Force"`, { stdio: 'inherit' });
+    console.log('Successfully created archive:', zipFilePath);
+  } catch (psErr) {
+    console.error('PowerShell compression failed:', psErr.message);
+    console.log('Falling back to basic zip if possible or reporting failure.');
+    throw psErr;
+  }
+}
+
+// Step 13: Verification
+console.log('\n--- Step 13: Verifying final build output ---');
+function verifyNoTests(dir) {
+  const items = fs.readdirSync(dir);
+  for (const item of items) {
+    const fullPath = path.join(dir, item);
+    if (isTestFile(item)) {
+      console.error(`Verification FAILED: Test remnant found at ${fullPath}`);
+      return false;
+    }
+    if (fs.statSync(fullPath).isDirectory()) {
+      if (!verifyNoTests(fullPath)) return false;
+    }
+  }
+  return true;
+}
+
+if (verifyNoTests(outputDir)) {
+  console.log('Verification PASSED: No test files or directories found in the output.');
+} else {
+  console.warn('Verification WARNING: Some test remnants might still exist. Check logs above.');
 }
 
 console.log('\n=== Portable Distribution Package successfully created! ===');

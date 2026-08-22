@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 import authRoutes from './auth/auth.routes';
 import productRoutes from './product/product.routes';
 import stockRoutes from './stock/stock.routes';
@@ -22,12 +23,31 @@ export function createApp(): express.Application {
   app.use(cookieParser());
 
   // Health check endpoint
-  app.get('/api/v1/health', (_req: Request, res: Response) => {
+  app.get('/api/v1/health', (req: Request, res: Response) => {
+    let serverIp = '127.0.0.1';
+    const interfaces = os.networkInterfaces();
+    for (const name of Object.keys(interfaces)) {
+      const ifaces = interfaces[name];
+      if (ifaces) {
+        for (const iface of ifaces) {
+          if (iface.family === 'IPv4' && !iface.internal) {
+            serverIp = iface.address;
+            break;
+          }
+        }
+      }
+      if (serverIp !== '127.0.0.1') break;
+    }
+
+    const serverPort = process.env.PORT || req.socket?.localPort || 3000;
+
     res.json({
       success: true,
       data: {
         status: 'ok',
         timestamp: new Date().toISOString(),
+        serverIp,
+        serverPort,
       },
     });
   });

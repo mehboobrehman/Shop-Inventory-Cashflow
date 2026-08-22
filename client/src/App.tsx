@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { Layout } from './components/Layout';
+import { ServerStatusBadge } from './components/ServerStatusBadge';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
@@ -23,6 +24,7 @@ const AppShell: React.FC = () => {
     <Router>
       <AuthProvider>
         <ToastContainer />
+        <ServerStatusBadge />
         <Layout>
           <Routes>
             {/* Public routes */}
