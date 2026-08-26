@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Shop Inventory Companion",
+    "slug": "shop-inventory-companion",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.shopinventory.companion"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      },
+      "package": "com.shopinventory.companion",
+      "permissions": [
+        "CAMERA",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to scan barcodes and QR codes."
+        }
+      ],
+      "expo-barcode-scanner"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7bae29c4-47ff-461c-9b8b-190b03201aa8"
+      }
+    }
+  }
+}
