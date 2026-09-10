@@ -1,7 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Vibration, Platform } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Vibration } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { StatusBar } from 'expo-status-bar';
+import { initDevHarness, DevMenuOverlay } from './dev-harness';
+
+// Initialize telemetry harness (active only in dev)
+initDevHarness({ autoDiscoverOnStart: true });
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -53,7 +57,7 @@ export default function App() {
     }
   };
 
-  const handleBarCodeScanned = ({ type, data }: { type: string, data: string }) => {
+  const handleBarCodeScanned = ({ data }: { type: string, data: string }) => {
     setScanned(true);
     setLastScanned(data);
     Vibration.vibrate();
@@ -134,6 +138,8 @@ export default function App() {
            </TouchableOpacity>
         )}
       </View>
+
+      <DevMenuOverlay />
     </View>
   );
 }
