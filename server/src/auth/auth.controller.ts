@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { ZodError, z } from 'zod';
-import { LoginResponse } from '@shop/shared';
 import { AuthService } from './auth.service';
 
 const authService = new AuthService();
@@ -104,7 +103,7 @@ export class AuthController {
 
       return res.json({
         success: true,
-        data: { user },
+        data: { user, token },
         message: 'Login successful',
       });
     } catch (error) {

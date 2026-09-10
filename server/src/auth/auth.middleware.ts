@@ -5,8 +5,12 @@ import { JWTPayload } from '@shop/shared';
 
 export class AuthMiddleware {
   authenticate(req: Request, res: Response, next: NextFunction) {
-    // Extract token from cookie
-    const token = req.cookies.token;
+    // Extract token from Authorization header or cookie
+    const authHeader = req.headers.authorization;
+    const token = (authHeader && authHeader.startsWith('Bearer '))
+      ? authHeader.substring(7)
+      : req.cookies?.token;
+
     if (!token) {
       return res.status(401).json({
         success: false,
