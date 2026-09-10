@@ -2,6 +2,7 @@
   "expo": {
     "name": "Shop Inventory Companion",
     "slug": "shop-inventory-companion",
+    "scheme": "shopinventory",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,8 +26,7 @@
         "CAMERA",
         "INTERNET",
         "ACCESS_NETWORK_STATE",
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
+        "RECORD_AUDIO"
       ]
     },
     "web": {
