@@ -6,12 +6,13 @@ import { ApiResponse, LoginRequest, LoginResponseData, User } from '../types/aut
 const DEFAULT_PORT = 4000;
 
 export const resolveBaseUrl = (customInput?: string | null): string => {
-  if (!customInput || !customInput.trim()) {
+  const urlToResolve = customInput || process.env.EXPO_PUBLIC_API_URL;
+  if (!urlToResolve || !urlToResolve.trim()) {
     const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
     return `http://${host}:${DEFAULT_PORT}/api/v1`;
   }
 
-  let input = customInput.trim();
+  let input = urlToResolve.trim();
 
   // Ensure protocol prefix
   if (!input.startsWith('http://') && !input.startsWith('https://')) {
