@@ -10,7 +10,7 @@
  * - Silent 2s timeout to never block UI thread or crash the host app
  */
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
 export type LogLevel = 'VERBOSE' | 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
@@ -138,8 +138,8 @@ class TelemetryManager {
 
   private async initStorage(): Promise<void> {
     try {
-      const cachedIp = await AsyncStorage.getItem(STORAGE_KEY_SERVER_IP);
-      const cachedPort = await AsyncStorage.getItem(STORAGE_KEY_SERVER_PORT);
+      const cachedIp = await SecureStore.getItemAsync(STORAGE_KEY_SERVER_IP);
+      const cachedPort = await SecureStore.getItemAsync(STORAGE_KEY_SERVER_PORT);
       if (cachedIp) {
         this.serverIp = cachedIp;
       }
@@ -187,8 +187,8 @@ class TelemetryManager {
     this.serverIp = ip.trim();
     this.serverPort = port;
     try {
-      await AsyncStorage.setItem(STORAGE_KEY_SERVER_IP, this.serverIp);
-      await AsyncStorage.setItem(STORAGE_KEY_SERVER_PORT, String(this.serverPort));
+      await SecureStore.setItemAsync(STORAGE_KEY_SERVER_IP, this.serverIp);
+      await SecureStore.setItemAsync(STORAGE_KEY_SERVER_PORT, String(this.serverPort));
     } catch {
       // Ignore storage errors
     }

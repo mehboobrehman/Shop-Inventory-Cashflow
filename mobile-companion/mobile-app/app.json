@@ -38,8 +38,7 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to scan barcodes and QR codes."
         }
-      ],
-      "expo-barcode-scanner"
+      ]
     ],
     "extra": {
       "eas": {

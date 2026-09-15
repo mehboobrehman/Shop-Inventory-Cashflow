@@ -18,6 +18,22 @@ allprojects {
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
   }
+
+  afterEvaluate { project ->
+    if (project.plugins.hasPlugin('com.android.application') || project.plugins.hasPlugin('com.android.library')) {
+      project.android {
+        externalNativeBuild {
+          cmake {
+            buildStagingDirectory = file("C:/Temp/build-cxx/${project.name.replaceAll('\\s+', '_')}")
+          }
+        }
+      }
+    }
+  }
+}
+
+subprojects {
+  buildDir = file("C:/Temp/gb/${project.name.replaceAll('\\s+', '_')}")
 }
 
 apply plugin: "expo-root-project"
