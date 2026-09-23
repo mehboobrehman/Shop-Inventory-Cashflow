@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,12 +17,30 @@ import AccountTransactionsPage from './pages/AccountTransactionsPage';
 import SalesHistoryPage from './pages/SalesHistoryPage';
 import CashflowPage from './pages/CashflowPage';
 import DashboardPage from './pages/DashboardPage';
+import { useAppVersion } from './hooks/useAppVersion';
+import { useStaleClientCheck } from './hooks/useStaleClientCheck';
+
+// Route change tracker component for hooks
+const AppVersionAndStaleWatcher: React.FC = () => {
+  useAppVersion();
+  useStaleClientCheck();
+  const location = useLocation();
+
+  // Also trigger an immediate check on route changes if desired
+  React.useEffect(() => {
+    // Route change event logged or checked
+    console.debug(`[Router] Route changed to ${location.pathname}`);
+  }, [location]);
+
+  return null;
+};
 
 // App Shell with Auth & Responsive Layout
 const AppShell: React.FC = () => {
   return (
     <Router>
       <AuthProvider>
+        <AppVersionAndStaleWatcher />
         <ToastContainer />
         <ServerStatusBadge />
         <Layout>

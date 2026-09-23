@@ -201,9 +201,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </nav>
 
         {/* Footer info in sidebar */}
-        <div className="pt-4 border-t border-gray-700 text-xs text-gray-400 flex items-center justify-between">
-          <span>Mode: {isPinned ? 'Pinned' : 'Auto-hide'}</span>
-          <span className="text-[10px] text-gray-500">v1.0</span>
+        <div className="pt-4 border-t border-gray-700 text-xs text-gray-400 space-y-1">
+          <div className="flex items-center justify-between">
+            <span className="font-semibold text-gray-300">
+              v{typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '1.0.0'}
+            </span>
+            <span className="font-mono text-[10px] bg-gray-900 px-1.5 py-0.5 rounded text-gray-400" title={`Commit: ${typeof __GIT_COMMIT_HASH__ !== 'undefined' ? __GIT_COMMIT_HASH__ : 'dev'}`}>
+              {typeof __GIT_COMMIT_HASH__ !== 'undefined' ? __GIT_COMMIT_HASH__.substring(0, 7) : 'dev'}
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-[10px] text-gray-500">
+            <span>Env: {typeof __ENVIRONMENT__ !== 'undefined' ? __ENVIRONMENT__ : 'prod'}</span>
+            <span>Mode: {isPinned ? 'Pinned' : 'Auto'}</span>
+          </div>
         </div>
       </aside>
     </>
