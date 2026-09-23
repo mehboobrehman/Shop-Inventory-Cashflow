@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
+import type { VersionInfo } from '@shop/shared';
 import authRoutes from './auth/auth.routes';
 import productRoutes from './product/product.routes';
 import stockRoutes from './stock/stock.routes';
@@ -11,6 +12,51 @@ import lowStockRoutes from './lowStock/lowStock.routes';
 import dashboardRoutes from './dashboard/dashboard.routes';
 import accountRoutes from './account/account.routes';
 import salesRoutes from './sales/sales.routes';
+
+function getVersionInfo(): VersionInfo {
+  const possiblePaths = [
+    path.resolve(process.cwd(), 'version.json'),
+    path.resolve(process.cwd(), '../version.json'),
+    path.resolve(__dirname, '../../version.json'),
+    path.resolve(__dirname, '../version.json'),
+    path.resolve(__dirname, 'version.json'),
+  ];
+
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      try {
+        const info = JSON.parse(fs.readFileSync(p, 'utf-8'));
+        if (info && info.version) {
+          return info as VersionInfo;
+        }
+      } catch (err) {
+        // Continue searching
+      }
+    }
+  }
+
+  // Fallback if version.json is missing or corrupt
+  let version = '1.0.0';
+  try {
+    const rootPkgPath = path.resolve(process.cwd(), 'package.json');
+    if (fs.existsSync(rootPkgPath)) {
+      const pkg = JSON.parse(fs.readFileSync(rootPkgPath, 'utf-8'));
+      version = pkg.version || '1.0.0';
+    }
+  } catch (err) {
+    // Ignore fallback errors
+  }
+
+  const commitHash = process.env.GIT_COMMIT_HASH || 'dev';
+  return {
+    version,
+    build: `${version}+build.${commitHash}`,
+    commitHash,
+    buildTimestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+  };
+}
+
 
 export function createApp(): express.Application {
   const app = express();
@@ -22,8 +68,25 @@ export function createApp(): express.Application {
   app.use(express.json());
   app.use(cookieParser());
 
-  // Health check endpoint
-  app.get('/api/v1/health', (req: Request, res: Response) => {
+  const versionInfo = getVersionInfo();
+
+  // Attach X-App-Version and X-Build-Id response headers to all API responses
+  app.use((_req: Request, res: Response, next: NextFunction) => {
+    res.setHeader('X-App-Version', versionInfo.build);
+    res.setHeader('X-Build-Id', versionInfo.commitHash);
+    next();
+  });
+
+  // Version endpoint returning complete version metadata
+  app.get('/api/v1/version', (_req: Request, res: Response) => {
+    res.json({
+      success: true,
+      data: versionInfo,
+    });
+  });
+
+  // Health check endpoint including version metadata
+  app.get('/api/v1/health', (_req: Request, res: Response) => {
     let serverIp = '127.0.0.1';
     const interfaces = os.networkInterfaces();
     for (const name of Object.keys(interfaces)) {
@@ -39,7 +102,7 @@ export function createApp(): express.Application {
       if (serverIp !== '127.0.0.1') break;
     }
 
-    const serverPort = process.env.PORT || req.socket?.localPort || 3000;
+    const serverPort = process.env.PORT || _req.socket?.localPort || 3000;
 
     res.json({
       success: true,
@@ -48,6 +111,12 @@ export function createApp(): express.Application {
         timestamp: new Date().toISOString(),
         serverIp,
         serverPort,
+        version: versionInfo.version,
+        build: versionInfo.build,
+        commitHash: versionInfo.commitHash,
+        buildTimestamp: versionInfo.buildTimestamp,
+        environment: versionInfo.environment,
+        versionInfo,
       },
     });
   });

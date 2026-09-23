@@ -14,6 +14,7 @@ export type {
   PaginationParams,
   PaginationMeta,
   PaginatedData,
+  VersionInfo,
 } from './common';
 
 // API envelope
