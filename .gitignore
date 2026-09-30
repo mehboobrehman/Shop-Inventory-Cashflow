@@ -4,6 +4,24 @@ node_modules/
 # Build output
 dist/
 build/
+dist-portable/
+release/
+
+# Binaries and archives
+*.apk
+*.aab
+*.zip
+*.tar.gz
+*.exe
+
+# Mobile Companion
+mobile-companion/mobile-app/.expo/
+mobile-companion/mobile-app/web-build/
+mobile-companion/mobile-app/android/.gradle/
+mobile-companion/mobile-app/android/build/
+mobile-companion/mobile-app/android/app/build/
+mobile-companion/mobile-app/node_modules/
+mobile-companion/mobile-app/logs/
 
 # Prisma generated client
 server/src/generated/
