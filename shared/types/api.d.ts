@@ -26,4 +26,5 @@ export type ApiPaginatedResponse<T> = ApiResponse<{
     items: T[];
     pagination: import('./common').PaginationMeta;
 }>;
+export type { VersionInfo } from './common';
 //# sourceMappingURL=api.d.ts.map

@@ -1,6 +1,6 @@
 {
   "name": "@shop/server",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Express + Prisma + TypeScript backend for Shop Inventory & Account Management System",
   "scripts": {

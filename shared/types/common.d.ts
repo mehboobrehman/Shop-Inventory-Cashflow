@@ -29,4 +29,12 @@ export interface PaginatedData<T> {
     items: T[];
     pagination: PaginationMeta;
 }
+/** Metadata describing application version and build parameters. */
+export interface VersionInfo {
+    version: string;
+    build: string;
+    commitHash: string;
+    buildTimestamp: ISODateString;
+    environment: string;
+}
 //# sourceMappingURL=common.d.ts.map

@@ -3,7 +3,7 @@
  * Import from `@shop/shared` or relative path to this index.
  */
 export { AccountType, TransactionType, TransactionSource, UserRole, StockMovementType } from './enums';
-export type { ISODateString, UUID, Money, PaginationParams, PaginationMeta, PaginatedData, } from './common';
+export type { ISODateString, UUID, Money, PaginationParams, PaginationMeta, PaginatedData, VersionInfo, } from './common';
 export type { ApiError, ApiResponse, ApiPaginatedResponse } from './api';
 export type { User, LoginRequest, RegisterRequest, LoginResponse, JWTPayload, } from './auth';
 export type { Product, CreateProductDTO, UpdateProductDTO, ProductQueryParams, } from './product';
