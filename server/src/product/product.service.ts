@@ -26,46 +26,83 @@ export class ProductService {
 
   async getProducts(params: ProductQueryParams): Promise<PaginatedData<Product>> {
     const { search, lowStock, page = 1, limit = 10 } = params;
-    
-    // Build where clause
+    const skip = (page - 1) * limit;
+
+    // Build search and lowStock conditions for SQL / Prisma
+    // We want robust database-level pagination and counting for low stock as well.
+    if (lowStock) {
+      // Build dynamic where conditions for raw query
+      let searchCondition = '';
+      const queryParams: any[] = [];
+
+      if (search) {
+        searchCondition = `AND ("name" LIKE ? OR "barcode" LIKE ?)`;
+        queryParams.push(`%${search}%`, `%${search}%`);
+      }
+
+      // Count query
+      const countSql = `
+        SELECT CAST(COUNT(*) AS INTEGER) as count
+        FROM "Product"
+        WHERE "isActive" = 1
+          AND "minStockLimit" > 0
+          AND "currentStock" <= "minStockLimit"
+          ${searchCondition}
+      `;
+      const countResult = await prisma.$queryRawUnsafe<Array<{ count: number }>>(countSql, ...queryParams);
+      const total = Number(countResult[0]?.count ?? 0);
+      const totalPages = Math.ceil(total / limit);
+
+      // Data query with LIMIT and OFFSET
+      const dataSql = `
+        SELECT *
+        FROM "Product"
+        WHERE "isActive" = 1
+          AND "minStockLimit" > 0
+          AND "currentStock" <= "minStockLimit"
+          ${searchCondition}
+        ORDER BY "name" ASC
+        LIMIT ? OFFSET ?
+      `;
+      const products = await prisma.$queryRawUnsafe<Array<any>>(dataSql, ...queryParams, limit, skip);
+
+      return {
+        items: products.map(this.mapToProductResponse),
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages,
+        },
+      };
+    }
+
+    // Standard product query (when lowStock is false)
     const where: any = { isActive: true };
-    
     if (search) {
       where.OR = [
         { name: { contains: search } },
         { barcode: { contains: search } },
       ];
     }
-    
-    if (lowStock) {
-      // Get all products that might be low stock (with minStockLimit > 0)
-      where.minStockLimit = { gt: 0 };
-    }
-    
-    // Get total count for pagination
+
     const total = await prisma.product.count({ where });
     const totalPages = Math.ceil(total / limit);
-    
-    // Get paginated products
+
     const products = await prisma.product.findMany({
       where,
-      skip: (page - 1) * limit,
+      skip,
       take: limit,
       orderBy: { name: 'asc' },
     });
-    
-    // Filter in memory for lowStock to compare currentStock < minStockLimit
-    const filteredProducts = lowStock 
-      ? products.filter(p => p.currentStock < p.minStockLimit)
-      : products;
-    
+
     return {
-      items: filteredProducts.map(this.mapToProductResponse),
+      items: products.map(this.mapToProductResponse),
       pagination: {
         page,
         limit,
-        total: lowStock ? filteredProducts.length : total,
-        totalPages: lowStock ? Math.ceil(filteredProducts.length / limit) : totalPages,
+        total,
+        totalPages,
       },
     };
   }

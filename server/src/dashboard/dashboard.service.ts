@@ -12,15 +12,26 @@ function decimalToNumber(value: any): number {
  * Calculate total stock value: sum(salePrice * currentStock) for all active products.
  */
 export async function getTotalStockValue(): Promise<number> {
-  const products = await prisma.product.findMany({
-    where: { isActive: true },
-    select: {
+  const result = await prisma.product.aggregate({
+    _sum: {
       salePrice: true,
-      currentStock: true,
+      currentStock: true
     },
+    where: { isActive: true }
   });
-  const total = products.reduce((sum, p) => sum + decimalToNumber(p.salePrice) * p.currentStock, 0);
-  return total;
+
+  if (result._sum.salePrice === null || result._sum.currentStock === null) {
+    return 0;
+  }
+
+  // Prisma's aggregate for sum of (A * B) is not directly available.
+  // We need to use a raw query for this calculation.
+  const rawResult = await prisma.$queryRaw<Array<{ total: number }>>`
+    SELECT CAST(SUM(\"salePrice\" * \"currentStock\") AS REAL) AS total
+    FROM \"Product\"
+    WHERE \"isActive\" = TRUE
+  `;
+  return Number(rawResult[0]?.total ?? 0);
 }
 
 /**
@@ -41,13 +52,12 @@ export async function getLowStockCount(): Promise<number> {
  * Get total account balance: sum of currentBalance across all accounts.
  */
 export async function getTotalAccountBalance(): Promise<number> {
-  const accounts = await prisma.account.findMany({
-    select: {
+  const result = await prisma.account.aggregate({
+    _sum: {
       currentBalance: true,
     },
   });
-  const total = accounts.reduce((sum, a) => sum + decimalToNumber(a.currentBalance), 0);
-  return total;
+  return decimalToNumber(result._sum.currentBalance ?? 0);
 }
 
 /**
@@ -59,20 +69,24 @@ export async function getTodaysSales(): Promise<{ total: number; count: number }
   const endOfDay = new Date();
   endOfDay.setHours(23, 59, 59, 999);
 
-  const sales = await prisma.sale.findMany({
+  const result = await prisma.sale.aggregate({
+    _sum: {
+      totalAmount: true,
+    },
+    _count: {
+      id: true,
+    },
     where: {
       createdAt: {
         gte: startOfDay,
         lte: endOfDay,
       },
     },
-    select: {
-      totalAmount: true,
-    },
   });
 
-  const total = sales.reduce((sum, s) => sum + decimalToNumber(s.totalAmount), 0);
-  return { total, count: sales.length };
+  const total = decimalToNumber(result._sum.totalAmount ?? 0);
+  const count = result._count.id;
+  return { total, count };
 }
 
 /**
@@ -123,37 +137,38 @@ export async function getRecentSales(limit: number = 10): Promise<Sale[]> {
  * Days with no sales will still be included with total = 0.
  */
 export async function getSalesTrend(days: number = 7): Promise<SalesTrendData[]> {
-  const result: SalesTrendData[] = [];
   const today = new Date();
-  // Start from (today - days + 1) to include today
+  const startDate = new Date(today);
+  startDate.setDate(startDate.getDate() - (days - 1));
+  startDate.setHours(0, 0, 0, 0);
+
+  const endDate = new Date(today);
+  endDate.setHours(23, 59, 59, 999);
+
+  // Fetch all sales within the range in a single query and group by date using SQLite strftime
+  const rawSales = await prisma.$queryRaw<Array<{ dateStr: string; total: number }>>`
+    SELECT strftime('%Y-%m-%d', "createdAt") as dateStr, CAST(SUM("totalAmount") AS REAL) as total
+    FROM "Sale"
+    WHERE "createdAt" >= ${startDate} AND "createdAt" <= ${endDate}
+    GROUP BY dateStr
+  `;
+
+  const salesMap = new Map<string, number>();
+  for (const row of rawSales) {
+    salesMap.set(row.dateStr, Number(row.total ?? 0));
+  }
+
+  const result: SalesTrendData[] = [];
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
-    // Set start and end of this day
-    const dayStart = new Date(date);
-    dayStart.setHours(0, 0, 0, 0);
-    const dayEnd = new Date(date);
-    dayEnd.setHours(23, 59, 59, 999);
-
-    // Sum sales for this day
-    const sales = await prisma.sale.findMany({
-      where: {
-        createdAt: {
-          gte: dayStart,
-          lte: dayEnd,
-        },
-      },
-      select: {
-        totalAmount: true,
-      },
-    });
-
-    const dailyTotal = sales.reduce((sum, s) => sum + decimalToNumber(s.totalAmount), 0);
+    const dateStr = date.toISOString().split('T')[0]!;
     result.push({
-      date: date.toISOString().split('T')[0]!, // YYYY-MM-DD
-      total: dailyTotal,
+      date: dateStr,
+      total: salesMap.get(dateStr) || 0,
     });
   }
+
   return result;
 }
 

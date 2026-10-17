@@ -1,5 +1,7 @@
 import express, { type Request, type Response, type NextFunction } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import fs from 'fs';
@@ -61,10 +63,27 @@ function getVersionInfo(): VersionInfo {
 export function createApp(): express.Application {
   const app = express();
 
+const clientUrl = process.env.CLIENT_URL ?? 'http://localhost:5173'; // Default to Vite's default port
+
   app.use(cors({
-    origin: true,
+    origin: clientUrl,
     credentials: true,
   }));
+
+  // Security Headers
+  app.use(helmet());
+
+  // Rate Limiting for login endpoint
+  const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // Limit each IP to 5 requests per windowMs
+    message: 'Too many login attempts from this IP, please try again after 15 minutes',
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  });
+  app.use('/api/v1/auth/login', loginLimiter);
+
+  // Other middleware
   app.use(express.json());
   app.use(cookieParser());
 
