@@ -1,39 +1,35 @@
-import axios from 'axios';
-import { DashboardStats, SalesTrendData, Sale } from '@shop/shared';
+import apiClient from './apiClient';
+import { DashboardStats, LowStockAlert, SalesTrendData, Sale } from '@shop/shared';
 
-// Create axios instance with auth interceptor
-const api = axios.create({
-  baseURL: '/api/v1',
-  withCredentials: true,
-});
-
-/**
- * Fetch dashboard aggregate stats.
- */
 export const getDashboardStats = async (): Promise<DashboardStats> => {
-  const response = await api.get('/dashboard/stats');
+  const response = await apiClient.get('/dashboard/stats');
   return response.data.data;
 };
 
-/**
- * Fetch recent sales (last 10).
- */
-export const getRecentSales = async (): Promise<Sale[]> => {
-  const response = await api.get('/dashboard/recent-sales');
+export const getLowStockItems = async (): Promise<LowStockAlert[]> => {
+  const response = await apiClient.get('/dashboard/low-stock');
   return response.data.data;
 };
 
-/**
- * Fetch sales trend data for chart.
- * @param days - 7 or 30 (default 7)
- */
-export const getSalesTrend = async (days: number = 7): Promise<SalesTrendData[]> => {
-  const response = await api.get(`/dashboard/sales-trend?days=${days}`);
+export const getCashflowSummary = async (days = 30): Promise<SalesTrendData[]> => {
+  const response = await apiClient.get('/dashboard/cashflow', { params: { days } });
+  return response.data.data;
+};
+
+export const getRecentSales = async (limit = 10): Promise<Sale[]> => {
+  const response = await apiClient.get('/dashboard/recent-sales', { params: { limit } });
+  return response.data.data;
+};
+
+export const getSalesTrend = async (days = 7): Promise<SalesTrendData[]> => {
+  const response = await apiClient.get('/dashboard/sales-trend', { params: { days } });
   return response.data.data;
 };
 
 export default {
   getDashboardStats,
+  getLowStockItems,
+  getCashflowSummary,
   getRecentSales,
   getSalesTrend,
 };

@@ -1,102 +1,110 @@
-import axios, { InternalAxiosRequestConfig, AxiosError } from 'axios';
-import { Account, CreateAccountDTO, UpdateAccountDTO, DepositDTO, WithdrawalDTO, AccountTransaction, PaginationMeta } from '@shop/shared';
+import apiClient from './apiClient';
+import { Account, AccountTransaction } from '@shop/shared';
 
-// Create axios instance with auth interceptor
-const api = axios.create({
-  baseURL: '/api/v1',
-  withCredentials: true,
-});
+export interface CreateAccountDTO {
+  type: string;
+  name: string;
+  initialBalance?: number;
+  credentials?: {
+    merchantId?: string;
+    apiKey?: string;
+    secret?: string;
+  };
+}
 
-interface AccountTransactionListResponse {
+export interface UpdateAccountDTO {
+  name?: string;
+  autoSyncEnabled?: boolean;
+  credentials?: {
+    merchantId?: string;
+    apiKey?: string;
+    secret?: string;
+  };
+}
+
+export interface TransferDTO {
+  sourceAccountId: string;
+  destinationAccountId: string;
+  amount: number;
+  description?: string;
+}
+
+export interface AccountTransactionQuery {
+  type?: string;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface AccountTransactionResult {
   items: AccountTransaction[];
-  pagination: PaginationMeta;
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
   summary: {
     totalDeposits: number;
     totalWithdrawals: number;
   };
 }
 
-/**
- * Fetch all accounts.
- */
 export const getAccounts = async (): Promise<Account[]> => {
-  const response = await api.get('/accounts');
+  const response = await apiClient.get('/accounts');
   return response.data.data;
 };
 
-/**
- * Fetch single account by ID.
- */
 export const getAccountById = async (id: string): Promise<Account> => {
-  const response = await api.get(`/accounts/${id}`);
+  const response = await apiClient.get(`/accounts/${id}`);
   return response.data.data;
 };
 
-/**
- * Create a new account.
- */
 export const createAccount = async (data: CreateAccountDTO): Promise<Account> => {
-  const response = await api.post('/accounts', data);
+  const response = await apiClient.post('/accounts', data);
   return response.data.data;
 };
 
-/**
- * Update account settings and credentials.
- */
-export const updateAccount = async (
-  id: string, 
-  data: UpdateAccountDTO & { credentials?: { merchantId?: string; apiKey?: string; secret?: string } }
-): Promise<Account> => {
-  const response = await api.put(`/accounts/${id}`, data);
+export const updateAccount = async (id: string, data: UpdateAccountDTO): Promise<Account> => {
+  const response = await apiClient.put(`/accounts/${id}`, data);
   return response.data.data;
 };
 
-/**
- * Record a manual deposit.
- */
-export const deposit = async (id: string, data: DepositDTO): Promise<{ account: Account; transaction: any }> => {
-  const response = await api.post(`/accounts/${id}/deposit`, data);
+export const deposit = async (id: string, data: { amount: number; description?: string } | number): Promise<{ account: Account; transaction: AccountTransaction }> => {
+  const payload = typeof data === 'number' ? { amount: data } : data;
+  const response = await apiClient.post(`/accounts/${id}/deposit`, payload);
   return response.data.data;
 };
 
-/**
- * Record a manual withdrawal.
- */
-export const withdraw = async (id: string, data: WithdrawalDTO): Promise<{ account: Account; transaction: any }> => {
-  const response = await api.post(`/accounts/${id}/withdraw`, data);
+export const withdraw = async (id: string, data: { amount: number; description?: string } | number): Promise<{ account: Account; transaction: AccountTransaction }> => {
+  const payload = typeof data === 'number' ? { amount: data } : data;
+  const response = await apiClient.post(`/accounts/${id}/withdraw`, payload);
   return response.data.data;
 };
 
-/**
- * Trigger account sync simulation.
- */
-export const syncAccount = async (id: string): Promise<{ message: string; fallback: boolean }> => {
-  const response = await api.post(`/accounts/${id}/sync`);
+export const syncAccount = async (id: string): Promise<any> => {
+  const response = await apiClient.post(`/accounts/${id}/sync`);
   return response.data.data;
 };
 
-/**
- * Fetch account transaction history with pagination.
- */
-export const getAccountTransactions = async (
-  accountId: string,
-  params?: {
-    type?: 'DEPOSIT' | 'WITHDRAWAL';
-    startDate?: string;
-    endDate?: string;
-    page?: number;
-    limit?: number;
+export const getAccountTransactions = async (accountId: string, query?: AccountTransactionQuery | number): Promise<AccountTransactionResult> => {
+  const params: any = {};
+  if (typeof query === 'number') {
+    params.limit = query;
+  } else if (query) {
+    if (query.type) params.type = query.type;
+    if (query.startDate) params.startDate = query.startDate;
+    if (query.endDate) params.endDate = query.endDate;
+    if (query.page) params.page = query.page;
+    if (query.limit) params.limit = query.limit;
   }
-): Promise<AccountTransactionListResponse> => {
-  const queryParams = new URLSearchParams();
-  if (params) {
-    if (params.type) queryParams.append('type', params.type);
-    if (params.startDate) queryParams.append('startDate', params.startDate);
-    if (params.endDate) queryParams.append('endDate', params.endDate);
-    if (params.page) queryParams.append('page', params.page.toString());
-    if (params.limit) queryParams.append('limit', params.limit.toString());
-  }
-  const response = await api.get(`/accounts/${accountId}/transactions?${queryParams.toString()}`);
+  const response = await apiClient.get(`/accounts/${accountId}/transactions`, { params });
+  return response.data.data;
+};
+
+export const transferFunds = async (data: TransferDTO): Promise<any> => {
+  const response = await apiClient.post('/accounts/transfer', data);
   return response.data.data;
 };
 
@@ -109,4 +117,5 @@ export default {
   withdraw,
   syncAccount,
   getAccountTransactions,
+  transferFunds,
 };

@@ -1,18 +1,12 @@
-import axios from 'axios';
+import apiClient from './apiClient';
 import { Sale, CreateSaleDTO, PaginatedData } from '@shop/shared';
-
-// Create axios instance with auth interceptor (shared pattern)
-const api = axios.create({
-  baseURL: '/api/v1',
-  withCredentials: true,
-});
 
 /**
  * Create a new sale.
  * Deducts stock automatically and optionally deposits to an account.
  */
 export const createSale = async (saleData: CreateSaleDTO): Promise<Sale> => {
-  const response = await api.post('/sales', saleData);
+  const response = await apiClient.post('/sales', saleData);
   return response.data.data;
 };
 
@@ -34,7 +28,7 @@ export const getSales = async (params?: {
     if (params.page) queryParams.append('page', params.page.toString());
     if (params.limit) queryParams.append('limit', params.limit.toString());
   }
-  const response = await api.get(`/sales?${queryParams.toString()}`);
+  const response = await apiClient.get(`/sales?${queryParams.toString()}`);
   return response.data.data;
 };
 
@@ -42,7 +36,7 @@ export const getSales = async (params?: {
  * Get a single sale by ID with full item details.
  */
 export const getSaleById = async (id: string): Promise<Sale> => {
-  const response = await api.get(`/sales/${id}`);
+  const response = await apiClient.get(`/sales/${id}`);
   return response.data.data;
 };
 

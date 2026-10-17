@@ -1,12 +1,5 @@
-// @ts-ignore - axios types are installed in client node_modules
-import axios from 'axios';
+import apiClient from './apiClient';
 import { StockMovement, StockMovementType } from '@shop/shared';
-
-// Create axios instance
-const api = axios.create({
-  baseURL: '/api/v1',
-  withCredentials: true,
-});
 
 interface StockInPayload {
   productId: string;
@@ -44,7 +37,7 @@ export const addStockIn = async (
     userId: userId || '',
   };
   
-  const response = await api.post('/stock/in', payload);
+  const response = await apiClient.post('/stock/in', payload);
   return response.data.data;
 };
 
@@ -61,7 +54,7 @@ export const adjustStock = async (
     userId: userId || '',
   };
   
-  const response = await api.post('/stock/adjust', payload);
+  const response = await apiClient.post('/stock/adjust', payload);
   return response.data.data;
 };
 
@@ -76,7 +69,7 @@ export const getStockMovements = async (
   if (filters?.limit) params.limit = filters.limit;
   if (filters?.skip) params.skip = filters.skip;
   
-  const response = await api.get('/stock/movements', { params });
+  const response = await apiClient.get('/stock/movements', { params });
   return response.data.data;
 };
 
