@@ -4,8 +4,8 @@
   "private": true,
   "description": "Express + Prisma + TypeScript backend for Shop Inventory & Account Management System",
   "scripts": {
-    "dev": "ts-node-dev --project tsconfig.ts-node.json --respawn src/index.ts",
-    "compile": "tsc && node -e \"require('fs').cpSync('src/generated', 'dist/server/src/generated', { recursive: true })\"",
+    "build": "npm run compile",
+    "compile": "npx tsc && node -e \"require('fs').cpSync('src/generated', 'dist/server/src/generated', { recursive: true })\"",
     "start": "node dist/server/src/index.js",
     "postbuild": "rm -rf dist/src/generated && cp -R src/generated dist/src/",
     "typecheck": "tsc --noEmit",
@@ -45,6 +45,6 @@
     "prisma": "^5.18.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "5.5.4"
+    "typescript": "^5.5.4"
   }
 }

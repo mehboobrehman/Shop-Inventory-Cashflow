@@ -15,6 +15,8 @@ import dashboardRoutes from './dashboard/dashboard.routes';
 import accountRoutes from './account/account.routes';
 import salesRoutes from './sales/sales.routes';
 
+import { debugTelemetryMiddleware, registerDebugRoutes } from './debug/telemetry';
+
 function getVersionInfo(): VersionInfo {
   const possiblePaths = [
     path.resolve(process.cwd(), 'version.json'),
@@ -62,6 +64,10 @@ function getVersionInfo(): VersionInfo {
 
 export function createApp(): express.Application {
   const app = express();
+
+  app.use(debugTelemetryMiddleware);
+  registerDebugRoutes(app);
+
 
 const clientUrl = process.env.CLIENT_URL ?? 'http://localhost:5173'; // Default to Vite's default port
 

@@ -80,3 +80,7 @@ export type {
   DashboardStats,
   SalesTrendData,
 } from './dashboard';
+
+// Telemetry & Debugging
+export type { TelemetryEvent, DebugMetrics } from './telemetry';
+export { TelemetryCollector, telemetry } from './telemetry';

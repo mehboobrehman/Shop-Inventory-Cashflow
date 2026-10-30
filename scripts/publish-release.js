@@ -63,16 +63,12 @@ function main() {
   // 4. Build Project & Portable artifacts
   console.log('\n--- Step 4: Building Project & Portable Packages ---');
   try {
-    runCmd('npm run build');
+    console.log('Building Debug & Release artifacts...');
+    runCmd('node scripts/create-portable-package.js');
   } catch (e) {
-    console.warn('Build warning encountered, continuing...', e.message);
+    console.warn('Portable build error:', e.message);
   }
 
-  try {
-    runCmd('npm run build:portable');
-  } catch (e) {
-    console.warn('Portable build notice:', e.message);
-  }
 
   // 5. Commit version bump changes
   console.log('\n--- Step 5: Committing Version Bump & Tagging ---');

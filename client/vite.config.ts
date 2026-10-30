@@ -37,10 +37,12 @@ export default defineConfig({
     __GIT_COMMIT_HASH__: JSON.stringify(versionInfo.commitHash),
     __BUILD_TIMESTAMP__: JSON.stringify(versionInfo.buildTimestamp),
     __ENVIRONMENT__: JSON.stringify(versionInfo.environment),
+    __BUILD_TYPE__: JSON.stringify(process.env.BUILD_TYPE || 'release'),
     'import.meta.env.VITE_APP_VERSION': JSON.stringify(versionInfo.version),
     'import.meta.env.VITE_GIT_COMMIT_HASH': JSON.stringify(versionInfo.commitHash),
     'import.meta.env.VITE_BUILD_TIMESTAMP': JSON.stringify(versionInfo.buildTimestamp),
     'import.meta.env.VITE_ENVIRONMENT': JSON.stringify(versionInfo.environment),
+    'import.meta.env.VITE_BUILD_TYPE': JSON.stringify(process.env.BUILD_TYPE || 'release'),
   },
   server: {
     port: 5173,

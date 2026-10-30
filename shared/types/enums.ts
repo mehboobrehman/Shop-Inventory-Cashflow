@@ -22,7 +22,7 @@ export enum TransactionType {
 export enum UserRole {
   ADMIN = 'ADMIN',
   MANAGER = 'MANAGER',
-  CASHIER = 'CASHIER',
+  CASHIER = 'CASHIER'
 }
 
 /** How an account transaction was created. */
