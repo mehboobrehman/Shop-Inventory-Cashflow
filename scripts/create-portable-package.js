@@ -108,7 +108,9 @@ const targetNodePath = path.join(outputDir, 'bin', 'node.exe');
 
 // Check if we are running from the same node.exe we are trying to copy
 if (path.resolve(nodeExePath) === path.resolve(process.execPath)) {
-  console.log('Skipping node.exe copy (currently running from this node.exe)');
+  console.log('Running from node.exe, copying to target bin/node.exe...');
+  fs.copyFileSync(nodeExePath, targetNodePath);
+  console.log('Copied node.exe -> bin/node.exe');
 } else {
   try {
     fs.copyFileSync(nodeExePath, targetNodePath);

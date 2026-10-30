@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2026-10-17
+
+### Features
+- feat: Phase 3: Clean Architecture & Bundle Optimization (c7320b5)
+- feat: Phase 2: Query Optimization & Performance (5c2c574)
+- feat: Implement Automated Version Bumping, Changelog Generation, and Release Workflow (b732206)
+- feat: Implement Frontend UI Version Exposure, Console Logging, and Stale Client Detection (e2f9ec6)
+- feat: Implement Build-Time Version Injection and Backend Version/Health Endpoints (31fbe67)
+- feat: Update portable distribution package and organize mobile APK release assets (7230218)
+- feat: End-to-end verification of Android build and Backend connectivity (c34e3bb)
+- feat: Update build scripts and environment variable handling (17f5731)
+- feat: Implement API client layer and Secure Store authentication (03b5abe)
+- feat: Configure Android Network Security and Manifest permissions (663dc32)
+- feat: Transition to Expo Prebuild and configure native Android directory (d151108)
+- feat: Generate native Android directory (304f436)
+- feat: Build mobile companion APK client app (90003ec)
+- feat: Implement Mobile Companion Web App & Portable Executable (a5ca93a)
+- feat: Implement Mobile Companion Web App & Portable Executable (c659051)
+
+
+## [1.1.2] - 2026-10-17
+
+### Features
+- feat: Phase 3: Clean Architecture & Bundle Optimization (c7320b5)
+- feat: Phase 2: Query Optimization & Performance (5c2c574)
+- feat: Implement Automated Version Bumping, Changelog Generation, and Release Workflow (b732206)
+- feat: Implement Frontend UI Version Exposure, Console Logging, and Stale Client Detection (e2f9ec6)
+- feat: Implement Build-Time Version Injection and Backend Version/Health Endpoints (31fbe67)
+- feat: Update portable distribution package and organize mobile APK release assets (7230218)
+- feat: End-to-end verification of Android build and Backend connectivity (c34e3bb)
+- feat: Update build scripts and environment variable handling (17f5731)
+- feat: Implement API client layer and Secure Store authentication (03b5abe)
+- feat: Configure Android Network Security and Manifest permissions (663dc32)
+- feat: Transition to Expo Prebuild and configure native Android directory (d151108)
+- feat: Generate native Android directory (304f436)
+- feat: Build mobile companion APK client app (90003ec)
+- feat: Implement Mobile Companion Web App & Portable Executable (a5ca93a)
+- feat: Implement Mobile Companion Web App & Portable Executable (c659051)
+
+
 ## [1.1.1] - 2026-10-14
 
 ### Features
