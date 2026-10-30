@@ -1,7 +1,7 @@
 {
-  "version": "1.1.4",
-  "build": "1.1.4+build.e3de195",
-  "commitHash": "e3de195",
-  "buildTimestamp": "2026-10-30T14:10:46.979Z",
+  "version": "1.1.5",
+  "build": "1.1.5+build.a896bcc",
+  "commitHash": "a896bcc",
+  "buildTimestamp": "2026-10-30T14:13:29.311Z",
   "environment": "production"
 }
