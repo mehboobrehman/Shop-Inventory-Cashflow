@@ -23,11 +23,14 @@ plugins {
 }
 
 extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
-  if (System.getenv('EXPO_USE_COMMUNITY_AUTOLINKING') == '1') {
-    ex.autolinkLibrariesFromCommand()
-  } else {
-    ex.autolinkLibrariesFromCommand(expoAutolinking.rnConfigCommand)
-  }
+  ex.autolinkLibrariesFromCommand([
+    "C:/Users/mehboob.rehman/nodejs/node",
+    "C:/Users/mehboob.rehman/OneDrive - National Foods Limited/AI/autodesk/Autodeskprojects/shop-inventory-cashflow/mobile-companion/mobile-app/node_modules/expo/bin/autolinking",
+    "react-native-config",
+    "--platform",
+    "android",
+    "--json"
+  ])
 }
 expoAutolinking.useExpoModules()
 
