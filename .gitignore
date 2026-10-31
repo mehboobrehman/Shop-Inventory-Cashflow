@@ -30,6 +30,8 @@ server/src/generated/
 .env
 .env.local
 .env.*.local
+token.txt
+release-notes-temp.md
 
 # OS files
 .DS_Store
