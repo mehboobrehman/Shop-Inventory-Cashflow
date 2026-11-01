@@ -2,8 +2,37 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
+const rootDir = path.resolve(__dirname, '..');
+
+function syncAndroidVersion() {
+  const gradlePath = path.join(rootDir, 'mobile-companion', 'mobile-app', 'android', 'app', 'build.gradle');
+  const pkgPath = path.join(rootDir, 'package.json');
+  if (!fs.existsSync(gradlePath) || !fs.existsSync(pkgPath)) return;
+
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+    const versionStr = pkg.version || '1.0.0';
+    const parts = versionStr.split('.').map(Number);
+    const major = parts[0] || 1;
+    const minor = parts[1] || 0;
+    const patch = parts[2] || 0;
+    const versionCode = major * 10000 + minor * 100 + patch;
+
+    let gradleContent = fs.readFileSync(gradlePath, 'utf-8');
+    gradleContent = gradleContent.replace(/versionCode\s+\d+/, `versionCode ${versionCode}`);
+    gradleContent = gradleContent.replace(/versionName\s+"[^"]+"/, `versionName "${versionStr}"`);
+    fs.writeFileSync(gradlePath, gradleContent, 'utf-8');
+    console.log(`Synchronized version into Android build.gradle: versionName "${versionStr}", versionCode ${versionCode}`);
+  } catch (err) {
+    console.warn('Warning: Failed to sync version into Android build.gradle:', err.message);
+  }
+}
+
 function generateVersionInfo() {
   const rootDir = path.resolve(__dirname, '..');
+
+  // Synchronize version into Android build.gradle
+  syncAndroidVersion();
   
   // 1. Read package.json version
   let version = '1.0.0';
