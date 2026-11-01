@@ -1,7 +1,7 @@
 {
   "version": "1.1.8",
-  "build": "1.1.8+build.0cd2b4c",
-  "commitHash": "0cd2b4c",
-  "buildTimestamp": "2026-10-31T09:19:59.076Z",
+  "build": "1.1.8+build.520b5ff",
+  "commitHash": "520b5ff",
+  "buildTimestamp": "2026-11-01T12:57:28.518Z",
   "environment": "production"
 }

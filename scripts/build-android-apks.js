@@ -25,13 +25,45 @@ function main() {
 
   // Copy or wrap as APK deliverables (robust companion app binary packages)
   if (fs.existsSync(debugZip)) {
-    fs.copyFileSync(debugZip, debugApkPath);
-    console.log(`Created Debug APK artifact: ${debugApkPath}`);
+    // Execute Gradle build for debug APK
+    try {
+      console.log('Running gradlew assembleDebug...');
+      execSync('gradlew assembleDebug', { cwd: 'mobile-companion/mobile-app/android', stdio: 'inherit' });
+      const debugApkPathBuilt = fs.existsSync('C:/tmp/b/app/outputs/apk/debug/app-debug.apk')
+        ? 'C:/tmp/b/app/outputs/apk/debug/app-debug.apk'
+        : path.join(rootDir, 'mobile-companion/mobile-app/android/app/build/outputs/apk/debug/app-debug.apk');
+      if (fs.existsSync(debugApkPathBuilt)) {
+        fs.copyFileSync(debugApkPathBuilt, debugApkPath);
+        console.log(`Copied Debug APK artifact from ${debugApkPathBuilt} to ${debugApkPath}`);
+      } else {
+        console.error('Debug APK not found at expected location:', debugApkPathBuilt);
+        throw new Error('Debug APK build failed');
+      }
+    } catch (error) {
+      console.error('Error building debug APK:', error);
+      throw error;
+    }
   }
 
   if (fs.existsSync(releaseZip)) {
-    fs.copyFileSync(releaseZip, releaseApkPath);
-    console.log(`Created Released APK artifact: ${releaseApkPath}`);
+    // Execute Gradle build for release APK
+    try {
+      console.log('Running gradlew assembleRelease...');
+      execSync('gradlew assembleRelease', { cwd: 'mobile-companion/mobile-app/android', stdio: 'inherit' });
+      const releaseApkPathBuilt = fs.existsSync('C:/tmp/b/app/outputs/apk/release/app-release.apk')
+        ? 'C:/tmp/b/app/outputs/apk/release/app-release.apk'
+        : path.join(rootDir, 'mobile-companion/mobile-app/android/app/build/outputs/apk/release/app-release.apk');
+      if (fs.existsSync(releaseApkPathBuilt)) {
+        fs.copyFileSync(releaseApkPathBuilt, releaseApkPath);
+        console.log(`Copied Release APK artifact from ${releaseApkPathBuilt} to ${releaseApkPath}`);
+      } else {
+        console.error('Release APK not found at expected location:', releaseApkPathBuilt);
+        throw new Error('Release APK build failed');
+      }
+    } catch (error) {
+      console.error('Error building release APK:', error);
+      throw error;
+    }
   }
 
   console.log('=== Android APKs built successfully with version handling and telemetry configuration ===');

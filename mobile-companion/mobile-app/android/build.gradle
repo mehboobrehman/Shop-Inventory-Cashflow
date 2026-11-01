@@ -20,5 +20,27 @@ allprojects {
   }
 }
 
+subprojects { subproject ->
+  subproject.afterEvaluate {
+    if (subproject.hasProperty('android')) {
+      // Redirect build and C++ staging directories to C:/tmp to avoid MAX_PATH and OneDrive locks
+      def safeName = subproject.name.replaceAll('\\s+', '_')
+      def bDir = file("C:/tmp/b/${safeName}")
+      if (!bDir.exists()) bDir.mkdirs()
+      subproject.layout.buildDirectory = bDir
+
+      subproject.android {
+        externalNativeBuild {
+          cmake {
+            def cDir = file("C:/tmp/cxx/${safeName}")
+            if (!cDir.exists()) cDir.mkdirs()
+            buildStagingDirectory = cDir
+          }
+        }
+      }
+    }
+  }
+}
+
 apply plugin: "expo-root-project"
 apply plugin: "com.facebook.react.rootproject"
