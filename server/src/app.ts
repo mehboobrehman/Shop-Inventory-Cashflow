@@ -227,5 +227,22 @@ const clientUrl = process.env.CLIENT_URL ?? 'http://localhost:5173'; // Default 
     }
   }
 
+  // Global Error Handler Middleware
+  app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
+    if (res.headersSent) {
+      return next(err);
+    }
+    console.error('Unhandled server error:', err);
+    const statusCode = err.status || err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    res.status(statusCode).json({
+      success: false,
+      error: {
+        code: err.code || 'INTERNAL_SERVER_ERROR',
+        message,
+      },
+    });
+  });
+
   return app;
 }

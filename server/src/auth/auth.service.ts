@@ -13,7 +13,7 @@ interface RegisterInput {
 }
 
 export class AuthService {
-  private readonly JWT_ACCESS_EXPIRES_IN = '15m';
+  private readonly JWT_ACCESS_EXPIRES_IN = '12h';
 
   async register(input: RegisterInput): Promise<User> {
     const { email, password, name, role = UserRole.CASHIER } = input;
